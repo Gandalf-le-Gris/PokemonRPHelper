@@ -1,9 +1,40 @@
 import { encounterService } from "@/services/instances/encounterService.instance";
+import { talentArray, TalentType } from "./talents";
 
 export interface Pokemon {
+  id: number,
   name: string,
   names: any[],
 }
+
+export type StatName = 'hp' | 'atk' | 'def' | 'spatk' | 'spdef' | 'spd';
+
+export const statsArray = [
+  {
+    value: 'hp',
+    title: 'PV',
+  },
+  {
+    value: 'atk',
+    title: 'Attaque',
+  },
+  {
+    value: 'def',
+    title: 'Défense',
+  },
+  {
+    value: 'spatk',
+    title: 'Attaque spé.',
+  },
+  {
+    value: 'spdef',
+    title: 'Défense spé.',
+  },
+  {
+    value: 'spd',
+    title: 'Vitesse',
+  },
+] as { value: StatName, title: string }[];
 
 export interface Stats {
   hp: number,
@@ -17,14 +48,16 @@ export interface Stats {
 export interface Character {
   uuid: string,
   name: string,
+  species: string,
   pokemon: Pokemon,
   baseStats: Stats,
   stats: Stats,
   hpt: number,
+  talents: {talent: TalentType, mod: number}[],
 }
 
 export async function createCharacter(pokemon: Pokemon, level: number): Promise<Character> {
-  const detail = await encounterService.getPokemonDetail(pokemon.name);
+  const detail = await encounterService.getPokemonDetail(pokemon.id);
   const baseStats = {
     hp: detail.stats[0].base_stat,
     atk: detail.stats[1].base_stat,
@@ -36,6 +69,7 @@ export async function createCharacter(pokemon: Pokemon, level: number): Promise<
   const character: Character = {
     uuid: crypto.randomUUID(),
     name: pokemon.names.find((e: any) => e.language.name === 'fr').name ?? pokemon.name,
+    species: pokemon.names.find((e: any) => e.language.name === 'fr').name ?? pokemon.name,
     pokemon: pokemon,
     baseStats,
     stats: {
@@ -47,17 +81,40 @@ export async function createCharacter(pokemon: Pokemon, level: number): Promise<
       spd: 0,
     },
     hpt: 1,
+    talents: talentArray.map(e => ({talent: e.value, mod: 0})),
   };
+  character.talents[Math.floor(Math.random() * character.talents.length)].mod = 2;
+  for (let i = 0; i < 2; i++) {
+    let ind: number;
+    do {
+      ind = Math.floor(Math.random() * character.talents.length);
+    } while (character.talents[ind].mod)
+    character.talents[ind].mod = 1;
+  }
   for (let i = 1; i <= level; i++) {
-    if (i % 5 === 0) {
-
-    } else {
-
-    }
+    levelUp(character, level);
   }
   return character;
 }
 
-function statsUp(character: Character) {
+function levelUp(character: Character, level: number) {
+  if (level % 5 !== 5) {
+    enchanceStatsOnce(character);
+  } else {
+    enchanceStatsOnce(character);
+    enchanceStatsOnce(character);
+  }
+}
 
+function enchanceStatsOnce(character: Character) {
+  const bst: number = Object.values(character.baseStats).reduce((acc, v) => acc + v, 0);
+  const pmf = Object.values(character.baseStats).map(e => e / bst);
+  const cdf = pmf.map((sum => value => sum += value)(0));
+  let rd: number;
+  let stat;
+  for (let i = 0; i < 3; i++) {
+    rd = Math.random();
+    stat = Object.keys(character.stats)[cdf.findIndex(e => rd <= e)] as StatName;
+    character.stats[stat]++;
+  }
 }
