@@ -1,5 +1,6 @@
 import { encounterService } from "@/services/instances/encounterService.instance";
 import { talentArray, TalentType } from "./talents";
+import { getPokemonSpecificities, SpecificityType } from "./specificities";
 
 export interface Pokemon {
   id: number,
@@ -54,6 +55,7 @@ export interface Character {
   stats: Stats,
   hpt: number,
   talents: {talent: TalentType, mod: number}[],
+  specificities: SpecificityType[],
 }
 
 export async function createCharacter(pokemon: Pokemon, level: number): Promise<Character> {
@@ -82,6 +84,7 @@ export async function createCharacter(pokemon: Pokemon, level: number): Promise<
     },
     hpt: 1,
     talents: talentArray.map(e => ({talent: e.value, mod: 0})),
+    specificities: [],
   };
   character.talents[Math.floor(Math.random() * character.talents.length)].mod = 2;
   for (let i = 0; i < 2; i++) {
@@ -91,18 +94,37 @@ export async function createCharacter(pokemon: Pokemon, level: number): Promise<
     } while (character.talents[ind].mod)
     character.talents[ind].mod = 1;
   }
+  character.specificities = getPokemonSpecificities(character);
   for (let i = 1; i <= level; i++) {
     levelUp(character, level);
   }
+  console.log(character.name, character.specificities);
   return character;
 }
 
 function levelUp(character: Character, level: number) {
-  if (level % 5 !== 5) {
-    enchanceStatsOnce(character);
+  const learnedTalents = character.talents.filter(e => !e.mod).length;
+  if (level % 5 !== 0) {
+    if (learnedTalents < talentArray.length && Math.random() < 1 / learnedTalents) {
+      let ind: number;
+      do {
+        ind = Math.floor(Math.random() * character.talents.length);
+      } while (character.talents[ind].mod)
+      character.talents[ind].mod = 1;
+    } else {
+      enchanceStatsOnce(character);
+    }
   } else {
-    enchanceStatsOnce(character);
-    enchanceStatsOnce(character);
+    if (learnedTalents < talentArray.length && Math.random() < 1 / (learnedTalents - 1)) {
+      let ind: number;
+      do {
+        ind = Math.floor(Math.random() * character.talents.length);
+      } while (character.talents[ind].mod)
+      character.talents[ind].mod = 2;
+    } else {
+      enchanceStatsOnce(character);
+      enchanceStatsOnce(character);
+    }
   }
 }
 
