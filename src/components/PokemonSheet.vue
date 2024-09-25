@@ -1,11 +1,12 @@
 <template>
   <v-card rounded="lg">
-    <v-card-title>
-      <v-row>
-        <v-col cols="6">
+    <v-card-title class="mb-8">
+      <v-row align="center">
+        <v-col>
           <v-text-field
             v-model="character.name"
             label="Nom"
+            hide-details
           />
         </v-col>
         <v-col cols="6">
@@ -13,6 +14,17 @@
             v-model="character.species"
             label="Espèce"
             disabled
+            hide-details
+          />
+        </v-col>
+        <v-col cols="auto" v-if="!isPlayerSheet">
+          <v-btn
+            @click="regenerateCharacter"
+            icon="mdi-refresh"
+            density="compact"
+            variant="plain"
+            size="x-large"
+            :loading="regenerateLoading"
           />
         </v-col>
       </v-row>
@@ -20,6 +32,23 @@
     <v-card-text>
       <v-row align="center">
         <v-col cols="6">
+          <v-row align="center" class="mb-4">
+            <v-col cols="12">
+              <v-sheet
+                rounded="lg"
+                class="bg-grey-darken-3 pa-2"
+              >
+                <v-tooltip location="top" :text="character.ability.desc">
+                  <template #activator="{ props }">
+                    <div class="text-subtitle-1 text-center" v-bind="props">
+                      <span class="text-subtitle-2">Talent : </span>
+                      {{ character.ability.title }}
+                    </div>
+                  </template>
+                </v-tooltip>
+              </v-sheet>
+            </v-col>
+          </v-row>
           <v-row v-for="stat in statsArray" :key="stat.value" class="ma-0" align="center">
             <v-col>
               <v-progress-linear
@@ -116,13 +145,19 @@
 </template>
 
 <script setup lang="ts">
+import { createCharacter } from '@/types/pokemon';
 import { StatName, statsArray, type Character } from '@/types/pokemon';
 import { computeGlobalModifiers } from '@/types/specificities';
 import { specificityArray, type Mod } from '@/types/specificities';
 import { talentArray } from '@/types/talents';
 import { ModelRef } from 'vue';
 
+defineProps({
+  isPlayerSheet: Boolean
+});
+
 const character: ModelRef<Character> = defineModel<Character>({required: true});
+const regenerateLoading: Ref<boolean> = ref<boolean>(false);
 
 const characterMods: ComputedRef<Mod> = computed<Mod>(() => computeGlobalModifiers(character.value));
 
@@ -135,4 +170,10 @@ const maxStat: ComputedRef<number> = computed<number>(() => {
     return acc > (x[1] + characterMods.value.stats[stat]) ? acc : (x[1] + characterMods.value.stats[stat]);
   }, 0)
 });
+
+async function regenerateCharacter() {
+  regenerateLoading.value = true;
+  character.value = await createCharacter(character.value.pokemon, character.value.level);
+  regenerateLoading.value = false;
+}
 </script>

@@ -1,11 +1,15 @@
 import { encounterService } from "@/services/instances/encounterService.instance";
 import { talentArray, TalentType } from "./talents";
-import { computeGlobalModifiers, getPokemonSpecificities, SpecificityType } from "./specificities";
+import { getPokemonSpecificities, SpecificityType } from "./specificities";
+import { Type } from "./types";
+import { Ability, getAbility } from "./abilities";
 
 export interface Pokemon {
   id: number,
   name: string,
   names: any[],
+  baseStats: Stats,
+  types: Type[]
 }
 
 export type StatName = 'hp' | 'atk' | 'def' | 'spatk' | 'spdef' | 'spd';
@@ -51,17 +55,18 @@ export interface Character {
   name: string,
   species: string,
   pokemon: Pokemon,
-  baseStats: Stats,
   stats: Stats,
   hpt: number,
   talents: {talent: TalentType, mod: number}[],
   specificities: SpecificityType[],
   level: number,
+  ability: Ability
 }
 
 export async function createCharacter(pokemon: Pokemon, level: number): Promise<Character> {
   const detail = await encounterService.getPokemonDetail(pokemon.id);
-  const baseStats = {
+  pokemon.types = Object.values(detail.types).map((e: any) => e.type.name)
+  pokemon.baseStats = {
     hp: detail.stats[0].base_stat,
     atk: detail.stats[1].base_stat,
     def: detail.stats[2].base_stat,
@@ -69,12 +74,12 @@ export async function createCharacter(pokemon: Pokemon, level: number): Promise<
     spdef: detail.stats[4].base_stat,
     spd: detail.stats[5].base_stat,
   };
+
   const character: Character = {
     uuid: crypto.randomUUID(),
     name: pokemon.names.find((e: any) => e.language.name === 'fr').name ?? pokemon.name,
     species: pokemon.names.find((e: any) => e.language.name === 'fr').name ?? pokemon.name,
-    pokemon: pokemon,
-    baseStats,
+    pokemon,
     stats: {
       hp: 0,
       atk: 0,
@@ -87,7 +92,9 @@ export async function createCharacter(pokemon: Pokemon, level: number): Promise<
     talents: talentArray.map(e => ({talent: e.value, mod: 0})),
     specificities: [],
     level,
+    ability: { value: 'Special', title: 'Special', desc: 'WIP' }
   };
+
   character.talents[Math.floor(Math.random() * character.talents.length)].mod = 2;
   for (let i = 0; i < 2; i++) {
     let ind: number;
@@ -97,10 +104,11 @@ export async function createCharacter(pokemon: Pokemon, level: number): Promise<
     character.talents[ind].mod = 1;
   }
   character.specificities = getPokemonSpecificities(character);
+  character.ability = getAbility(character);
+
   for (let i = 1; i <= level; i++) {
     levelUp(character, level);
   }
-  console.log(character.name, computeGlobalModifiers(character));
   return character;
 }
 
@@ -131,8 +139,8 @@ function levelUp(character: Character, level: number) {
 }
 
 function enchanceStatsOnce(character: Character) {
-  const bst: number = Object.values(character.baseStats).reduce((acc, v) => acc + v, 0);
-  const pmf = Object.values(character.baseStats).map(e => e / bst);
+  const bst: number = Object.values(character.pokemon.baseStats).reduce((acc, v) => acc + v, 0);
+  const pmf = Object.values(character.pokemon.baseStats).map(e => e / bst);
   const cdf = pmf.map((sum => value => sum += value)(0));
   let rd: number;
   let stat;
