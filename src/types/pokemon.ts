@@ -1,6 +1,6 @@
 import { encounterService } from "@/services/instances/encounterService.instance";
 import { talentArray, TalentType } from "./talents";
-import { getPokemonSpecificities, SpecificityType } from "./specificities";
+import { computeGlobalModifiers, getPokemonSpecificities, SpecificityType } from "./specificities";
 
 export interface Pokemon {
   id: number,
@@ -56,6 +56,7 @@ export interface Character {
   hpt: number,
   talents: {talent: TalentType, mod: number}[],
   specificities: SpecificityType[],
+  level: number,
 }
 
 export async function createCharacter(pokemon: Pokemon, level: number): Promise<Character> {
@@ -85,6 +86,7 @@ export async function createCharacter(pokemon: Pokemon, level: number): Promise<
     hpt: 1,
     talents: talentArray.map(e => ({talent: e.value, mod: 0})),
     specificities: [],
+    level,
   };
   character.talents[Math.floor(Math.random() * character.talents.length)].mod = 2;
   for (let i = 0; i < 2; i++) {
@@ -98,7 +100,7 @@ export async function createCharacter(pokemon: Pokemon, level: number): Promise<
   for (let i = 1; i <= level; i++) {
     levelUp(character, level);
   }
-  console.log(character.name, character.specificities);
+  console.log(character.name, computeGlobalModifiers(character));
   return character;
 }
 

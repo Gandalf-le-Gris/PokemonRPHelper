@@ -11,7 +11,7 @@ declare module 'vue' {
     Encounter: typeof import('./components/Encounter.vue')['default']
     EncounterFilters: typeof import('./components/EncounterFilters.vue')['default']
     HelloWorld: typeof import('./components/HelloWorld.vue')['default']
-    PokemonEncounter: typeof import('./components/PokemonEncounter.vue')['default']
+    PokemonSheet: typeof import('./components/PokemonSheet.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

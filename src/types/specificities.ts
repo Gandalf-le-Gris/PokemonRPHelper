@@ -1,5 +1,6 @@
 import specificities from '@/assets/specificities.json';
-import { Character } from './pokemon';
+import { Character, Stats } from './pokemon';
+import { TalentType } from './talents';
 
 export type SpecificityType = 
     'twoLegs'
@@ -28,6 +29,14 @@ export type SpecificityType =
   | 'giant'
   | 'massive';
 
+export interface Mod {
+  stats?: Stats,
+  talents?: {
+    name: TalentType,
+    mod: number 
+  }[]
+}
+
 export const specificityArray = [
   {
     value: 'average',
@@ -48,6 +57,16 @@ export const specificityArray = [
     value: 'bouncing',
     title: 'Rebond',
     desc: 'Se déplace en rebondissant (+1 à la concentration et à la nage)',
+    effect: () => ({
+      talents: [{
+        name: 'Focus',
+        mod: 1
+      },
+      {
+        name: 'Swim',
+        mod: 1
+      }]
+    })
   },
   {
     value: 'burrow',
@@ -73,11 +92,27 @@ export const specificityArray = [
     value: 'manyHands',
     title: 'Plus de 2 mains',
     desc: 'Peut tenir plusieurs objets (+2 en dextérité)',
+    effect: () => ({
+      talents: [{
+        name: 'Finesse',
+        mod: 2
+      }]
+    })
   },
   {
     value: 'manyLegs',
     title: 'Plus de 2 jambes',
     desc: 'Se tient à 4 pattes ou plus (+1 en équilibre et endurance)',
+    effect: () => ({
+      talents: [{
+        name: 'Balance',
+        mod: 1
+      },
+      {
+        name: 'Endurance',
+        mod: 1
+      }]
+    })
   },
   {
     value: 'massive',
@@ -93,6 +128,16 @@ export const specificityArray = [
     value: 'rollWiggleSlide',
     title: 'Rampant',
     desc: 'Se déplace en roulant, rampant ou serpentant (+1 en perspicacité et discrétion)',
+    effect: () => ({
+      talents: [{
+        name: 'Sense motive',
+        mod: 1
+      },
+      {
+        name: 'Stealth',
+        mod: 1
+      }]
+    })
   },
   {
     value: 'small',
@@ -102,22 +147,54 @@ export const specificityArray = [
   {
     value: 'sticky',
     title: 'Adhérence',
-    desc: 'Peut s\'accrocher aux murs (réussite automatique lors d\'escalade)',
+    desc: 'Peut s\'accrocher aux murs (réussite automatique lors de jets d\'escalade)',
+    effect: () => ({
+      talents: [{
+        name: 'Climb',
+        mod: 9999
+      }]
+    })
   },
   {
     value: 'superResistance',
     title: 'Résistant',
     desc: 'Particulièrement résistant (+2 en défense et défense spéciale au niveau 1 et tous les 10 niveaux)',
+    effect: (c: Character) => ({
+      stats: {
+        hp: 0,
+        atk: 0,
+        def: 2 * Math.ceil((c.level + 1) / 10),
+        spatk: 0,
+        spdef: 2 * Math.ceil((c.level + 1) / 10),
+        spd: 0
+      }
+    })
   },
   {
     value: 'superSpeed',
     title: 'Rapide',
     desc: 'Particulièrement rapide (+3 en vitesse au niveau 1 et tous les 10 niveaux)',
+    effect: (c: Character) => ({
+      stats: {
+        hp: 0,
+        atk: 0,
+        def: 0,
+        spatk: 0,
+        spdef: 0,
+        spd: 3 * Math.ceil((c.level + 1) / 10)
+      }
+    })
   },
   {
     value: 'swim',
     title: 'Nageur',
-    desc: 'Nage rapidement (réussite automatique lors de nage)',
+    desc: 'Nage rapidement (réussite automatique lors de jets de nage)',
+    effect: () => ({
+      talents: [{
+        name: 'Swim',
+        mod: 9999
+      }]
+    })
   },
   {
     value: 'telekinesis',
@@ -138,11 +215,27 @@ export const specificityArray = [
     value: 'twoHands',
     title: '2 mains',
     desc: 'Peut tenir un objet (+1 en dextérité)',
+    effect: () => ({
+      talents: [{
+        name: 'Finesse',
+        mod: 1
+      }]
+    })
   },
   {
     value: 'twoLegs',
     title: '2 jambes',
     desc: 'Se déplace sur deux jambes (+1 en escalade et en dextérité)',
+    effect: () => ({
+      talents: [{
+        name: 'Climb',
+        mod: 1
+      },
+      {
+        name: 'Finesse',
+        mod: 1
+      }]
+    })
   },
   {
     value: 'waterBreathing',
@@ -154,10 +247,51 @@ export const specificityArray = [
     title: 'Ailé',
     desc: 'Se déplace en volant (immunité aux attaques sol, peut transporter d\'autres Pokémon mais subit alors 1 dégât par passager et par heure)',
   },
-] as { value: SpecificityType, title: string, desc: string }[];
+] as { value: SpecificityType, title: string, desc: string, effect?: (c: Character) => Mod }[];
 
 export function getPokemonSpecificities(character: Character): SpecificityType[] {
   return specificityArray
     .map(e => e.value)
     .filter(e => specificities[e].some(s => s.toLowerCase().includes(character.pokemon.name)));
+}
+
+export function computeGlobalModifiers(character: Character): Mod {
+  return character.specificities
+    .reduce((acc, x) => {
+      const effect = specificityArray.find(s => s.value === x)?.effect;
+      if (effect) {
+        const mod = effect(character);
+        if (mod.stats) {
+          acc.stats = {
+            hp: acc.stats.hp + mod.stats.hp,
+            atk: acc.stats.atk + mod.stats.atk,
+            def: acc.stats.def + mod.stats.def,
+            spatk: acc.stats.spatk + mod.stats.spatk,
+            spdef: acc.stats.spdef + mod.stats.spdef,
+            spd: acc.stats.spd + mod.stats.spd,
+          }
+        }
+        if (mod.talents) {
+          mod.talents.forEach(t => {
+            const ind = acc.talents.findIndex(e => e.name === t.name);
+            if (ind >= 0) {
+              acc.talents[ind].mod += t.mod;
+            } else {
+              acc.talents.push(t);
+            }
+          })
+        }
+      }
+      return acc;
+    }, {
+      stats: {
+        hp: 0,
+        atk: 0,
+        def: 0,
+        spatk: 0,
+        spdef: 0,
+        spd: 0
+      },
+      talents: [] as { name: TalentType, mod: number }[]
+    })
 }

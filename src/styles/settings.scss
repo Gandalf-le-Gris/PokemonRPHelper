@@ -8,3 +8,11 @@
 // @use 'vuetify/settings' with (
 //   $color-pack: false
 // );
+
+.v-field__disabled-opacity-100 .v-field {
+  opacity: 1;
+}
+
+.inner-compact .v-field__append-inner {
+  margin-left: -4px;
+}

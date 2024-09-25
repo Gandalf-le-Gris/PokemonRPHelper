@@ -3,7 +3,7 @@
     <v-responsive
       class="align-centerfill-height mx-auto"
     >
-      <v-card title="Paramètres de la rencontre" class="pa-4">
+      <v-card title="Paramètres de la rencontre" class="pa-4" rounded="lg">
         <encounter-filters v-model="filters"/>
         <div class="d-flex justify-space-around">
           <v-btn
@@ -16,11 +16,12 @@
       </v-card>
       <v-row v-if="characters.length" class="mt-8">
         <v-col
-          cols="6"
+          cols="12"
+          lg="6"
           v-for="(character, index) in characters"
           :key="character.uuid"
         >
-          <pokemon-encounter v-model="characters[index]"/>
+          <pokemon-sheet v-model="characters[index]"/>
         </v-col>
       </v-row>
     </v-responsive>
