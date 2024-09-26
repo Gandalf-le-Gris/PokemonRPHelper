@@ -33,7 +33,7 @@
       <v-row align="center">
         <v-col cols="6">
           <v-row align="center" class="mb-4">
-            <v-col cols="12">
+            <v-col>
               <v-sheet
                 rounded="lg"
                 class="bg-grey-darken-3 pa-2"
@@ -47,6 +47,24 @@
                   </template>
                 </v-tooltip>
               </v-sheet>
+            </v-col>
+            <v-col cols="auto">
+              <v-text-field
+                v-model="character.hpt"
+                label="PV"
+                type="number"
+                width="120"
+                hide-details
+                density="compact"
+                variant="outlined"
+                min="0"
+                :max="maxHP"
+                class="inner-compact font-weight-bold"
+              >
+                <template #append-inner>
+                  {{ `/${maxHP}` }}
+                </template>
+              </v-text-field>
             </v-col>
           </v-row>
           <v-row v-for="stat in statsArray" :key="stat.value" class="ma-0" align="center">
@@ -114,7 +132,7 @@
             </v-col>
             <v-col cols="auto">
               <v-text-field
-                v-if="(characterMods.talents?.find(e => e.name === talent.value)?.mod ?? 0) < 1000"
+                v-if="((characterMods.talents?.find(e => e.name === talent.value)?.mod ?? 0) < 1000) && (character.ability.value !== 'Healer' || talent.value !== 'Heal')"
                 v-model="character.talents[index].mod"
                 type="number"
                 width="84"
@@ -160,6 +178,7 @@ const character: ModelRef<Character> = defineModel<Character>({required: true});
 const regenerateLoading: Ref<boolean> = ref<boolean>(false);
 
 const characterMods: ComputedRef<Mod> = computed<Mod>(() => computeGlobalModifiers(character.value));
+const maxHP: ComputedRef<number> = computed<number>(() => Math.max(1, character.value.stats.hp * (character.value.ability.value === 'Tank' ? 5 : 3)))
 
 const maxStat: ComputedRef<number> = computed<number>(() => {
   return Object.entries(character.value.stats).reduce((acc, x) => {

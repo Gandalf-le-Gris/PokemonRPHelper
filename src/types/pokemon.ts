@@ -136,6 +136,7 @@ function levelUp(character: Character, level: number) {
       enchanceStatsOnce(character);
     }
   }
+  character.hpt = Math.max(1, character.stats.hp * (character.ability.value === 'Tank' ? 5 : 3));
 }
 
 function enchanceStatsOnce(character: Character) {
