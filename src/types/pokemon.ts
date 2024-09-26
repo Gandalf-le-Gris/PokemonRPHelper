@@ -60,7 +60,15 @@ export interface Character {
   talents: {talent: TalentType, mod: number}[],
   specificities: SpecificityType[],
   level: number,
-  ability: Ability
+  ability: Ability,
+  inventory: string
+  attacks: string[],
+  items: {
+    held: string
+    head: string,
+    neck: string,
+    belt: string
+  }
 }
 
 export async function createCharacter(pokemon: Pokemon, level: number): Promise<Character> {
@@ -92,7 +100,15 @@ export async function createCharacter(pokemon: Pokemon, level: number): Promise<
     talents: talentArray.map(e => ({talent: e.value, mod: 0})),
     specificities: [],
     level,
-    ability: { value: 'Special', title: 'Special', desc: 'WIP' }
+    ability: { value: 'Special', title: 'Special', desc: 'WIP' },
+    inventory: '',
+    attacks: ['', '', '', ''],
+    items: {
+      held: '',
+      head: '',
+      neck: '',
+      belt: ''
+    }
   };
 
   character.talents[Math.floor(Math.random() * character.talents.length)].mod = 2;

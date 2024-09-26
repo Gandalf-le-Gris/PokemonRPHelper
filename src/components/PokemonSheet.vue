@@ -38,7 +38,7 @@
                 rounded="lg"
                 class="bg-grey-darken-3 pa-2"
               >
-                <v-tooltip location="top" :text="character.ability.desc">
+                <v-tooltip location="top" max-width="512" :text="character.ability.desc">
                   <template #activator="{ props }">
                     <div class="text-subtitle-1 text-center" v-bind="props">
                       <span class="text-subtitle-2">Talent : </span>
@@ -124,6 +124,31 @@
               </v-sheet>
             </v-col>
           </v-row>
+          <v-row align="center">
+            <v-col cols="12">
+              <v-sheet
+                rounded="lg"
+                class="bg-grey-darken-3 pa-2"
+              >
+                <v-row>
+                  <v-col class="text-subtitle-1 text-center ma-0">
+                    Attaques
+                  </v-col>
+                </v-row>
+                <v-row align="center" v-for="(_, index) in character.attacks" :key=index class="my-n3">
+                  <v-col cols="12">
+                    <v-text-field
+                      v-model="character.attacks[index]"
+                      :label="`Attaque ${index + 1}`"
+                      hide-details
+                      density="compact"
+                      variant="outlined"
+                    />
+                  </v-col>
+                </v-row>
+              </v-sheet>
+            </v-col>
+          </v-row>
         </v-col>
         <v-col cols="6">
           <v-row v-for="(talent, index) in talentArray" :key="talent.value" align="center" class="mx-0 my-n5">
@@ -156,6 +181,39 @@
               />
             </v-col>
           </v-row>
+        </v-col>
+      </v-row>
+      <v-row class="mt-8">
+        <v-col cols="7">
+          <v-textarea
+            v-model="character.inventory"
+            hide-details
+            label="Inventaire"
+            no-resize
+            rows="10"
+          />
+        </v-col>
+        <v-col cols="5" class="d-flex flex-column justify-space-between">
+          <v-text-field
+            v-model="character.items.held"
+            hide-details
+            label="Objet tenu"
+          />
+          <v-text-field
+            v-model="character.items.head"
+            hide-details
+            label="Tête"
+          />
+          <v-text-field
+            v-model="character.items.neck"
+            hide-details
+            label="Cou"
+          />
+          <v-text-field
+            v-model="character.items.belt"
+            hide-details
+            label="Ceinture"
+          />
         </v-col>
       </v-row>
     </v-card-text>
