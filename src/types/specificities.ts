@@ -256,23 +256,23 @@ export function getPokemonSpecificities(character: Character): SpecificityType[]
 }
 
 export function computeGlobalModifiers(character: Character): Mod {
-  return character.specificities
+  const mod: Mod = character.specificities
     .reduce((acc, x) => {
       const effect = specificityArray.find(s => s.value === x)?.effect;
       if (effect) {
-        const mod = effect(character);
-        if (mod.stats) {
+        const modTemp = effect(character);
+        if (modTemp.stats) {
           acc.stats = {
-            hp: acc.stats.hp + mod.stats.hp,
-            atk: acc.stats.atk + mod.stats.atk,
-            def: acc.stats.def + mod.stats.def,
-            spatk: acc.stats.spatk + mod.stats.spatk,
-            spdef: acc.stats.spdef + mod.stats.spdef,
-            spd: acc.stats.spd + mod.stats.spd,
+            hp: acc.stats.hp + modTemp.stats.hp,
+            atk: acc.stats.atk + modTemp.stats.atk,
+            def: acc.stats.def + modTemp.stats.def,
+            spatk: acc.stats.spatk + modTemp.stats.spatk,
+            spdef: acc.stats.spdef + modTemp.stats.spdef,
+            spd: acc.stats.spd + modTemp.stats.spd,
           }
         }
-        if (mod.talents) {
-          mod.talents.forEach(t => {
+        if (modTemp.talents) {
+          modTemp.talents.forEach(t => {
             const ind = acc.talents.findIndex(e => e.name === t.name);
             if (ind >= 0) {
               acc.talents[ind].mod += t.mod;
@@ -293,5 +293,27 @@ export function computeGlobalModifiers(character: Character): Mod {
         spd: 0
       },
       talents: [] as { name: TalentType, mod: number }[]
-    })
+    });
+    if (character.ability.value === 'Force of wind' && mod.stats) {
+      mod.stats = { ...mod.stats, spd: mod.stats.spd * 3 };
+    }
+    return character.iqSkills
+      .reduce((acc, x) => {
+        if (x.effect) {
+          const modTemp = x.effect(character);
+          if (modTemp.talents) {
+            modTemp.talents.forEach(t => {
+              if (acc.talents) {
+                const ind = acc.talents.findIndex(e => e.name === t.name);
+                if (ind >= 0) {
+                  acc.talents[ind].mod += t.mod;
+                } else {
+                  acc.talents.push(t);
+                }
+              }
+            })
+          }
+        }
+        return acc;
+      }, mod);
 }

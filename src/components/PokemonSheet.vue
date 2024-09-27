@@ -183,6 +183,40 @@
           </v-row>
         </v-col>
       </v-row>
+      <v-row v-if="character.iqSkills.length" class="mt-8">
+        <v-col>
+          <v-sheet
+            rounded="lg"
+            class="bg-grey-darken-3 pa-2"
+          >
+            <v-row>
+              <v-col class="text-subtitle-1 text-center ma-0 mb-n3">
+                Compétences de QI
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col
+                v-for="(_, index) in character.iqSkills"
+                :key="index"
+                cols="4"
+              >
+                <v-tooltip location="top" :text="character.iqSkills[index].desc">
+                  <template #activator="{ props }">
+                    <v-select
+                      v-model="character.iqSkills[index]"
+                      hide-details
+                      item-value="value"
+                      item-title="title"
+                      :items="iqSkillArray.filter(s => s.level <= (index + 1) * 5)"
+                      v-bind="props"
+                    />
+                  </template>
+                </v-tooltip>
+              </v-col>
+            </v-row>
+          </v-sheet>
+        </v-col>
+      </v-row>
       <v-row class="mt-8">
         <v-col cols="7">
           <v-textarea
@@ -221,7 +255,8 @@
 </template>
 
 <script setup lang="ts">
-import { createCharacter } from '@/types/pokemon';
+import { iqSkillArray } from '@/types/iqSkills';
+import { computeHPT, createCharacter } from '@/types/pokemon';
 import { StatName, statsArray, type Character } from '@/types/pokemon';
 import { computeGlobalModifiers } from '@/types/specificities';
 import { specificityArray, type Mod } from '@/types/specificities';
@@ -236,7 +271,7 @@ const character: ModelRef<Character> = defineModel<Character>({required: true});
 const regenerateLoading: Ref<boolean> = ref<boolean>(false);
 
 const characterMods: ComputedRef<Mod> = computed<Mod>(() => computeGlobalModifiers(character.value));
-const maxHP: ComputedRef<number> = computed<number>(() => Math.max(1, character.value.stats.hp * (character.value.ability.value === 'Tank' ? 5 : 3)))
+const maxHP: ComputedRef<number> = computed<number>(() => computeHPT(character.value))
 
 const maxStat: ComputedRef<number> = computed<number>(() => {
   return Object.entries(character.value.stats).reduce((acc, x) => {

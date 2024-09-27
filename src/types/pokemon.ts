@@ -3,6 +3,7 @@ import { talentArray, TalentType } from "./talents";
 import { getPokemonSpecificities, SpecificityType } from "./specificities";
 import { Type } from "./types";
 import { Ability, getAbility } from "./abilities";
+import { IQSkill } from "./iqSkills";
 
 export interface Pokemon {
   id: number,
@@ -68,7 +69,8 @@ export interface Character {
     head: string,
     neck: string,
     belt: string
-  }
+  },
+  iqSkills: IQSkill[]
 }
 
 export async function createCharacter(pokemon: Pokemon, level: number): Promise<Character> {
@@ -108,7 +110,8 @@ export async function createCharacter(pokemon: Pokemon, level: number): Promise<
       head: '',
       neck: '',
       belt: ''
-    }
+    },
+    iqSkills: []
   };
 
   character.talents[Math.floor(Math.random() * character.talents.length)].mod = 2;
@@ -123,7 +126,7 @@ export async function createCharacter(pokemon: Pokemon, level: number): Promise<
   character.ability = getAbility(character);
 
   for (let i = 1; i <= level; i++) {
-    levelUp(character, level);
+    levelUp(character, i);
   }
   return character;
 }
@@ -151,8 +154,9 @@ function levelUp(character: Character, level: number) {
       enchanceStatsOnce(character);
       enchanceStatsOnce(character);
     }
+    character.iqSkills.push({ value: 'Not learned', title: 'Pas encore appris', desc: 'Pas encore appris', level: 1 });
   }
-  character.hpt = Math.max(1, character.stats.hp * (character.ability.value === 'Tank' ? 5 : 3));
+  character.hpt = computeHPT(character);
 }
 
 function enchanceStatsOnce(character: Character) {
@@ -166,4 +170,19 @@ function enchanceStatsOnce(character: Character) {
     stat = Object.keys(character.stats)[cdf.findIndex(e => rd <= e)] as StatName;
     character.stats[stat]++;
   }
+}
+
+export function computeHPT(character: Character) {
+  if (character.ability.value === 'Tank' || character.iqSkills.some(e => e.value === 'Brick house') || character.iqSkills.some(e => e.value === 'Advanced brick house')) {
+    if (character.ability.value === 'Tank' && character.iqSkills.some(e => e.value === 'Brick house')
+        || character.ability.value === 'Tank' || character.iqSkills.some(e => e.value === 'Advanced brick house')
+        || character.iqSkills.some(e => e.value === 'Brick house') && character.iqSkills.some(e => e.value === 'Advanced brick house')) {
+      if (character.ability.value === 'Tank' || character.iqSkills.some(e => e.value === 'Brick house') || character.iqSkills.some(e => e.value === 'Advanced brick house')) {
+        return Math.max(1, character.stats.hp * 9);
+      }
+      return Math.max(1, character.stats.hp * 7);
+    }
+    return Math.max(1, character.stats.hp * 5);
+  }
+  return Math.max(1, character.stats.hp * 3);
 }
