@@ -391,11 +391,10 @@ function saveCharacter() {
 }
 
 async function resetCharacter() {
-  character.value = await createCharacter(character.value.pokemon, 0);
+  character.value = await createCharacter(character.value.pokemon, 0, character.value.uuid);
 }
 
 function updateLevel() {
-  console.log(character.value.level / 5, character.value.iqSkills.length)
   while (character.value.level / 5 > character.value.iqSkills.length) {
     character.value.iqSkills.push({ value: 'Not learned', title: 'Pas encore appris', desc: 'Pas encore appris', level: 1 });
   }

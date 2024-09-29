@@ -10,6 +10,7 @@
               v-model="character"
               :items="characters"
               return-object
+              item-value="uuid"
               item-title="name"
               hide-details
               no-data-text="Aucun Pokémon enregistré"
@@ -52,11 +53,14 @@ export default defineComponent({
   methods: {
     async newCharacter() {
       const pokemonDetails = await encounterService.getRandomPokemon();
-      this.character = await createCharacter(pokemonDetails, 5);
+      this.character = await createCharacter(pokemonDetails, 0);
     },
     reloadCharacters() {
       this.characters = Object.values(JSON.parse(localStorage.getItem('saved-characters') ?? '{}'));
     }
   },
+  mounted() {
+    this.reloadCharacters();
+  }
 });
 </script>

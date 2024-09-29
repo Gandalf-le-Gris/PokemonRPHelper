@@ -267,8 +267,8 @@ const waterAbilities: TypeAbilities = {
 
 const grassAbilities: TypeAbilities = {
   A: {
-    value: 'Torrent',
-    title: 'Torrent',
+    value: 'Engrais',
+    title: 'Engrais',
     desc: 'Tant que ce Pokémon a 1/4 de ses PV ou moins, les dégâts de ses attaques de type plante sont doublés'
   },
   B: {
@@ -664,7 +664,12 @@ const specialAbilities: Record<string, Ability> = {
     title: "V comme victoire",
     desc: "Ce Pokémon peut lancer les dés 3 fois lorsqu'il attaque et choisir le résultat qu'il veut garder, et gagne toujours aux jeux de chance"
   },
-  darmanitan: {
+  'darmanitan-standard': {
+    value: "Zen mode",
+    title: "Mode transe",
+    desc: "Lorsque ce Pokémon chute en-deça de la moitié de ses PV ou repasse au-dessus, il change de forme et de type"
+  },
+  'darmanitan-standard-galar': {
     value: "Zen mode",
     title: "Mode transe",
     desc: "Lorsque ce Pokémon chute en-deça de la moitié de ses PV ou repasse au-dessus, il change de forme et de type"
@@ -675,6 +680,16 @@ const specialAbilities: Record<string, Ability> = {
     desc: "Ce Pokémon peut utiliser une illusion pour prendre l'apparence de n'importe quel Pokémon qu'il a déjà vu. L'illusion disparaît lorsque ce Pokémon subit des dégâts"
   },
   zoroark: {
+    value: "Illusion",
+    title: "Illusion",
+    desc: "Ce Pokémon peut utiliser une illusion pour prendre l'apparence de n'importe quel Pokémon qu'il a déjà vu. L'illusion disparaît lorsque ce Pokémon subit des dégâts"
+  },
+  'zorua-hisui': {
+    value: "Illusion",
+    title: "Illusion",
+    desc: "Ce Pokémon peut utiliser une illusion pour prendre l'apparence de n'importe quel Pokémon qu'il a déjà vu. L'illusion disparaît lorsque ce Pokémon subit des dégâts"
+  },
+  'zoroark-hisui': {
     value: "Illusion",
     title: "Illusion",
     desc: "Ce Pokémon peut utiliser une illusion pour prendre l'apparence de n'importe quel Pokémon qu'il a déjà vu. L'illusion disparaît lorsque ce Pokémon subit des dégâts"
@@ -834,7 +849,12 @@ const specialAbilities: Record<string, Ability> = {
     title: "Poing invisible",
     desc: "Ce Pokémon assène un coup critique sur 11 et 12, et peut alors réattaquer"
   },
-  urshifu: {
+  'urshifu-single-strike': {
+    value: "Lightning fists",
+    title: "Poing invisible",
+    desc: "Ce Pokémon assène un coup critique sur 11 et 12, et peut alors réattaquer"
+  },
+  'urshifu-rapid-strike': {
     value: "Lightning fists",
     title: "Poing invisible",
     desc: "Ce Pokémon assène un coup critique sur 11 et 12, et peut alors réattaquer"
@@ -978,7 +998,6 @@ const specialAbilities: Record<string, Ability> = {
 
 export function getAbility(character: Character): Ability {
   const variety = character.pokemon.varieties[character.variety].pokemon.name;
-  console.log(variety)
   const key = (['A', 'B', 'C', 'D'] as ('A' | 'B' | 'C' | 'D')[]).find(e => abilities[e].some(s => splitMatch(variety, s.toLowerCase())));
   return key ? abilityRecord[character.pokemon.types[0]][key] : getSpecialAbility(character);
 }

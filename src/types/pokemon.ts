@@ -75,7 +75,7 @@ export interface Character {
   iqSkills: IQSkill[]
 }
 
-export async function createCharacter(pokemon: Pokemon, level: number): Promise<Character> {
+export async function createCharacter(pokemon: Pokemon, level: number, uuid?: string): Promise<Character> {
   const detail = await encounterService.getPokemonDetail(pokemon.id);
   pokemon.types = Object.values(detail.types).map((e: any) => e.type.name)
   pokemon.baseStats = {
@@ -88,7 +88,7 @@ export async function createCharacter(pokemon: Pokemon, level: number): Promise<
   };
 
   const character: Character = {
-    uuid: crypto.randomUUID(),
+    uuid: uuid ?? crypto.randomUUID(),
     name: pokemon.names.find((e: any) => e.language.name === 'fr').name ?? pokemon.name,
     species: pokemon.name,
     pokemon,
