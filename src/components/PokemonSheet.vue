@@ -3,84 +3,41 @@
     <v-card-title class="mb-8">
       <v-row align="center">
         <v-col>
-          <v-text-field
-            v-model="character.name"
-            label="Nom"
-            hide-details
-          />
-        </v-col>
-        <v-col cols="5">
-          <v-row>
-            <v-col>
-              <v-autocomplete
-                @update:modelValue="character.variety = 0; updateSpecies()"
-                v-model="character.species"
-                :items="searchArray"
-                item-value="value"
-                item-title="title"
-                label="Espèce"
+          <v-row align="center">
+            <v-col cols="5">
+              <v-text-field
+                v-model="character.name"
+                label="Nom"
                 hide-details
               />
             </v-col>
-            <v-col cols="5" v-if="varieties.length > 1">
-              <v-select
-                @update:modelValue="updateSpecies"
-                v-model="character.variety"
-                :items="varieties"
-                item-value="value"
-                item-title="title"
-                label="Variante"
-                hide-details
-              />
+            <v-col cols="7">
+              <v-row>
+                <v-col>
+                  <v-autocomplete
+                    @update:modelValue="character.variety = 0; updateSpecies()"
+                    v-model="character.species"
+                    :items="searchArray"
+                    item-value="value"
+                    item-title="title"
+                    label="Espèce"
+                    hide-details
+                    no-data-text="Aucun Pokémon trouvé"
+                  />
+                </v-col>
+                <v-col cols="6" v-if="varieties.length > 1">
+                  <v-select
+                    @update:modelValue="updateSpecies"
+                    v-model="character.variety"
+                    :items="varieties"
+                    item-value="value"
+                    item-title="title"
+                    label="Variante"
+                    hide-details
+                  />
+                </v-col>
+              </v-row>
             </v-col>
-          </v-row>
-        </v-col>
-        <v-col cols="auto">
-          <v-text-field
-            v-model="character.level"
-            @update:model-value="updateLevel"
-            type="number"
-            label="Niveau"
-            max-width="100"
-            hide-details
-          />
-        </v-col>
-        <v-col cols="auto" class="d-flex flex-column">
-          <v-img :src="type1" width="80"/>
-          <v-img v-if="type2" :src="type2" width="80" class="mt-2"/>
-        </v-col>
-        <v-col cols="auto" v-if="!isPlayerSheet">
-          <v-btn
-            @click="regenerateCharacter"
-            icon="mdi-refresh"
-            density="compact"
-            variant="plain"
-            size="x-large"
-            :loading="regenerateLoading"
-          />
-        </v-col>
-        <v-col cols="auto" v-else>
-          <v-btn
-            @click="resetCharacter"
-            icon="mdi-refresh"
-            density="compact"
-            variant="plain"
-            size="x-large"
-          />
-          <v-btn
-            @click="saveCharacter"
-            icon="mdi-content-save"
-            density="compact"
-            variant="plain"
-            size="x-large"
-          />
-        </v-col>
-      </v-row>
-    </v-card-title>
-    <v-card-text>
-      <v-row align="center">
-        <v-col cols="6">
-          <v-row align="center" class="mb-4">
             <v-col>
               <v-sheet
                 rounded="lg"
@@ -96,12 +53,70 @@
                 </v-tooltip>
               </v-sheet>
             </v-col>
-            <v-col cols="auto">
+            <v-col cols="auto" class="d-flex flex-column">
+              <v-img :src="type1" width="80"/>
+              <v-img v-if="type2" :src="type2" width="80" class="mt-2"/>
+            </v-col>
+            <v-col cols="auto" v-if="!isPlayerSheet">
+              <v-btn
+                @click="regenerateCharacter"
+                icon="mdi-refresh"
+                density="compact"
+                variant="plain"
+                size="x-large"
+                :loading="regenerateLoading"
+              />
+            </v-col>
+            <v-col cols="auto" v-else>
+              <v-btn
+                @click="resetCharacter"
+                icon="mdi-refresh"
+                density="compact"
+                variant="plain"
+                size="x-large"
+              />
+              <v-btn
+                @click="saveCharacter"
+                icon="mdi-content-save"
+                density="compact"
+                variant="plain"
+                size="x-large"
+              />
+            </v-col>
+          </v-row>
+        </v-col>
+        <v-col cols="auto">
+          <v-sheet
+            border="md grey-darken-3"
+            rounded="xl"
+          >
+            <v-img :src="character.pokemon.sprites.front_default" width="128"/>
+          </v-sheet>
+        </v-col>
+      </v-row>
+    </v-card-title>
+    <v-card-text>
+      <v-row align="center">
+        <v-col cols="6">
+          <v-row align="center" class="mb-4">
+            <v-col>
+              <v-text-field
+                v-model="character.level"
+                @update:model-value="updateLevel"
+                type="number"
+                label="Niveau"
+                hide-details
+                density="compact"
+                variant="outlined"
+                min="0"
+                class="font-weight-bold"
+              />
+            </v-col>
+            <v-col>
               <v-text-field
                 v-model="character.hpt"
                 label="PV"
                 type="number"
-                width="120"
                 hide-details
                 density="compact"
                 variant="outlined"

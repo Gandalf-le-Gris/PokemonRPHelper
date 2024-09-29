@@ -545,7 +545,7 @@
     "Pidgey",
     "Pidgeotto",
     "Pidgeot",
-    "Farfetch'd",
+    "Farfetchd",
     "Doduo",
     "Dodrio",
     "Taillow",
@@ -791,12 +791,12 @@
     "Swablu",
     "Oranguru",
     "Drampa",
-    "Farfetch'd (Galar)",
+    "Farfetchd (Galar)",
     "Sneasel (Hisui)",
     "Riolu",
     "Mienfoo",
     "Mienshao",
-    "Sirfetch'd",
+    "Sirfetchd",
     "Meditite",
     "Medicham",
     "Lucario",
@@ -960,7 +960,8 @@
     "Floette",
     "Florges",
     "Kleavor",
-    "Sneasler"
+    "Sneasler",
+    "Tapu Koko"
   ],
   "E": [
     "Ditto",

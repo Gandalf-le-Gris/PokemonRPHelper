@@ -54,6 +54,7 @@ export default defineComponent({
     async newCharacter() {
       const pokemonDetails = await encounterService.getRandomPokemon();
       this.character = await createCharacter(pokemonDetails, 0);
+      console.log(this.character)
     },
     reloadCharacters() {
       this.characters = Object.values(JSON.parse(localStorage.getItem('saved-characters') ?? '{}'));

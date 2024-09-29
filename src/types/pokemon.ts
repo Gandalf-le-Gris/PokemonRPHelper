@@ -11,7 +11,10 @@ export interface Pokemon {
   names: any[],
   baseStats: Stats,
   types: Type[],
-  varieties: any[]
+  varieties: any[],
+  sprites: {
+    front_default: string,
+  },
 }
 
 export type StatName = 'hp' | 'atk' | 'def' | 'spatk' | 'spdef' | 'spd';
@@ -86,6 +89,7 @@ export async function createCharacter(pokemon: Pokemon, level: number, uuid?: st
     spdef: detail.stats[4].base_stat,
     spd: detail.stats[5].base_stat,
   };
+  pokemon.sprites = { front_default: detail.sprites.front_default };
 
   const character: Character = {
     uuid: uuid ?? crypto.randomUUID(),
@@ -140,6 +144,7 @@ export async function changeSpecies(character: Character) {
   const pokemon = await encounterService.getPokemonSpecies(character.species);
   const detail = await encounterService.getPokemonDetailByVariety(pokemon.varieties[character.variety].pokemon.url);
   pokemon.types = Object.values(detail.types).map((e: any) => e.type.name);
+  pokemon.sprites = { front_default: detail.sprites.front_default };
   character.pokemon = pokemon;
   character.specificities = getPokemonSpecificities(character);
   character.ability = getAbility(character);
