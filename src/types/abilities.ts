@@ -1,7 +1,7 @@
 import abilities from '@/assets/abilities.json';
 import { Character } from "./pokemon";
 import { Type } from "./types";
-import { splitMatch } from '@/utils/stringUtils';
+import { splitMatchPokemonName } from '@/utils/stringUtils';
 
 export interface Ability {
   value: string,
@@ -479,7 +479,7 @@ const specialAbilities: Record<string, Ability> = {
     title: "Blizzard légendaire",
     desc: "Ce Pokémon peut déclencher à volonté un blizzard dans un rayon de 1km autour de lui"
   },
-  'articuno (galar form)': {
+  'articuno (galar)': {
     value: "Psychic freeze",
     title: "Gel psychique",
     desc: "Lorsque ce Pokémon réussit une attaque, le Pokémon touché est paralysé par la peur"
@@ -489,7 +489,7 @@ const specialAbilities: Record<string, Ability> = {
     title: "Orage légendaire",
     desc: "Ce Pokémon peut déclencher à volonté un orage dans un rayon de 1km autour de lui"
   },
-  'zapdos (galar form)': {
+  'zapdos (galar)': {
     value: "Overdrive kick",
     title: "Coup de pied surchargé",
     desc: "Lorsque ce Pokémon réussit une attaque, le Pokémon touché est paralysé par la peur"
@@ -499,7 +499,7 @@ const specialAbilities: Record<string, Ability> = {
     title: "Canicule légendaire",
     desc: "Ce Pokémon peut déclencher à volonté une canicule dans un rayon de 1km autour de lui"
   },
-  'moltres (galar form)': {
+  'moltres (galar)': {
     value: "Draining flame",
     title: "Flamme épuisante",
     desc: "Lorsque ce Pokémon réussit une attaque, le Pokémon touché est paralysé par la peur"
@@ -559,6 +559,21 @@ const specialAbilities: Record<string, Ability> = {
     title: "Météo",
     desc: "Le type de ce Pokémon dépend de la météo actuelle"
   },
+  'castform-sunny': {
+    value: "Weather change",
+    title: "Météo",
+    desc: "Le type de ce Pokémon dépend de la météo actuelle"
+  },
+  'castform-rainy': {
+    value: "Weather change",
+    title: "Météo",
+    desc: "Le type de ce Pokémon dépend de la météo actuelle"
+  },
+  'castform-snowy': {
+    value: "Weather change",
+    title: "Météo",
+    desc: "Le type de ce Pokémon dépend de la météo actuelle"
+  },
   kecleon: {
     value: "Color change",
     title: "Homochromie",
@@ -584,7 +599,22 @@ const specialAbilities: Record<string, Ability> = {
     title: "Vœu",
     desc: "Ce Pokémon peut exaucer les souhaits des autres. Un Pokémon qui attaque ce Pokémon ne peut pas utiliser la même attaque deux tours de suite"
   },
-  deoxys: {
+  'deoxys-normal': {
+    value: "Form change",
+    title: "Forme extraterrestre",
+    desc: "Ce Pokémon peut changer de forme à volonté, ce qui modifie ses statistiques"
+  },
+  'deoxys-speed': {
+    value: "Form change",
+    title: "Forme extraterrestre",
+    desc: "Ce Pokémon peut changer de forme à volonté, ce qui modifie ses statistiques"
+  },
+  'deoxys-attack': {
+    value: "Form change",
+    title: "Forme extraterrestre",
+    desc: "Ce Pokémon peut changer de forme à volonté, ce qui modifie ses statistiques"
+  },
+  'deoxys-defense': {
     value: "Form change",
     title: "Forme extraterrestre",
     desc: "Ce Pokémon peut changer de forme à volonté, ce qui modifie ses statistiques"
@@ -594,12 +624,47 @@ const specialAbilities: Record<string, Ability> = {
     title: "Camouflage",
     desc: "Le type de ce Pokémon dépend de son environnement"
   },
-  wormadam: {
+  'wormadam-plant': {
+    value: "Camouflage",
+    title: "Camouflage",
+    desc: "Le type de ce Pokémon dépend de son environnement"
+  },
+  'wormadam-sandy': {
+    value: "Camouflage",
+    title: "Camouflage",
+    desc: "Le type de ce Pokémon dépend de son environnement"
+  },
+  'wormadam-trash': {
     value: "Camouflage",
     title: "Camouflage",
     desc: "Le type de ce Pokémon dépend de son environnement"
   },
   rotom: {
+    value: "Poltergeist",
+    title: "Esprit frappeur",
+    desc: "Ce Pokémon peut changer de type en imaginant un appareil électrique et en réussissant un jet de concentration. Son type secondaire dépend de l'appareil électrique choisi"
+  },
+  'rotom-heat': {
+    value: "Poltergeist",
+    title: "Esprit frappeur",
+    desc: "Ce Pokémon peut changer de type en imaginant un appareil électrique et en réussissant un jet de concentration. Son type secondaire dépend de l'appareil électrique choisi"
+  },
+  'rotom-frost': {
+    value: "Poltergeist",
+    title: "Esprit frappeur",
+    desc: "Ce Pokémon peut changer de type en imaginant un appareil électrique et en réussissant un jet de concentration. Son type secondaire dépend de l'appareil électrique choisi"
+  },
+  'rotom-wash': {
+    value: "Poltergeist",
+    title: "Esprit frappeur",
+    desc: "Ce Pokémon peut changer de type en imaginant un appareil électrique et en réussissant un jet de concentration. Son type secondaire dépend de l'appareil électrique choisi"
+  },
+  'rotom-mow': {
+    value: "Poltergeist",
+    title: "Esprit frappeur",
+    desc: "Ce Pokémon peut changer de type en imaginant un appareil électrique et en réussissant un jet de concentration. Son type secondaire dépend de l'appareil électrique choisi"
+  },
+  'rotom-fan': {
     value: "Poltergeist",
     title: "Esprit frappeur",
     desc: "Ce Pokémon peut changer de type en imaginant un appareil électrique et en réussissant un jet de concentration. Son type secondaire dépend de l'appareil électrique choisi"
@@ -624,12 +689,27 @@ const specialAbilities: Record<string, Ability> = {
     title: "Maître du temps",
     desc: "Ce Pokémon peut stopper le cours du temps, et créer et manipuler des lignes temporelles alternatives. Un Pokémon qui attaque ce Pokémon ne peut pas utiliser la même attaque deux tours de suite"
   },
+  'dialga-origin': {
+    value: "Time mender",
+    title: "Maître du temps",
+    desc: "Ce Pokémon peut stopper le cours du temps, et créer et manipuler des lignes temporelles alternatives. Un Pokémon qui attaque ce Pokémon ne peut pas utiliser la même attaque deux tours de suite"
+  },
   palkia: {
     value: "Space mender",
     title: "Maître de l'espace",
     desc: "Ce Pokémon peut manipuler l'espace pour téléporter des objets et des Pokémon ou créer des portails entre deux endroits. Un Pokémon qui attaque ce Pokémon ne peut pas utiliser la même attaque deux tours de suite"
   },
-  giratina: {
+  'palkia-origin': {
+    value: "Space mender",
+    title: "Maître de l'espace",
+    desc: "Ce Pokémon peut manipuler l'espace pour téléporter des objets et des Pokémon ou créer des portails entre deux endroits. Un Pokémon qui attaque ce Pokémon ne peut pas utiliser la même attaque deux tours de suite"
+  },
+  'giratina-altered': {
+    value: "The distorted one",
+    title: "Le banni",
+    desc: "Ce Pokémon peut s'approprier les pouvoirs de Dialga et Palkia et distordre l'espace-temps autour de lui. Un Pokémon qui attaque ce Pokémon ne peut pas utiliser la même attaque deux tours de suite"
+  },
+  'giratina-origin': {
     value: "The distorted one",
     title: "Le banni",
     desc: "Ce Pokémon peut s'approprier les pouvoirs de Dialga et Palkia et distordre l'espace-temps autour de lui. Un Pokémon qui attaque ce Pokémon ne peut pas utiliser la même attaque deux tours de suite"
@@ -649,7 +729,12 @@ const specialAbilities: Record<string, Ability> = {
     title: "Joli rêve",
     desc: "Ce Pokémon peut apparaître en rêve aux autres et manipuler leurs rêves. Sur un jet de concentration réussi, il peut endormir un Pokémon et lui infliger 5 dégâts au début du tour de ce Pokémon tant qu'il reste endormi"
   },
-  shaymin: {
+  'shaymin-land': {
+    value: "Land and sky",
+    title: "Ciel et terre",
+    desc: "Ce Pokémon peut changer de forme à volonté, changeant ainsi de type"
+  },
+  'shaymin-sky': {
     value: "Land and sky",
     title: "Ciel et terre",
     desc: "Ce Pokémon peut changer de forme à volonté, changeant ainsi de type"
@@ -709,17 +794,32 @@ const specialAbilities: Record<string, Ability> = {
     title: "Epée de la justice",
     desc: "Lorsqu'ils combattent avec ce Pokémon, Cobaltium, Terrakium et Keldeo voient leur attaque doublée"
   },
-  tornadus: {
+  'tornadus-incarnate': {
     value: "Force of wind",
     title: "Force du vent",
     desc: "Ce Pokémon se déplace si vite qu'il peut lever des bourrasques. Sa vitesse est triplée"
   },
-  thundurus: {
+  'tornadus-therian': {
+    value: "Force of wind",
+    title: "Force du vent",
+    desc: "Ce Pokémon se déplace si vite qu'il peut lever des bourrasques. Sa vitesse est triplée"
+  },
+  'thundurus-incarnate': {
     value: "Force of thunder",
     title: "Force de la foudre",
     desc: "Ce Pokémon peut déclencher des orages. Ses attaques de type électrik infligent 2 fois plus de dégâts"
   },
-  landorus: {
+  'thundurus-therian': {
+    value: "Force of thunder",
+    title: "Force de la foudre",
+    desc: "Ce Pokémon peut déclencher des orages. Ses attaques de type électrik infligent 2 fois plus de dégâts"
+  },
+  'landorus-incarnate': {
+    value: "Force of nature",
+    title: "Force de la nature",
+    desc: "Ce Pokémon peut faire pousser des plantes et rendre les sols fertiles. Il récupère 5 PV au début de son tour"
+  },
+  'landorus-therian': {
     value: "Force of nature",
     title: "Force de la nature",
     desc: "Ce Pokémon peut faire pousser des plantes et rendre les sols fertiles. Il récupère 5 PV au début de son tour"
@@ -739,12 +839,27 @@ const specialAbilities: Record<string, Ability> = {
     title: "Brise-glace",
     desc: "Lorsque ce Pokémon réussit une attaque de type glace, le Pokémon touché subit 2 fois plus de dégâts des attaques physiques pendant 5h"
   },
-  keldeo: {
+  'kyurem-white': {
+    value: "Shatter",
+    title: "Brise-glace",
+    desc: "Lorsque ce Pokémon réussit une attaque de type glace, le Pokémon touché subit 2 fois plus de dégâts des attaques physiques pendant 5h"
+  },
+  'kyurem-black': {
+    value: "Shatter",
+    title: "Brise-glace",
+    desc: "Lorsque ce Pokémon réussit une attaque de type glace, le Pokémon touché subit 2 fois plus de dégâts des attaques physiques pendant 5h"
+  },
+  'keldeo-ordinary': {
     value: "Sword of determination",
     title: "Epée de la détermination",
     desc: "Ce Pokémon a l'avantage sur tous ses jets"
   },
-  meloetta: {
+  'meloetta-aria': {
+    value: "Genre form",
+    title: "Artiste",
+    desc: "Ce Pokémon peut changer de forme et de type en chantant"
+  },
+  'meloetta-pirouette': {
     value: "Genre form",
     title: "Artiste",
     desc: "Ce Pokémon peut changer de forme et de type en chantant"
@@ -754,7 +869,12 @@ const specialAbilities: Record<string, Ability> = {
     title: "Techno buster",
     desc: "Ce Pokémon peut utiliser une cinquième attaque dont le type dépend du module tenu"
   },
-  aegislash: {
+  'aegislash-shield': {
+    value: "Stance change",
+    title: "Déclic tactique",
+    desc: "Ce Pokémon peut changer de forme pendant son tour, ce qui modifie ses statistiques"
+  },
+  'aegislash-blade': {
     value: "Stance change",
     title: "Déclic tactique",
     desc: "Ce Pokémon peut changer de forme pendant son tour, ce qui modifie ses statistiques"
@@ -769,7 +889,17 @@ const specialAbilities: Record<string, Ability> = {
     title: "Porteur de mort",
     desc: "Ce Pokémon peut drainer la vie des autres, et se soigner de la moitié des dégâts qu'il inflige. Les attaques de type ténèbres des autres Pokémon infligent 50% de dégâts supplémentaires"
   },
-  zygarde: {
+  'zygarde-10': {
+    value: "Orderbringer",
+    title: "Porteur de paix",
+    desc: "Ce Pokémon nullifie les talents de Xerneas et Yvletal, et leur inflige 2 fois plus de dégâts"
+  },
+  'zygarde-50': {
+    value: "Orderbringer",
+    title: "Porteur de paix",
+    desc: "Ce Pokémon nullifie les talents de Xerneas et Yvletal, et leur inflige 2 fois plus de dégâts"
+  },
+  'zygarde-complete': {
     value: "Orderbringer",
     title: "Porteur de paix",
     desc: "Ce Pokémon nullifie les talents de Xerneas et Yvletal, et leur inflige 2 fois plus de dégâts"
@@ -779,12 +909,32 @@ const specialAbilities: Record<string, Ability> = {
     title: "Déchaînement",
     desc: "Ce Pokémon peut se téléporter à volonté. Lorsque sa bouteille est ouverte, il change de forme et de statistiques"
   },
-  oricorio: {
+  'oricorio-baile': {
     value: "Nectar sipper",
     title: "Butineur de nectar",
     desc: "La forme et le type de ce Pokémon dépendent de la flore locale et changent selon le continent"
   },
-  wishiwashi: {
+  'oricorio-pom-pom': {
+    value: "Nectar sipper",
+    title: "Butineur de nectar",
+    desc: "La forme et le type de ce Pokémon dépendent de la flore locale et changent selon le continent"
+  },
+  'oricorio-pau': {
+    value: "Nectar sipper",
+    title: "Butineur de nectar",
+    desc: "La forme et le type de ce Pokémon dépendent de la flore locale et changent selon le continent"
+  },
+  'oricorio-sensu': {
+    value: "Nectar sipper",
+    title: "Butineur de nectar",
+    desc: "La forme et le type de ce Pokémon dépendent de la flore locale et changent selon le continent"
+  },
+  'wishiwashi-solo': {
+    value: "Schooling",
+    title: "Banc",
+    desc: "Tant que ce Pokémon a plus de 1/4 de ses PV, ses statistiques autres que ses PV sont doublées"
+  },
+  'wishiwashi-school': {
     value: "Schooling",
     title: "Banc",
     desc: "Tant que ce Pokémon a plus de 1/4 de ses PV, ses statistiques autres que ses PV sont doublées"
@@ -804,7 +954,7 @@ const specialAbilities: Record<string, Ability> = {
     title: "Métallo-Garde",
     desc: "Tant que ce Pokémon a tous ses PV, les attaquants ont le désavantage"
   },
-  'necrozma (dusk mane)': {
+  'necrozma (dusk)': {
     value: "Sun devourer",
     title: "Métallo-Garde",
     desc: "Tant que ce Pokémon a tous ses PV, les attaquants ont le désavantage"
@@ -814,7 +964,7 @@ const specialAbilities: Record<string, Ability> = {
     title: "Spectro-Bouclier",
     desc: "Tant que ce Pokémon a tous ses PV, les attaques lui infligent 2 fois moins de dégâts"
   },
-  'necrozma (dawn wings)': {
+  'necrozma (dawn)': {
     value: "Sun devourer",
     title: "Spectro-Bouclier",
     desc: "Tant que ce Pokémon a tous ses PV, les attaques lui infligent 2 fois moins de dégâts"
@@ -824,7 +974,7 @@ const specialAbilities: Record<string, Ability> = {
     title: "Rassemblement",
     desc: "Plusieurs individus de cette espèce peuvent se rassembler en un seul Pokémon. Les statistiques du Pokémon ainsi formé sont les plus hautes de chacun de ses membres, et il peut utiliser toutes les compétences de ses membres"
   },
-  eiscue: {
+  'eiscue-ice': {
     value: "Ice face",
     title: "Tête de gel",
     desc: "La première attaque physique chaque combat n'inflige aucun dégât à ce Pokémon"
@@ -834,12 +984,27 @@ const specialAbilities: Record<string, Ability> = {
     title: "Lame Indomptable",
     desc: "Tant que ce Pokémon porte son épée, son attaque est doublée"
   },
+  'zacian-crowned': {
+    value: "Intrepid sword",
+    title: "Lame Indomptable",
+    desc: "Tant que ce Pokémon porte son épée, son attaque est doublée"
+  },
   zamazenta: {
     value: "Dauntless shield",
     title: "Égide Inflexible",
     desc: "Tant que ce Pokémon porte son bouclier, sa défense est doublée"
   },
+  'zamazenta-crowned': {
+    value: "Dauntless shield",
+    title: "Égide Inflexible",
+    desc: "Tant que ce Pokémon porte son bouclier, sa défense est doublée"
+  },
   eternatus: {
+    value: "Max storm",
+    title: "Orage dynamax",
+    desc: "Ce Pokémon peut déclencher à volonté un orage dynamax dans un rayon de 1km autour de lui"
+  },
+  'eternatus-eternamax': {
     value: "Max storm",
     title: "Orage dynamax",
     desc: "Ce Pokémon peut déclencher à volonté un orage dynamax dans un rayon de 1km autour de lui"
@@ -874,7 +1039,7 @@ const specialAbilities: Record<string, Ability> = {
     title: "Blanche Ruade",
     desc: "Lorsque ce Pokémon met KO un ennemi, son attaque augmente de 50% pendant 1h (additif)"
   },
-  'calyrex (ice rider)': {
+  'calyrex-ice': {
     value: "Chilling neigh",
     title: "Blanche Ruade",
     desc: "Lorsque ce Pokémon met KO un ennemi, son attaque augmente de 50% pendant 1h (additif)"
@@ -884,7 +1049,7 @@ const specialAbilities: Record<string, Ability> = {
     title: "Sombre Ruade",
     desc: "Lorsque ce Pokémon met KO un ennemi, son attaque spéciale augmente de 50% pendant 1h (additif)"
   },
-  'calyrex (shadow rider)': {
+  'calyrex-shadow': {
     value: "Grim neigh",
     title: "Sombre Ruade",
     desc: "Lorsque ce Pokémon met KO un ennemi, son attaque spéciale augmente de 50% pendant 1h (additif)"
@@ -894,17 +1059,27 @@ const specialAbilities: Record<string, Ability> = {
     title: "Œil Révélateur",
     desc: "Les attaques de ce Pokémon ne peuvent pas rater, et ses attaques de type normal peuvent toucher les Pokémon de type spectre"
   },
-  enamorus: {
+  'enamorus-incarnate': {
     value: "Force of emotion",
     title: "Force de l'émotion",
     desc: "Tous les ennemis de ce Pokémon tombent amoureux de lui au début du combat"
   },
-  palafin: {
+  'enamorus-therian': {
+    value: "Force of emotion",
+    title: "Force de l'émotion",
+    desc: "Tous les ennemis de ce Pokémon tombent amoureux de lui au début du combat"
+  },
+  'palafin-zero': {
     value: "Zero to hero",
     title: "Supermutation",
     desc: "Les attaques de ce Pokémon sont toutes peu efficaces. S'il passe un tour en dehors du combat, lorsqu'il revient, à la place toutes ses attaques super efficaces infligent des dégâts doublés jusqu'à la fin du combat"
   },
-  tatsugiri: {
+  'palafin-hero': {
+    value: "Hero to zero",
+    title: "Supermutation",
+    desc: "Les attaques de ce Pokémon sont toutes peu efficaces. S'il passe un tour en dehors du combat, lorsqu'il revient, à la place toutes ses attaques super efficaces infligent des dégâts doublés jusqu'à la fin du combat"
+  },
+  'tatsugiri-curly': {
     value: "Commander",
     title: "Commandant",
     desc: "Si ce Pokémon combat avec un Oyacata, il peut se cacher dans sa bouche. Il ne peut plus agir, mais toutes les statistiques du Oyacata à l'exception de ses PV sont doublées"
@@ -984,7 +1159,32 @@ const specialAbilities: Record<string, Ability> = {
     title: "Masque",
     desc: "Le type de ce Pokémon et l'effet secondaire de ce talent dépendent du masque tenu"
   },
+  'ogerpon-wellspring-mask': {
+    value: "Masking",
+    title: "Masque",
+    desc: "Le type de ce Pokémon et l'effet secondaire de ce talent dépendent du masque tenu"
+  },
+  'ogerpon-hearthflame-mask': {
+    value: "Masking",
+    title: "Masque",
+    desc: "Le type de ce Pokémon et l'effet secondaire de ce talent dépendent du masque tenu"
+  },
+  'ogerpon-cornerstone-mask': {
+    value: "Masking",
+    title: "Masque",
+    desc: "Le type de ce Pokémon et l'effet secondaire de ce talent dépendent du masque tenu"
+  },
   terapagos: {
+    value: "Tera shell",
+    title: "Téra-carapace",
+    desc: "Au début du combat, ce Pokémon passe en forme Téracristal. Sous cette forme, il peut nullifier la météo et toute tentative de téracristallisation des autres Pokémon. Tant que ce Pokémon a tous ses PV, les attaques qui le ciblent sont peu efficaces"
+  },
+  'terapagos-terastal': {
+    value: "Tera shell",
+    title: "Téra-carapace",
+    desc: "Au début du combat, ce Pokémon passe en forme Téracristal. Sous cette forme, il peut nullifier la météo et toute tentative de téracristallisation des autres Pokémon. Tant que ce Pokémon a tous ses PV, les attaques qui le ciblent sont peu efficaces"
+  },
+  'terapagos-stellar': {
     value: "Tera shell",
     title: "Téra-carapace",
     desc: "Au début du combat, ce Pokémon passe en forme Téracristal. Sous cette forme, il peut nullifier la météo et toute tentative de téracristallisation des autres Pokémon. Tant que ce Pokémon a tous ses PV, les attaques qui le ciblent sont peu efficaces"
@@ -998,11 +1198,11 @@ const specialAbilities: Record<string, Ability> = {
 
 export function getAbility(character: Character): Ability {
   const variety = character.pokemon.varieties[character.variety].pokemon.name;
-  const key = (['A', 'B', 'C', 'D'] as ('A' | 'B' | 'C' | 'D')[]).find(e => abilities[e].some(s => splitMatch(variety, s.toLowerCase())));
+  const key = (['A', 'B', 'C', 'D'] as ('A' | 'B' | 'C' | 'D')[]).find(e => abilities[e].some(s => splitMatchPokemonName(variety, s.toLowerCase())));
   return key ? abilityRecord[character.pokemon.types[0]][key] : getSpecialAbility(character);
 }
 
 function getSpecialAbility(character: Character): Ability {
   const variety = character.pokemon.varieties[character.variety].pokemon.name;
-  return Object.entries(specialAbilities).find(s => splitMatch(variety, s[0].toLowerCase()))?.[1] ?? { value: 'Not found', title: 'Non trouvé', desc: 'Non trouvé' }
+  return Object.entries(specialAbilities).find(s => splitMatchPokemonName(variety, s[0].toLowerCase()))?.[1] ?? { value: 'Not found', title: 'Non trouvé', desc: 'Non trouvé' }
 }

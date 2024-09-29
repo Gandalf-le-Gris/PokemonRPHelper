@@ -314,12 +314,46 @@
           />
         </v-col>
       </v-row>
+      <v-row v-if="isPlayerSheet" align="center" class="mt-6">
+        <v-col>
+          <v-sheet
+            rounded="lg"
+            class="bg-grey-darken-3 pa-2"
+          >
+            <v-row>
+              <v-col class="text-subtitle-1 text-center ma-0 mb-n3">
+                Expérience
+              </v-col>
+            </v-row>
+            <v-row align="center" dense class="mt-4 mx-2">
+              <v-col v-for="key in Object.keys(experienceLabels)" :key cols="3">
+                <v-checkbox
+                  v-model="character.experience[key as 'ko']"
+                  :label="experienceLabels[key as 'ko']"
+                  hide-details
+                  density="compact"
+                />
+              </v-col>
+              <v-col cols="3">
+                <v-btn
+                  @click="levelUp"
+                  :disabled="Object.values(character.experience).filter(e => e).length < 4"
+                  text="Gain de niveau"
+                  prepend-icon="mdi-creation"
+                  rounded="lg"
+                />
+              </v-col>
+            </v-row>
+          </v-sheet>
+        </v-col>
+      </v-row>
     </v-card-text>
   </v-card>
 </template>
 
 <script setup lang="ts">
 import { encounterService } from '@/services/instances/encounterService.instance';
+import { experienceLabels } from '@/types/experience';
 import { iqSkillArray } from '@/types/iqSkills';
 import { changeSpecies, computeHPT, createCharacter } from '@/types/pokemon';
 import { StatName, statsArray, type Character } from '@/types/pokemon';
@@ -327,6 +361,7 @@ import { searchArray } from '@/types/search';
 import { computeGlobalModifiers } from '@/types/specificities';
 import { specificityArray, type Mod } from '@/types/specificities';
 import { talentArray } from '@/types/talents';
+import { getVarieties } from '@/utils/varieties';
 import { ModelRef } from 'vue';
 
 defineProps({
@@ -354,25 +389,7 @@ const maxStat: ComputedRef<number> = computed<number>(() => {
 });
 
 const varieties: ComputedRef<{ value: number, title: string }[]> = computed(() =>
-  character.value.pokemon.varieties
-    .map((e, i) => ({
-      value: i,
-      title: e.pokemon.name.includes('hisui') ? 'Hisui'
-              : e.pokemon.name.includes('paldea') ? 'Paldea'
-              : e.pokemon.name.includes('alola') ? 'Alola'
-              : e.pokemon.name.includes('galar') ? 'Galar'
-              : 'Normal',
-      pokemon: e.pokemon
-    }))
-    .filter(e =>
-      !e.pokemon.name.includes('totem')
-      && !e.pokemon.name.includes('zen')
-      && (e.pokemon.name === character.value.pokemon.name
-      || e.pokemon.name.includes('standard')
-      || e.pokemon.name.includes('hisui')
-      || e.pokemon.name.includes('paldea')
-      || e.pokemon.name.includes('alola')
-      || e.pokemon.name.includes('galar')))
+  getVarieties(character.value)
 );
 
 async function regenerateCharacter() {
@@ -417,5 +434,19 @@ function updateLevel() {
   while (character.value.level / 5 < character.value.iqSkills.length) {
     character.value.iqSkills.pop();
   }
+}
+
+function levelUp() {
+  character.value.experience = {
+    dungeonClear: false,
+    exploration: false,
+    fail: false,
+    success: false,
+    friend: false,
+    ko: false,
+    help: false,
+  }
+  character.value.level++;
+  updateLevel();
 }
 </script>

@@ -1,7 +1,7 @@
 import specificities from '@/assets/specificities.json';
 import { Character, Stats } from './pokemon';
 import { TalentType } from './talents';
-import { splitMatch } from '@/utils/stringUtils';
+import { splitMatchPokemonName } from '@/utils/stringUtils';
 
 export type SpecificityType = 
     'twoLegs'
@@ -102,7 +102,7 @@ export const specificityArray = [
   },
   {
     value: 'manyLegs',
-    title: 'Plus de 2 jambes',
+    title: 'Plus de 2 pattes',
     desc: 'Se tient à 4 pattes ou plus (+1 en équilibre et endurance)',
     effect: () => ({
       talents: [{
@@ -225,8 +225,8 @@ export const specificityArray = [
   },
   {
     value: 'twoLegs',
-    title: '2 jambes',
-    desc: 'Se déplace sur deux jambes (+1 en escalade et en dextérité)',
+    title: '2 pattes',
+    desc: 'Se déplace sur deux pattes (+1 en escalade et en dextérité)',
     effect: () => ({
       talents: [{
         name: 'Climb',
@@ -254,7 +254,7 @@ export function getPokemonSpecificities(character: Character): SpecificityType[]
   const variety = character.pokemon.varieties[character.variety].pokemon.name;
   return specificityArray
     .map(e => e.value)
-    .filter(e => specificities[e].some(s => splitMatch(variety, s.toLowerCase())));
+    .filter(e => specificities[e].some(s => splitMatchPokemonName(variety, s.toLowerCase())));
 }
 
 export function computeGlobalModifiers(character: Character): Mod {

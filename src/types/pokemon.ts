@@ -4,6 +4,7 @@ import { getPokemonSpecificities, SpecificityType } from "./specificities";
 import { Type } from "./types";
 import { Ability, getAbility } from "./abilities";
 import { IQSkill } from "./iqSkills";
+import { Experience } from "./experience";
 
 export interface Pokemon {
   id: number,
@@ -75,7 +76,8 @@ export interface Character {
     neck: string,
     belt: string
   },
-  iqSkills: IQSkill[]
+  iqSkills: IQSkill[],
+  experience: Experience
 }
 
 export async function createCharacter(pokemon: Pokemon, level: number, uuid?: string): Promise<Character> {
@@ -118,7 +120,16 @@ export async function createCharacter(pokemon: Pokemon, level: number, uuid?: st
       neck: '',
       belt: ''
     },
-    iqSkills: []
+    iqSkills: [],
+    experience: {
+      dungeonClear: false,
+      exploration: false,
+      fail: false,
+      success: false,
+      friend: false,
+      ko: false,
+      help: false,
+    }
   };
 
   if (level > 0) {
