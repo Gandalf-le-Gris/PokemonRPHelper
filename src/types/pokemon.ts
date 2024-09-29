@@ -10,7 +10,8 @@ export interface Pokemon {
   name: string,
   names: any[],
   baseStats: Stats,
-  types: Type[]
+  types: Type[],
+  varieties: any[]
 }
 
 export type StatName = 'hp' | 'atk' | 'def' | 'spatk' | 'spdef' | 'spd';
@@ -55,6 +56,7 @@ export interface Character {
   uuid: string,
   name: string,
   species: string,
+  variety: number,
   pokemon: Pokemon,
   stats: Stats,
   hpt: number,
@@ -88,8 +90,9 @@ export async function createCharacter(pokemon: Pokemon, level: number): Promise<
   const character: Character = {
     uuid: crypto.randomUUID(),
     name: pokemon.names.find((e: any) => e.language.name === 'fr').name ?? pokemon.name,
-    species: pokemon.names.find((e: any) => e.language.name === 'fr').name ?? pokemon.name,
+    species: pokemon.name,
     pokemon,
+    variety: 0,
     stats: {
       hp: 0,
       atk: 0,
@@ -114,13 +117,15 @@ export async function createCharacter(pokemon: Pokemon, level: number): Promise<
     iqSkills: []
   };
 
-  character.talents[Math.floor(Math.random() * character.talents.length)].mod = 2;
-  for (let i = 0; i < 2; i++) {
-    let ind: number;
-    do {
-      ind = Math.floor(Math.random() * character.talents.length);
-    } while (character.talents[ind].mod)
-    character.talents[ind].mod = 1;
+  if (level > 0) {
+    character.talents[Math.floor(Math.random() * character.talents.length)].mod = 2;
+    for (let i = 0; i < 2; i++) {
+      let ind: number;
+      do {
+        ind = Math.floor(Math.random() * character.talents.length);
+      } while (character.talents[ind].mod)
+      character.talents[ind].mod = 1;
+    }
   }
   character.specificities = getPokemonSpecificities(character);
   character.ability = getAbility(character);
@@ -129,6 +134,15 @@ export async function createCharacter(pokemon: Pokemon, level: number): Promise<
     levelUp(character, i);
   }
   return character;
+}
+
+export async function changeSpecies(character: Character) {
+  const pokemon = await encounterService.getPokemonSpecies(character.species);
+  const detail = await encounterService.getPokemonDetailByVariety(pokemon.varieties[character.variety].pokemon.url);
+  pokemon.types = Object.values(detail.types).map((e: any) => e.type.name);
+  character.pokemon = pokemon;
+  character.specificities = getPokemonSpecificities(character);
+  character.ability = getAbility(character);
 }
 
 function levelUp(character: Character, level: number) {
@@ -175,9 +189,9 @@ function enchanceStatsOnce(character: Character) {
 export function computeHPT(character: Character) {
   if (character.ability.value === 'Tank' || character.iqSkills.some(e => e.value === 'Brick house') || character.iqSkills.some(e => e.value === 'Advanced brick house')) {
     if (character.ability.value === 'Tank' && character.iqSkills.some(e => e.value === 'Brick house')
-        || character.ability.value === 'Tank' || character.iqSkills.some(e => e.value === 'Advanced brick house')
+        || character.ability.value === 'Tank' && character.iqSkills.some(e => e.value === 'Advanced brick house')
         || character.iqSkills.some(e => e.value === 'Brick house') && character.iqSkills.some(e => e.value === 'Advanced brick house')) {
-      if (character.ability.value === 'Tank' || character.iqSkills.some(e => e.value === 'Brick house') || character.iqSkills.some(e => e.value === 'Advanced brick house')) {
+      if (character.ability.value === 'Tank' && character.iqSkills.some(e => e.value === 'Brick house') && character.iqSkills.some(e => e.value === 'Advanced brick house')) {
         return Math.max(1, character.stats.hp * 9);
       }
       return Math.max(1, character.stats.hp * 7);

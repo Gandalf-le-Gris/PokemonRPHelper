@@ -9,13 +9,45 @@
             hide-details
           />
         </v-col>
-        <v-col cols="6">
+        <v-col cols="5">
+          <v-row>
+            <v-col>
+              <v-autocomplete
+                @update:modelValue="character.variety = 0; updateSpecies()"
+                v-model="character.species"
+                :items="searchArray"
+                item-value="value"
+                item-title="title"
+                label="Espèce"
+                hide-details
+              />
+            </v-col>
+            <v-col cols="5" v-if="varieties.length > 1">
+              <v-select
+                @update:modelValue="updateSpecies"
+                v-model="character.variety"
+                :items="varieties"
+                item-value="value"
+                item-title="title"
+                label="Variante"
+                hide-details
+              />
+            </v-col>
+          </v-row>
+        </v-col>
+        <v-col cols="auto">
           <v-text-field
-            v-model="character.species"
-            label="Espèce"
-            disabled
+            v-model="character.level"
+            @update:model-value="updateLevel"
+            type="number"
+            label="Niveau"
+            max-width="100"
             hide-details
           />
+        </v-col>
+        <v-col cols="auto" class="d-flex flex-column">
+          <v-img :src="type1" width="80"/>
+          <v-img v-if="type2" :src="type2" width="80" class="mt-2"/>
         </v-col>
         <v-col cols="auto" v-if="!isPlayerSheet">
           <v-btn
@@ -25,6 +57,22 @@
             variant="plain"
             size="x-large"
             :loading="regenerateLoading"
+          />
+        </v-col>
+        <v-col cols="auto" v-else>
+          <v-btn
+            @click="resetCharacter"
+            icon="mdi-refresh"
+            density="compact"
+            variant="plain"
+            size="x-large"
+          />
+          <v-btn
+            @click="saveCharacter"
+            icon="mdi-content-save"
+            density="compact"
+            variant="plain"
+            size="x-large"
           />
         </v-col>
       </v-row>
@@ -207,7 +255,8 @@
                       hide-details
                       item-value="value"
                       item-title="title"
-                      :items="iqSkillArray.filter(s => s.level <= (index + 1) * 5)"
+                      return-object
+                      :items="iqSkillArray.filter(s => (s.level <= (index + 1) * 5) && (!character.iqSkills.some((k, i) => k.value === s.value && i !== index)))"
                       v-bind="props"
                     />
                   </template>
@@ -255,9 +304,11 @@
 </template>
 
 <script setup lang="ts">
+import { encounterService } from '@/services/instances/encounterService.instance';
 import { iqSkillArray } from '@/types/iqSkills';
-import { computeHPT, createCharacter } from '@/types/pokemon';
+import { changeSpecies, computeHPT, createCharacter } from '@/types/pokemon';
 import { StatName, statsArray, type Character } from '@/types/pokemon';
+import { searchArray } from '@/types/search';
 import { computeGlobalModifiers } from '@/types/specificities';
 import { specificityArray, type Mod } from '@/types/specificities';
 import { talentArray } from '@/types/talents';
@@ -269,9 +320,13 @@ defineProps({
 
 const character: ModelRef<Character> = defineModel<Character>({required: true});
 const regenerateLoading: Ref<boolean> = ref<boolean>(false);
+const type1: Ref<string> = ref('');
+const type2: Ref<string> = ref('');
 
 const characterMods: ComputedRef<Mod> = computed<Mod>(() => computeGlobalModifiers(character.value));
-const maxHP: ComputedRef<number> = computed<number>(() => computeHPT(character.value))
+const maxHP: ComputedRef<number> = computed<number>(() => computeHPT(character.value));
+
+const emit = defineEmits(['saved']);
 
 const maxStat: ComputedRef<number> = computed<number>(() => {
   return Object.entries(character.value.stats).reduce((acc, x) => {
@@ -283,9 +338,69 @@ const maxStat: ComputedRef<number> = computed<number>(() => {
   }, 0)
 });
 
+const varieties: ComputedRef<{ value: number, title: string }[]> = computed(() =>
+  character.value.pokemon.varieties
+    .map((e, i) => ({
+      value: i,
+      title: e.pokemon.name.includes('hisui') ? 'Hisui'
+              : e.pokemon.name.includes('paldea') ? 'Paldea'
+              : e.pokemon.name.includes('alola') ? 'Alola'
+              : e.pokemon.name.includes('galar') ? 'Galar'
+              : 'Normal',
+      pokemon: e.pokemon
+    }))
+    .filter(e =>
+      !e.pokemon.name.includes('totem')
+      && !e.pokemon.name.includes('zen')
+      && (e.pokemon.name === character.value.pokemon.name
+      || e.pokemon.name.includes('standard')
+      || e.pokemon.name.includes('hisui')
+      || e.pokemon.name.includes('paldea')
+      || e.pokemon.name.includes('alola')
+      || e.pokemon.name.includes('galar')))
+);
+
 async function regenerateCharacter() {
   regenerateLoading.value = true;
   character.value = await createCharacter(character.value.pokemon, character.value.level);
   regenerateLoading.value = false;
+}
+
+async function updateSpecies() {
+  setTimeout(() => changeSpecies(character.value), 0);
+}
+
+onMounted(loadTypeImages);
+
+watch(() => [...character.value.pokemon.types], loadTypeImages);
+
+async function loadTypeImages() {
+  type1.value = await encounterService.getTypeIcon(character.value.pokemon.types[0]);
+  if (character.value.pokemon.types.length > 1) {
+    type2.value = await encounterService.getTypeIcon(character.value.pokemon.types[1]);
+  } else {
+    type2.value = ''
+  }
+}
+
+function saveCharacter() {
+  const saved = JSON.parse(localStorage.getItem('saved-characters') ?? '{}');
+  saved[character.value.uuid] = JSON.parse(JSON.stringify(character.value));
+  localStorage.setItem('saved-characters', JSON.stringify(saved));
+  emit('saved');
+}
+
+async function resetCharacter() {
+  character.value = await createCharacter(character.value.pokemon, 0);
+}
+
+function updateLevel() {
+  console.log(character.value.level / 5, character.value.iqSkills.length)
+  while (character.value.level / 5 > character.value.iqSkills.length) {
+    character.value.iqSkills.push({ value: 'Not learned', title: 'Pas encore appris', desc: 'Pas encore appris', level: 1 });
+  }
+  while (character.value.level / 5 < character.value.iqSkills.length) {
+    character.value.iqSkills.pop();
+  }
 }
 </script>

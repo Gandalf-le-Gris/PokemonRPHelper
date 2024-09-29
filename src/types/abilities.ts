@@ -1,6 +1,7 @@
 import abilities from '@/assets/abilities.json';
 import { Character } from "./pokemon";
 import { Type } from "./types";
+import { splitMatch } from '@/utils/stringUtils';
 
 export interface Ability {
   value: string,
@@ -976,10 +977,13 @@ const specialAbilities: Record<string, Ability> = {
 }
 
 export function getAbility(character: Character): Ability {
-  const key = (['A', 'B', 'C', 'D'] as ('A' | 'B' | 'C' | 'D')[]).find(e => abilities[e].some(n => n.toLowerCase().includes(character.pokemon.name)));
+  const variety = character.pokemon.varieties[character.variety].pokemon.name;
+  console.log(variety)
+  const key = (['A', 'B', 'C', 'D'] as ('A' | 'B' | 'C' | 'D')[]).find(e => abilities[e].some(s => splitMatch(variety, s.toLowerCase())));
   return key ? abilityRecord[character.pokemon.types[0]][key] : getSpecialAbility(character);
 }
 
 function getSpecialAbility(character: Character): Ability {
-  return Object.entries(specialAbilities).find(a => a[0].toLowerCase().includes(character.pokemon.name))?.[1] ?? { value: 'Not found', title: 'Non trouvé', desc: 'Non trouvé' }
+  const variety = character.pokemon.varieties[character.variety].pokemon.name;
+  return Object.entries(specialAbilities).find(s => splitMatch(variety, s[0].toLowerCase()))?.[1] ?? { value: 'Not found', title: 'Non trouvé', desc: 'Non trouvé' }
 }

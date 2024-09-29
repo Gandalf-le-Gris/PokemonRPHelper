@@ -1,6 +1,7 @@
 import specificities from '@/assets/specificities.json';
 import { Character, Stats } from './pokemon';
 import { TalentType } from './talents';
+import { splitMatch } from '@/utils/stringUtils';
 
 export type SpecificityType = 
     'twoLegs'
@@ -250,9 +251,10 @@ export const specificityArray = [
 ] as { value: SpecificityType, title: string, desc: string, effect?: (c: Character) => Mod }[];
 
 export function getPokemonSpecificities(character: Character): SpecificityType[] {
+  const variety = character.pokemon.varieties[character.variety].pokemon.name;
   return specificityArray
     .map(e => e.value)
-    .filter(e => specificities[e].some(s => s.toLowerCase().includes(character.pokemon.name)));
+    .filter(e => specificities[e].some(s => splitMatch(variety, s.toLowerCase())));
 }
 
 export function computeGlobalModifiers(character: Character): Mod {

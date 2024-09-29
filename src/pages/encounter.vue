@@ -17,7 +17,7 @@
       <v-row v-if="characters.length" class="mt-8">
         <v-col
           cols="12"
-          lg="6"
+          x-lg="6"
           v-for="(character, index) in characters"
           :key="character.uuid"
         >
