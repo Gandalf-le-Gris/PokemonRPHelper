@@ -264,7 +264,7 @@ export const iqSkillArray = [
   },
   {
     value: "Resilient",
-    title: "Résistant",
+    title: "Résilient",
     desc: "Ce Pokémon ne subit aucun dégât de la météo, des anomalies de statut et des talents des autres Pokémon",
     level: 50
   },

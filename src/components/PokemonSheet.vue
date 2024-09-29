@@ -395,6 +395,7 @@ async function resetCharacter() {
 }
 
 function updateLevel() {
+  character.value.level = Number(character.value.level);
   while (character.value.level / 5 > character.value.iqSkills.length) {
     character.value.iqSkills.push({ value: 'Not learned', title: 'Pas encore appris', desc: 'Pas encore appris', level: 1 });
   }

@@ -147,7 +147,7 @@ export async function changeSpecies(character: Character) {
 
 function levelUp(character: Character, level: number) {
   const learnedTalents = character.talents.filter(e => !e.mod).length;
-  if (level % 5 !== 0) {
+  if (level % 5 !== 0 && level % 2 === 0) {
     if (learnedTalents < talentArray.length && Math.random() < 1 / learnedTalents) {
       let ind: number;
       do {
@@ -157,7 +157,7 @@ function levelUp(character: Character, level: number) {
     } else {
       enchanceStatsOnce(character);
     }
-  } else {
+  } else if (level % 5 === 0) {
     if (learnedTalents < talentArray.length && Math.random() < 1 / (learnedTalents - 1)) {
       let ind: number;
       do {
