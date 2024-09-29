@@ -192,7 +192,7 @@ const ghostAbilities: TypeAbilities = {
   D: {
     value: 'Incorporeal',
     title: 'Intangible',
-    desc: 'Ce Pokémon inflige 2 et reçoit 2 fois moins de dégâts physiques'
+    desc: 'Ce Pokémon inflige et reçoit 2 fois moins de dégâts physiques'
   },
 }
 
