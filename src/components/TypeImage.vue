@@ -2,7 +2,7 @@
   <div>
     <v-img v-if="!offensive && !defensive" :src="detail?.src" :width/>
 
-    <v-tooltip v-else location="top">
+    <v-tooltip v-else location="top" :open-on-click>
       <template #activator="{ props }">
         <v-img :src="detail?.src" :width v-bind="props"/>
       </template>
@@ -134,6 +134,10 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
+  openOnClick: {
+    type: Boolean,
+    default: false
+  }
 });
 
 const detail: Ref<TypeDetail | undefined> = ref();

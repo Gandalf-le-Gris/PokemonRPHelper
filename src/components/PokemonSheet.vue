@@ -43,7 +43,7 @@
                 rounded="lg"
                 class="bg-grey-darken-3 pa-2"
               >
-                <v-tooltip location="top" max-width="512" :text="character.ability.desc">
+                <v-tooltip location="top" max-width="512" :text="character.ability.desc" open-on-click>
                   <template #activator="{ props }">
                     <div class="text-subtitle-1 text-center" v-bind="props">
                       <span class="text-subtitle-2">Talent : </span>
@@ -54,8 +54,8 @@
               </v-sheet>
             </v-col>
             <v-col cols="auto" class="d-flex flex-column">
-              <TypeImage :type="character.pokemon.types[0]" defensive/>
-              <TypeImage v-if="character.pokemon.types[1]" :type="character.pokemon.types[1]" defensive class="mt-2"/>
+              <TypeImage :type="character.pokemon.types[0]" defensive open-on-click/>
+              <TypeImage v-if="character.pokemon.types[1]" :type="character.pokemon.types[1]" defensive open-on-click class="mt-2"/>
             </v-col>
             <v-col cols="auto" v-if="!isPlayerSheet">
               <v-btn
@@ -175,7 +175,7 @@
                 </v-row>
                 <v-row v-for="specificity in character.specificities" :key="specificity" class="mx-0 my-n3">
                   <v-col>
-                    <v-tooltip location="top" :text="specificityArray.find(s => s.value === specificity)?.desc">
+                    <v-tooltip location="top" :text="specificityArray.find(s => s.value === specificity)?.desc" open-on-click>
                       <template #activator="{ props }">
                         <span v-bind="props">
                           {{ specificityArray.find(s => s.value === specificity)?.title }}
@@ -284,7 +284,7 @@
                 :key="index"
                 cols="4"
               >
-                <v-tooltip location="top" :text="character.iqSkills[index].desc">
+                <v-tooltip location="top" :text="character.iqSkills[index].desc" open-on-click>
                   <template #activator="{ props }">
                     <v-select
                       v-model="character.iqSkills[index]"

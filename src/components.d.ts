@@ -8,7 +8,6 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     EncounterFilters: typeof import('./components/EncounterFilters.vue')['default']
-    EncounterView: typeof import('./components/EncounterView.vue')['default']
     PokemonSheet: typeof import('./components/PokemonSheet.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
