@@ -54,8 +54,8 @@
               </v-sheet>
             </v-col>
             <v-col cols="auto" class="d-flex flex-column">
-              <v-img :src="type1" width="80"/>
-              <v-img v-if="type2" :src="type2" width="80" class="mt-2"/>
+              <TypeImage :type="character.pokemon.types[0]" defensive/>
+              <TypeImage v-if="character.pokemon.types[1]" :type="character.pokemon.types[1]" defensive class="mt-2"/>
             </v-col>
             <v-col cols="auto" v-if="!isPlayerSheet">
               <v-btn
@@ -198,10 +198,31 @@
                     Attaques
                   </v-col>
                 </v-row>
-                <v-row align="center" v-for="(_, index) in character.attacks" :key=index class="my-n3">
-                  <v-col cols="12">
+                <v-row align="center" v-for="(_, index) in character.attacks" :key=index dense>
+                  <v-col v-if="!character.attacks[index].type" cols="4">
+                    <v-select
+                      v-model="character.attacks[index].type"
+                      :items="attackTypes"
+                      item-value="type"
+                      item-title="title"
+                      hide-details
+                      density="compact"
+                      variant="outlined"
+                      :label="`Type ${index + 1}`"
+                      :menu="autoOpen === index"
+                    />
+                  </v-col>
+                  <v-col v-else cols="auto">
+                    <type-image
+                      @click="character.attacks[index].type = undefined; autoOpen = index"
+                      :type="character.attacks[index].type!"
+                      offensive
+                      class="cursor-pointer"
+                    />
+                  </v-col>
+                  <v-col>
                     <v-text-field
-                      v-model="character.attacks[index]"
+                      v-model="character.attacks[index].detail"
                       :label="`Attaque ${index + 1}`"
                       hide-details
                       density="compact"
@@ -352,7 +373,7 @@
 </template>
 
 <script setup lang="ts">
-import { encounterService } from '@/services/instances/encounterService.instance';
+import { typeService } from '@/services/instances/typeService.instance';
 import { experienceLabels } from '@/types/experience';
 import { iqSkillArray } from '@/types/iqSkills';
 import { changeSpecies, computeHPT, createCharacter } from '@/types/pokemon';
@@ -361,6 +382,7 @@ import { searchArray } from '@/types/search';
 import { computeGlobalModifiers } from '@/types/specificities';
 import { specificityArray, type Mod } from '@/types/specificities';
 import { talentArray } from '@/types/talents';
+import { TypeDetail } from '@/types/types';
 import { getVarieties } from '@/utils/varieties';
 import { ModelRef } from 'vue';
 
@@ -370,8 +392,7 @@ defineProps({
 
 const character: ModelRef<Character> = defineModel<Character>({required: true});
 const regenerateLoading: Ref<boolean> = ref<boolean>(false);
-const type1: Ref<string> = ref('');
-const type2: Ref<string> = ref('');
+const autoOpen: Ref<number> = ref<number>(-1);
 
 const characterMods: ComputedRef<Mod> = computed<Mod>(() => computeGlobalModifiers(character.value));
 const maxHP: ComputedRef<number> = computed<number>(() => computeHPT(character.value));
@@ -392,27 +413,19 @@ const varieties: ComputedRef<{ value: number, title: string }[]> = computed(() =
   getVarieties(character.value)
 );
 
+const attackTypes: ComputedRef<TypeDetail[]> = computed(() =>
+  typeService.typeList.filter(e => e.type !== 'stellar' && e.type !== 'unknown').sort((a, b) => a.title.localeCompare(b.title))
+);
+
 async function regenerateCharacter() {
   regenerateLoading.value = true;
+  autoOpen.value = -1;
   character.value = await createCharacter(character.value.pokemon, character.value.level);
   regenerateLoading.value = false;
 }
 
 async function updateSpecies() {
   setTimeout(() => changeSpecies(character.value), 0);
-}
-
-onMounted(loadTypeImages);
-
-watch(() => [...character.value.pokemon.types], loadTypeImages);
-
-async function loadTypeImages() {
-  type1.value = await encounterService.getTypeIcon(character.value.pokemon.types[0]);
-  if (character.value.pokemon.types.length > 1) {
-    type2.value = await encounterService.getTypeIcon(character.value.pokemon.types[1]);
-  } else {
-    type2.value = ''
-  }
 }
 
 function saveCharacter() {

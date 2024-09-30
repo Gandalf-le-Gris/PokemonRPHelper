@@ -726,7 +726,7 @@ const specialAbilities: Record<string, Ability> = {
   },
   darkrai: {
     value: "Pleasant dream",
-    title: "Joli rêve",
+    title: "Cauchemar",
     desc: "Ce Pokémon peut apparaître en rêve aux autres et manipuler leurs rêves. Sur un jet de concentration réussi, il peut endormir un Pokémon et lui infliger 5 dégâts au début du tour de ce Pokémon tant qu'il reste endormi"
   },
   'shaymin-land': {

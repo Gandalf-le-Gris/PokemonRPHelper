@@ -20,6 +20,22 @@ export type Type =
   | 'stellar'
   | 'unknown';
 
+export interface TypeDetail {
+  type: Type,
+  title: string,
+  src: string,
+  offensive: {
+    strong: Type[],
+    weak: Type[],
+    ineffective: Type[],
+  },
+  defensive: {
+    strong: Type[],
+    weak: Type[],
+    ineffective: Type[],
+  }
+}
+
 export const typeArray = [
   {
     value: 'bug',

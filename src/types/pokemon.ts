@@ -69,7 +69,7 @@ export interface Character {
   level: number,
   ability: Ability,
   inventory: string
-  attacks: string[],
+  attacks: { type?: Type, detail?: string }[],
   items: {
     held: string
     head: string,
@@ -113,7 +113,7 @@ export async function createCharacter(pokemon: Pokemon, level: number, uuid?: st
     level,
     ability: { value: 'Special', title: 'Special', desc: 'WIP' },
     inventory: '',
-    attacks: ['', '', '', ''],
+    attacks: [{}, {}, {}, {}],
     items: {
       held: '',
       head: '',

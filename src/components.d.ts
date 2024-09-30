@@ -12,5 +12,6 @@ declare module 'vue' {
     PokemonSheet: typeof import('./components/PokemonSheet.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TypeImage: typeof import('./components/TypeImage.vue')['default']
   }
 }

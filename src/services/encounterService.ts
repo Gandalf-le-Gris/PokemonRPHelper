@@ -20,10 +20,6 @@ export class EncounterService {
     return (await axios.get(url)).data;
   }
 
-  public async getTypeIcon(type: string): Promise<string> {
-    return (await axios.get(`https://pokeapi.co/api/v2/type/${type}`)).data.sprites['generation-viii']['sword-shield'].name_icon
-  }
-
   public async getRandomPokemon(biome?: Biome) {
     if (biome) {
       const pokemonList = (await this.getBiomeDetail(biome)).pokemon_species.map((e: any) => e.name);
