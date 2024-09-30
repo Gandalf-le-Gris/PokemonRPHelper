@@ -258,7 +258,7 @@ export function getPokemonSpecificities(character: Character): SpecificityType[]
 }
 
 export function computeGlobalModifiers(character: Character): Mod {
-  const mod: Mod = character.specificities
+  let mod: Mod = character.specificities
     .reduce((acc, x) => {
       const effect = specificityArray.find(s => s.value === x)?.effect;
       if (effect) {
@@ -296,10 +296,7 @@ export function computeGlobalModifiers(character: Character): Mod {
       },
       talents: [] as { name: TalentType, mod: number }[]
     });
-    if (character.ability.value === 'Force of wind' && mod.stats) {
-      mod.stats = { ...mod.stats, spd: mod.stats.spd * 3 };
-    }
-    return character.iqSkills
+    mod = character.iqSkills
       .reduce((acc, x) => {
         if (x.effect) {
           const modTemp = x.effect(character);
@@ -318,4 +315,18 @@ export function computeGlobalModifiers(character: Character): Mod {
         }
         return acc;
       }, mod);
+    if (character.ability.value === 'Force of wind') {
+      if (!mod.stats) {
+        mod.stats = {
+          hp: 0,
+          atk: 0,
+          def: 0,
+          spatk: 0,
+          spdef: 0,
+          spd: 0
+        };
+      }
+      mod.stats.spd += character.stats.spd * 2;
+    }
+    return mod;
 }
