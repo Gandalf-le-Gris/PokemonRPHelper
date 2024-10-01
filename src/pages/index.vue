@@ -16,9 +16,8 @@
               no-data-text="Aucun Pokémon enregistré"
             />
           </v-col>
-          <v-col cols="auto">
+          <v-col cols="auto" v-if="character">
             <v-btn
-              v-if="character"
               @click="exportSheet"
               prepend-icon="mdi-file-export"
               text="Exporter"
@@ -48,7 +47,7 @@
         class="mt-8"
       />
 
-      <input id="file-select" type="file" style="display: none" @change="importSheet"/>
+      <input id="file-select" type="file" accept="application/json" style="display: none" @change="importSheet"/>
       <v-snackbar
         v-model="showError"
         :text="errorMessage"

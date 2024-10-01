@@ -4,16 +4,16 @@
       <v-row align="center">
         <v-col>
           <v-row align="center">
-            <v-col cols="5">
+            <v-col cols="12" sm="5">
               <v-text-field
                 v-model="character.name"
                 label="Nom"
                 hide-details
               />
             </v-col>
-            <v-col cols="7">
+            <v-col cols="12" sm="7">
               <v-row>
-                <v-col>
+                <v-col cols="12" sm>
                   <v-autocomplete
                     @update:modelValue="character.variety = 0; updateSpecies()"
                     v-model="character.species"
@@ -25,7 +25,7 @@
                     no-data-text="Aucun Pokémon trouvé"
                   />
                 </v-col>
-                <v-col cols="6" v-if="varieties.length > 1">
+                <v-col cols="12" sm="6" v-if="varieties.length > 1">
                   <v-select
                     @update:modelValue="updateSpecies"
                     v-model="character.variety"
@@ -38,7 +38,7 @@
                 </v-col>
               </v-row>
             </v-col>
-            <v-col>
+            <v-col cols="12" sm>
               <v-sheet
                 rounded="lg"
                 class="bg-grey-darken-3 pa-2"
@@ -57,7 +57,7 @@
               <TypeImage :type="character.pokemon.types[0]" defensive open-on-click/>
               <TypeImage v-if="character.pokemon.types[1]" :type="character.pokemon.types[1]" defensive open-on-click class="mt-2"/>
             </v-col>
-            <v-col cols="auto" v-if="!isPlayerSheet">
+            <v-col v-if="!isPlayerSheet" class="d-flex justify-end">
               <v-btn
                 @click="regenerateCharacter"
                 icon="mdi-refresh"
@@ -67,7 +67,7 @@
                 :loading="regenerateLoading"
               />
             </v-col>
-            <v-col cols="auto" v-else>
+            <v-col v-else class="d-flex justify-end">
               <v-btn
                 @click="resetCharacter"
                 icon="mdi-refresh"
@@ -83,12 +83,22 @@
                 size="x-large"
               />
             </v-col>
+            <v-col v-if="$vuetify.display.xs" cols="auto" class="d-flex justify-center">
+              <v-sheet
+                border="md grey-darken-3"
+                rounded="lg"
+                max-width="80"
+              >
+                <v-img :src="character.pokemon.sprites.front_default" width="80"/>
+              </v-sheet>
+            </v-col>
           </v-row>
         </v-col>
-        <v-col cols="auto">
+        <v-col v-if="$vuetify.display.smAndUp" cols="12" sm="auto" class="d-flex justify-center align-center">
           <v-sheet
             border="md grey-darken-3"
             rounded="xl"
+            max-width="128"
           >
             <v-img :src="character.pokemon.sprites.front_default" width="128"/>
           </v-sheet>
@@ -97,7 +107,7 @@
     </v-card-title>
     <v-card-text>
       <v-row align="center">
-        <v-col cols="6">
+        <v-col cols="12" sm="6">
           <v-row align="center" class="mb-4">
             <v-col>
               <v-text-field
@@ -234,7 +244,7 @@
             </v-col>
           </v-row>
         </v-col>
-        <v-col cols="6">
+        <v-col cols="12" sm="6">
           <v-row v-for="(talent, index) in talentArray" :key="talent.value" align="center" class="mx-0 my-n5">
             <v-col>
               {{ talent.title }}
