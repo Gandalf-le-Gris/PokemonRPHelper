@@ -119,7 +119,7 @@ import { PropType } from 'vue';
 
 const props = defineProps({
   type: {
-    type: Object as PropType<Type>,
+    type: String as PropType<Type>,
     required: true
   },
   width: {

@@ -313,7 +313,7 @@
         </v-col>
       </v-row>
       <v-row class="mt-8">
-        <v-col cols="7">
+        <v-col cols="12" sm="7">
           <v-textarea
             v-model="character.inventory"
             hide-details
@@ -322,7 +322,7 @@
             rows="10"
           />
         </v-col>
-        <v-col cols="5" class="d-flex flex-column justify-space-between">
+        <v-col cols="12" sm="5" class="d-flex flex-column justify-space-between">
           <v-text-field
             v-model="character.items.held"
             hide-details
@@ -332,16 +332,19 @@
             v-model="character.items.head"
             hide-details
             label="Tête"
+            class="mt-2"
           />
           <v-text-field
             v-model="character.items.neck"
             hide-details
             label="Cou"
+            class="mt-2"
           />
           <v-text-field
             v-model="character.items.belt"
             hide-details
             label="Ceinture"
+            class="mt-2"
           />
         </v-col>
       </v-row>
@@ -357,7 +360,7 @@
               </v-col>
             </v-row>
             <v-row align="center" dense class="mt-4 mx-2">
-              <v-col v-for="key in Object.keys(experienceLabels)" :key cols="3">
+              <v-col v-for="key in Object.keys(experienceLabels)" :key cols="6" md="3">
                 <v-checkbox
                   v-model="character.experience[key as 'ko']"
                   :label="experienceLabels[key as 'ko']"
@@ -365,7 +368,7 @@
                   density="compact"
                 />
               </v-col>
-              <v-col cols="3">
+              <v-col cols="6" md="3">
                 <v-btn
                   @click="levelUp"
                   :disabled="Object.values(character.experience).filter(e => e).length < 4"
@@ -442,6 +445,7 @@ function saveCharacter() {
   const saved = JSON.parse(localStorage.getItem('saved-characters') ?? '{}');
   saved[character.value.uuid] = JSON.parse(JSON.stringify(character.value));
   localStorage.setItem('saved-characters', JSON.stringify(saved));
+  localStorage.setItem('last-saved', JSON.stringify(character.value.uuid));
   emit('saved');
 }
 

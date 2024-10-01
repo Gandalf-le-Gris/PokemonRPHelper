@@ -539,7 +539,7 @@ const specialAbilities: Record<string, Ability> = {
     title: "Trou noir",
     desc: "Lorsque ce Pokémon est mis KO, ce Pokémon déclenche une attaque spéciale sans type infligeant des dégâts équivalents à 3 fois son attaque spéciale à un ennemi"
   },
-  munja: {
+  shedinja: {
     value: "Wonder guard",
     title: "Garde mystik",
     desc: "Seules les attaques super efficaces infligent des dégâts à ce Pokémon, mais il est mis KO par toute attaque super efficace"

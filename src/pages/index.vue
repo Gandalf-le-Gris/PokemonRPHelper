@@ -116,6 +116,10 @@ export default defineComponent({
   },
   mounted() {
     this.reloadCharacters();
+    const lastSaved = JSON.parse(localStorage.getItem('last-saved') ?? '""');
+    if (lastSaved) {
+      this.character = this.characters.find(p => p.uuid === lastSaved);
+    }
   }
 });
 </script>
