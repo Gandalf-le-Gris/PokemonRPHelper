@@ -216,3 +216,12 @@ export function computeHPT(character: Character) {
   }
   return Math.max(1, character.stats.hp * 3);
 }
+
+export function isCharacter(obj: any): obj is Character {
+  return !!obj.uuid && typeof obj.uuid === 'string'
+    && !!obj.name && typeof obj.name === 'string'
+    && !!obj.species && typeof obj.species === 'string'
+    && obj.variety !== undefined && typeof obj.variety === 'number'
+    && !!obj.pokemon
+    && obj.level !== undefined && typeof obj.level === 'number'
+}
