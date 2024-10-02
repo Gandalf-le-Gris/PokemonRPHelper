@@ -239,6 +239,16 @@
                       variant="outlined"
                     />
                   </v-col>
+                  <v-col cols="auto">
+                    <v-btn
+                      v-show="character.attacks[index].type"
+                      @click="openStatusDialog(index)"
+                      icon="mdi-help-circle"
+                      density="compact"
+                      color="transparent"
+                      elevation="0"
+                    />
+                  </v-col>
                 </v-row>
               </v-sheet>
             </v-col>
@@ -383,6 +393,37 @@
       </v-row>
     </v-card-text>
   </v-card>
+
+  <v-dialog v-model="showStatusDialog" max-width="600">
+    <v-card
+      title="Capacités de statut"
+      rounded="xl"
+      class="py-4"
+    >
+      <template #append>
+        <TypeImage :type="character.attacks[selectedStatus].type ?? 'normal'"/>
+      </template>
+      <template
+        v-for="i in [1, 2, 3]"
+        :key="i"
+      >
+        <template v-if="statusMoves[character.attacks[selectedStatus].type ?? 'normal'][i].length">
+          <v-divider v-if="i > 1" class="my-4"/>
+          <span class="text-body-1 font-weight-bold mt-2 mb-1 ml-6">Rang {{ i }}</span>
+          <v-btn
+            v-for="move in statusMoves[character.attacks[selectedStatus].type ?? 'normal'][i]"
+            :key="move"
+            @click="selectStatusMove(move)"
+            tile
+            elevation="0"
+            class="text-body-2"
+          >
+            <span class="status-move-btn">{{ move }}</span>
+          </v-btn>
+        </template>
+      </template>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script setup lang="ts">
@@ -394,6 +435,7 @@ import { StatName, statsArray, type Character } from '@/types/pokemon';
 import { searchArray } from '@/types/search';
 import { computeGlobalModifiers } from '@/types/specificities';
 import { specificityArray, type Mod } from '@/types/specificities';
+import statusMoves from '@/types/statusMoves';
 import { talentArray } from '@/types/talents';
 import { TypeDetail } from '@/types/types';
 import { getVarieties } from '@/utils/varieties';
@@ -406,6 +448,8 @@ defineProps({
 const character: ModelRef<Character> = defineModel<Character>({required: true});
 const regenerateLoading: Ref<boolean> = ref<boolean>(false);
 const autoOpen: Ref<number> = ref<number>(-1);
+const showStatusDialog: Ref<boolean> = ref<boolean>(false);
+const selectedStatus: Ref<number> = ref<number>(-1);
 
 const characterMods: ComputedRef<Mod> = computed<Mod>(() => computeGlobalModifiers(character.value));
 const maxHP: ComputedRef<number> = computed<number>(() => computeHPT(character.value));
@@ -476,4 +520,22 @@ function levelUp() {
   character.value.level++;
   updateLevel();
 }
+
+function openStatusDialog(index: number) {
+  selectedStatus.value = index;
+  showStatusDialog.value = true;
+}
+
+function selectStatusMove(move: string) {
+  character.value.attacks[selectedStatus.value].detail = move;
+  showStatusDialog.value = false;
+}
 </script>
+
+<style scoped>
+.status-move-btn {
+  max-width: 800px;
+  line-break: auto;
+  text-wrap: wrap;
+}
+</style>

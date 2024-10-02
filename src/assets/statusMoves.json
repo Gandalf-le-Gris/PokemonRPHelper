@@ -1,0 +1,379 @@
+{
+  "normal": {
+    "1": [
+      "Réduit la défense d'un ennemi de 25%",
+      "Réduit l'attaque d'un ennemi de 25%",
+      "Réduit l'attaque spéciale d'un ennemi de 25%",
+      "Augmente la défense de l'utilisateur de 50%",
+      "Augmente l'attaque de l'utilisateur de 50%",
+      "Soigne un allié de 25%",
+      "Repousse un ennemi à distance",
+      "Charme un ennemi"
+    ],
+    "2": [
+      "Réduit la défense d'un ennemi de 50%",
+      "Réduit l'attaque d'un ennemi de 50%",
+      "Réduit l'attaque spéciale d'un ennemi de 50%",
+      "Réduit la défense de tous les ennemis de 25%",
+      "Réduit l'attaque de tous les ennemis de 25%",
+      "Réduit l'attaque spéciale de tous les ennemis de 25%",
+      "Augmente la défense de l'utilisateur de 100%",
+      "Augmente l'attaque de l'utilisateur de 100%",
+      "Augmente la défense de l'utilisateur et des alliés proches de 50%",
+      "Augmente l'attaque de l'utilisateur et des alliés proches de 50%",
+      "Soigne un allié de 50%",
+      "Repousse un ennemi à distance et lui inflige des dégâts spéciaux en cas d'impact avec un obstacle",
+      "Entrave la dernière attaque utilisée par un ennemi"
+    ],
+    "3": [
+      "Réduit la défense de tous les ennemis de 50%",
+      "Réduit l'attaque de tous les ennemis de 50%",
+      "Réduit l'attaque spéciale de tous les ennemis de 50%",
+      "Augmente la défense de l'utilisateur et des alliés proches de 100%",
+      "Augmente l'attaque de l'utilisateur et des alliés proches de 100%",
+      "Soigne un allié de 75%"
+    ]
+  },
+  "fighting": {
+    "1": [
+      "Augmente l'attaque de l'utilisateur de 50%",
+      "Nullife les dégâts de la prochaine attaque subie",
+      "Rend la prochaine attaque infligée toujours critique",
+      "Force un ennemi à attaquer l'utilisateur s'il le peut"
+    ],
+    "2": [
+      "Augmente l'attaque et la défense de l'utilisateur de 50%",
+      "Force tous les ennemis à attaquer l'utilisateur s'ils le peuvent"
+    ],
+    "3": [
+      "Augmente l'attaque et la défense de l'utilisateur de 100%",
+      "Augmente l'attaque, la défense et la vitesse de l'utilisateur de 50%"
+    ]
+  },
+  "flying": {
+    "1": [
+      "Nullifie les changements de stats d'un ennemi liés aux capacités de statut",
+      "Nullifie les changements de stats d'un allié liés aux capacités de statut",
+      "Avance l'utilisateur d'un rang dans l'ordre de priorité au début du prochain tour"
+    ],
+    "2": [
+      "Copie la dernière attaque ou capcité de statut utilisée par un ennemi",
+      "Réduit l'attaque d'un ennemi de 50%",
+      "Soigne l'utilisateur de 50% et lui fait perdre le type vol pour un tour",
+      "Avance l'utilisateur et un allié proche d'un rang dans l'ordre de priorité au début du prochain tour"
+    ],
+    "3": [
+
+    ]
+  },
+  "poison": {
+    "1": [
+      "Augmente la défense de l'utilisateur de 50%",
+      "Recule un ennemi d'un rang dans l'ordre de priorité au début du prochain tour",
+      "Empoisonne un ennemi",
+      "Nullifie les effets des objets tenus",
+      "Nullifie le talent d'un ennemi"
+    ],
+    "2": [
+      "Augmente la défense de l'utilisateur de 100%",
+      "Recule tous les ennemis d'un rang dans l'ordre de priorité au début du prochain tour",
+      "Nullifie le talent de tous les ennemis",
+      "Nullife les dégâts de la prochaine attaque subie et empoisonne l'attaquant",
+      "Empoisonne deux ennemis",
+      "Soigne les anomalies de statut d'un allié"
+    ],
+    "3": [
+      "Empoisonne tous les ennemis",
+      "Soigne les anomalies de statut d'un allié et soigne l'utilisateur de 25%"
+    ]
+  },
+  "ground": {
+    "1": [
+      "Eblouit un ennemi",
+      "Réduit la puissance des attaques électrik de 25% pendant 2 tours"
+    ],
+    "2": [
+      "Aveugle un ennemi",
+      "Eblouit tous les ennemis",
+      "Réduit la puissance des attaques électrik de 25% pendant 5 tours",
+      "Réduit la puissance des attaques électrik de 50% pendant 2 tours"
+    ],
+    "3": [
+
+    ]
+  },
+  "rock": {
+    "1": [
+      "Lève une tempête de sable",
+      "Avance l'utilisateur d'un rang dans l'ordre de priorité au début du prochain tour",
+      "Augmente la défense d'un allié de 50%"
+    ],
+    "2": [
+      "Avance l'utilisateur de deux rangs dans l'ordre de priorité au début du prochain tour",
+      "Augmente la défense de l'utilisateur et des alliés proches de 50%",
+      "Augmente la défense d'un allié de 100%",
+      "Ralentit un ennemi"
+    ],
+    "3": [
+      "Avance l'utilisateur en haut de l'ordre de priorité au début du prochain tour",
+      "Augmente la défense des alliés proches de 100%",
+      "Ralentit tous les ennemis"
+    ]
+  },
+  "bug": {
+    "1": [
+      "Augmente l'attaque spéciale de l'utilisateur de 50%",
+      "Recule un ennemi d'un rang dans l'ordre de priorité au début du prochain tour",
+      "Force un ennemi à attaquer l'utilisateur s'il le peut"
+    ],
+    "2": [
+      "Augmente l'attaque spéciale de l'utilisateur de 100%",
+      "Recule un ennemi de deux rangs dans l'ordre de priorité au début du prochain tour",
+      "Force tous les ennemis à attaquer l'utilisateur s'ils le peuvent",
+      "Accélère l'utilisateur"
+    ],
+    "3": [
+      "Augmente l'attaque spéciale et la défense spéciale de l'utilisateur de 100%",
+      "Recule un ennemi en bas de l'ordre de priorité au début du prochain tour",
+      "Accélère l'utilisateur et ses alliés proches"
+    ]
+  },
+  "ghost": {
+    "1": [
+      "Réduit la défense spéciale d'un ennemi de 25%",
+      "Réduit l'attaque spéciale d'un ennemi de 25%",
+      "Fait enrager un ennemi",
+      "Remplace le type secondaire d'un ennemi par le type spectre"
+    ],
+    "2": [
+      "Réduit la défense spéciale d'un ennemi de 50%",
+      "Réduit l'attaque spéciale d'un ennemi de 50%",
+      "Brûle un ennemi",
+      "Paralyse un ennemi",
+      "Met KO le dernier ennemi à avoir attaqué l'utilisateur lorsque celui-ci est mis KO"
+    ],
+    "3": [
+      "Fait disparaître l'utilisateur pendant un tour, et ses attaques ignorent les protections au tour suivant"
+    ]
+  },
+  "steel": {
+    "1": [
+      "Augmente la défense de l'utilisateur de 50%",
+      "Réduit la défense spéciale d'un ennemi de 25%",
+      "Réduit l'attaque spéciale d'un ennemi de 25%",
+      "Avance l'utilisateur d'un rang dans l'ordre de priorité au début du prochain tour"
+    ],
+    "2": [
+      "Augmente la défense de l'utilisateur de 100%",
+      "Réduit la défense spéciale d'un ennemi de 50%",
+      "Réduit l'attaque spéciale d'un ennemi de 50%",
+      "Avance l'utilisateur de deux rangs dans l'ordre de priorité au début du prochain tour",
+      "Nullife les dégâts de la prochaine attaque subie et réduit l'attaque de l'attaquant de 25%"
+    ],
+    "3": [
+
+    ]
+  },
+  "fire": {
+    "1": [
+      "Augmente l'attaque spéciale de l'utilisateur de 50%",
+      "Augmente l'attaque de l'utilisateur de 50%",
+      "Intensifie les rayons du soleil",
+      "Brûle un ennemi"
+    ],
+    "2": [
+      "Augmente l'attaque spéciale de l'utilisateur de 100%",
+      "Augmente l'attaque de l'utilisateur de 100%",
+      "Brûle deux ennemis"
+    ],
+    "3": [
+      "Brûle tous les ennemis"
+    ]
+  },
+  "water": {
+    "1": [
+      "Augmente la défense spéciale de l'utilisateur de 50%",
+      "Augmente la défense de l'utilisateur de 50%",
+      "Fait pleuvoir",
+      "Remplace le type secondaire d'un ennemi par le type eau",
+      "Réduit la puissance des attaques feu de 25% pendant 2 tours",
+      "Soigne l'utilisateur de 25%"
+    ],
+    "2": [
+      "Augmente la défense spéciale de l'utilisateur de 100%",
+      "Augmente la défense de l'utilisateur de 100%",
+      "Réduit la puissance des attaques feu de 25% pendant 5 tours",
+      "Réduit la puissance des attaques feu de 50% pendant 2 tours",
+      "Soigne l'utilisateur et les alliés proches de 25%"
+    ],
+    "3": [
+      "Soigne l'utilisateur et les alliés proches de 50%"
+    ]
+  },
+  "grass": {
+    "1": [
+      "Réduit l'attaque d'un ennemi de 25%",
+      "Réduit l'attaque spéciale d'un ennemi de 25%",
+      "Remplace le type secondaire d'un ennemi par le type plante",
+      "Soigne l'utilisateur de 25%",
+      "Soigne un allié de 25%"
+    ],
+    "2": [
+      "Réduit l'attaque d'un ennemi de 50%",
+      "Réduit l'attaque spéciale d'un ennemi de 50%",
+      "Empoisonne un ennemi",
+      "Paralyse un ennemi",
+      "Soigne l'utilisateur de 50%",
+      "Soigne un allié de 50%"
+    ],
+    "3": [
+      "Soigne l'utilisateur de 75%",
+      "Soigne un allié de 75%"
+    ]
+  },
+  "electric": {
+    "1": [
+      "Réduit la défense d'un ennemi de 25%",
+      "Réduit la défense spéciale d'un ennemi de 25%",
+      "Rend la prochaine attaque infligée toujours critique",
+      "Paralyse un ennemi"
+    ],
+    "2": [
+      "Réduit la défense d'un ennemi de 50%",
+      "Réduit la défense spéciale d'un ennemi de 50%",
+      "Paralyse deux ennemis",
+      "Accélère l'utilisateur"
+    ],
+    "3": [
+      "Paralyse tous les ennemis",
+      "Accélère l'utilisateur et ses alliés proches"
+    ]
+  },
+  "psychic": {
+    "1": [
+      "Augmente l'attaque spéciale de l'utilisateur de 50%",
+      "Augmente la défense spéciale de l'utilisateur de 50%",
+      "Inverse l'ordre de priorité au début du prochain tour",
+      "Nullifie les effets des objets tenus",
+      "Renvoie tous les effets des capacités de statut à l'envoyeur pendant un tour",
+      "Transfère les anomalies de statut de l'utilisateur à un autre Pokémon",
+      "Eblouit un ennemi"
+    ],
+    "2": [
+      "Augmente l'attaque spéciale et la défense spéciale de l'utilisateur de 50%",
+      "Augmente l'attaque spéciale de l'utilisateur de 100%",
+      "Augmente la défense spéciale de l'utilisateur de 100%",
+      "Accélère l'utilisateur",
+      "Inverse l'attaque et la défense de l'utilisateur",
+      "Supprime les immunités de type d'un ennemi"
+    ],
+    "3": [
+      "Accélère l'utilisateur et ses alliés proches"
+    ]
+  },
+  "ice": {
+    "1": [
+      "Fait grêler",
+      "Gèle un ennemi s'il grêle",
+      "Recule un ennemi d'un rang dans l'ordre de priorité au début du prochain tour",
+      "Empêche les baisses de stats de l'utilisateur"
+    ],
+    "2": [
+      "Gèle un ennemi",
+      "Recule un ennemi de deux rangs dans l'ordre de priorité au début du prochain tour",
+      "Empêche les baisses de stats de l'utilisateur et des alliés proches"
+    ],
+    "3": [
+      "Gèle deux ennemis",
+      "Recule un ennemi en bas de l'ordre de priorité au début du prochain tour"
+    ]
+  },
+  "dragon": {
+    "1": [
+      "Augmente l'attaque de l'utilisateur de 50%",
+      "Avance l'utilisateur d'un rang dans l'ordre de priorité au début du prochain tour",
+      "Augmente l'attaque et la défense de l'utilisateur de 50%, mais celui-ci perd 25% de ses PV",
+      "Rend la prochaine attaque infligée toujours critique"
+    ],
+    "2": [
+      "Augmente l'attaque de l'utilisateur de 50% et l'avance d'un rang dans l'ordre de priorité au début du prochain tour",
+      "Augmente l'attaque, la défense et l'attaque spéciale de l'utilisateur de 50%, mais celui-ci perd 25% de ses PV",
+      "Double les dégâts de la prochaine attaque de l'utilisateur, et réduit son attaque et son attaque spéciale de 25% après ça"
+    ],
+    "3": [
+      "Augmente l'attaque de l'utilisateur de 100% et l'avance d'un rang dans l'ordre de priorité au début du prochain tour",
+      "Augmente l'attaque, la défense, l'attaque spéciale et la défense spéciale de l'utilisateur de 100%, mais celui-ci perd 50% de ses PV"
+    ]
+  },
+  "dark": {
+    "1": [
+      "Augmente l'attaque spéciale de l'utilisateur de 50%",
+      "Réduit l'attaque spéciale d'un ennemi de 25%",
+      "Réduit la défense spéciale d'un ennemi de 25%",
+      "Nullifie les effets des objets tenus",
+      "Vole l'objet tenu d'un autre Pokémon",
+      "Donne l'objet tenu à un autre Pokémon"
+    ],
+    "2": [
+      "Augmente l'attaque spéciale de l'utilisateur de 100%",
+      "Augmente l'attaque spéciale de l'utilisateur et des alliés proches de 50%",
+      "Réduit l'attaque spéciale d'un ennemi de 50%",
+      "Réduit l'attaque spéciale de tous les ennemis de 25%",
+      "Réduit la défense spéciale d'un ennemi de 50%",
+      "Réduit la défense spéciale de tous les ennemis de 25%",
+      "Empêche un ennemi d'utiliser la même attaque deux fois de suite",
+      "Empêche un ennemi d'utiliser des capacités de statut",
+      "Echange les objets tenus de l'utilisateur et d'un autre Pokémon"
+    ],
+    "3": [
+      "Augmente l'attaque spéciale de l'utilisateur et des alliés proches de 100%",
+      "Réduit l'attaque spéciale de tous les ennemis de 50%",
+      "Réduit la défense spéciale de tous les ennemis de 50%"
+    ]
+  },
+  "fairy": {
+    "1": [
+      "Réduit l'attaque d'un ennemi de 25%",
+      "Augmente l'attaque d'un allié de 50%",
+      "Augmente l'attaque spéciale d'un allié de 50%",
+      "Soigne l'utilisateur de 25%",
+      "Soigne un allié de 25%"
+    ],
+    "2": [
+      "Réduit l'attaque d'un ennemi de 50%",
+      "Augmente l'attaque d'un allié de 100%",
+      "Augmente l'attaque spéciale d'un allié de 100%",
+      "Soigne l'utilisateur de 50%",
+      "Soigne un allié de 50%"
+    ],
+    "3": [
+      "Réduit l'attaque de tous les ennemis de 50%",
+      "Augmente l'attaque de l'utilisateur et des alliés proches de 100%",
+      "Augmente l'attaque spéciale de l'utilisateur et des alliés proches de 100%",
+      "Soigne l'utilisateur de 75%",
+      "Soigne un allié de 75%"
+    ]
+  },
+  "stellar": {
+    "1": [
+
+    ],
+    "2": [
+
+    ],
+    "3": [
+
+    ]
+  },
+  "unknown": {
+    "1": [
+
+    ],
+    "2": [
+
+    ],
+    "3": [
+      
+    ]
+  }
+}

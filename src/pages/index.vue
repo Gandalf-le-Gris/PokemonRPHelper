@@ -3,7 +3,7 @@
     <v-responsive
       class="align-centerfill-height mx-auto"
     >
-      <v-card title="Mes personnages" class="pa-4" rounded="lg">
+      <v-card title="Mes personnages" class="pa-4 mb-8" rounded="lg">
         <v-row align="center">
           <v-col cols="12" md="">
             <v-select
@@ -44,7 +44,6 @@
         v-model="character"
         @saved="reloadCharacters"
         is-player-sheet
-        class="mt-8"
       />
 
       <input id="file-select" type="file" accept="application/json" style="display: none" @change="importSheet"/>
