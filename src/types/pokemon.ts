@@ -3,7 +3,7 @@ import { talentArray, TalentType } from "./talents";
 import { getPokemonSpecificities, SpecificityType } from "./specificities";
 import { Type } from "./types";
 import { Ability, getAbility } from "./abilities";
-import { IQSkill } from "./iqSkills";
+import { IQSkill, iqSkillArray } from "./iqSkills";
 import { Experience } from "./experience";
 
 export interface Pokemon {
@@ -110,7 +110,7 @@ export async function createCharacter(pokemon: Pokemon, level: number, uuid?: st
     hpt: 1,
     talents: talentArray.map(e => ({talent: e.value, mod: 0})),
     specificities: [],
-    level,
+    level: Number(level),
     ability: { value: 'Special', title: 'Special', desc: 'WIP' },
     inventory: '',
     attacks: [{}, {}, {}, {}],
@@ -162,6 +162,7 @@ export async function changeSpecies(character: Character) {
 }
 
 function levelUp(character: Character, level: number) {
+  enchanceStatsOnce(character);
   const learnedTalents = character.talents.filter(e => !e.mod).length;
   if (level % 5 !== 0 && level % 2 === 0) {
     if (learnedTalents < talentArray.length && Math.random() < 1 / learnedTalents) {
@@ -184,7 +185,23 @@ function levelUp(character: Character, level: number) {
       enchanceStatsOnce(character);
       enchanceStatsOnce(character);
     }
-    character.iqSkills.push({ value: 'Not learned', title: 'Pas encore appris', desc: 'Pas encore appris', level: 1 });
+
+    let availableSkills = iqSkillArray
+      .filter(e => !character.iqSkills.includes(e)
+        && e.level <= level
+        && (e.level > level - 15 || e.level === 50)
+        && !e.value.toLowerCase().includes('bond'));
+    if (!availableSkills.length) {
+      availableSkills = iqSkillArray
+        .filter(e => !character.iqSkills.includes(e)
+          && e.level <= level
+          && !e.value.toLowerCase().includes('bond'));
+    }
+    if (availableSkills.length) {
+      character.iqSkills.push(availableSkills[Math.floor(Math.random() * availableSkills.length)]);
+    } else {
+      character.iqSkills.push({ value: 'None', title: 'Aucun', desc: 'Aucun talent disponible', level: 0 });
+    }
   }
   character.hpt = computeHPT(character);
 }
@@ -196,8 +213,11 @@ function enchanceStatsOnce(character: Character) {
   let rd: number;
   let stat;
   for (let i = 0; i < 3; i++) {
-    rd = Math.random();
-    stat = Object.keys(character.stats)[cdf.findIndex(e => rd <= e)] as StatName;
+    const lowestStat = Object.values(character.stats).reduce((acc, x) => acc > x ? x : acc, character.stats.hp);
+    do {
+      rd = Math.random();
+      stat = Object.keys(character.stats)[cdf.findIndex(e => rd <= e)] as StatName;
+    } while (character.stats[stat] >= lowestStat + 20)
     character.stats[stat]++;
   }
 }

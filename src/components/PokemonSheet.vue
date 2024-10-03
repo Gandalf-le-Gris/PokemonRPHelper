@@ -294,11 +294,11 @@
             class="bg-grey-darken-3 pa-2"
           >
             <v-row>
-              <v-col class="text-subtitle-1 text-center ma-0 mb-n3">
+              <v-col class="text-subtitle-1 text-center ma-0">
                 Compétences de QI
               </v-col>
             </v-row>
-            <v-row>
+            <v-row dense>
               <v-col
                 v-for="(_, index) in character.iqSkills"
                 :key="index"
@@ -308,6 +308,7 @@
                   <template #activator="{ props }">
                     <v-select
                       v-model="character.iqSkills[index]"
+                      :label="`Niveau ${(index + 1) * 5}`"
                       hide-details
                       item-value="value"
                       item-title="title"
