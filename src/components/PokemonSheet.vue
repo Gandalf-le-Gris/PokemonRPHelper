@@ -69,7 +69,7 @@
             </v-col>
             <v-col v-else class="d-flex justify-end">
               <v-btn
-                @click="resetCharacter"
+                @click="confirmReset = true"
                 icon="mdi-refresh"
                 density="compact"
                 variant="plain"
@@ -424,6 +424,12 @@
       </template>
     </v-card>
   </v-dialog>
+
+  <ConfirmCancelDialog
+    v-model="confirmReset"
+    @confirm="resetCharacter"
+    title="Réinitialiser la fiche ?"
+  />
 </template>
 
 <script setup lang="ts">
@@ -450,6 +456,7 @@ const regenerateLoading: Ref<boolean> = ref<boolean>(false);
 const autoOpen: Ref<number> = ref<number>(-1);
 const showStatusDialog: Ref<boolean> = ref<boolean>(false);
 const selectedStatus: Ref<number> = ref<number>(-1);
+const confirmReset: Ref<boolean> = ref<boolean>(false);
 
 const characterMods: ComputedRef<Mod> = computed<Mod>(() => computeGlobalModifiers(character.value));
 const maxHP: ComputedRef<number> = computed<number>(() => computeHPT(character.value));

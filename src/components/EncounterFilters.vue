@@ -12,7 +12,7 @@
     <v-col cols="3">
       <v-select
         v-model="filters.biome"
-        :items="biomes"
+        :items="habitatArray.sort((a, b) => a.title.localeCompare(b.title))"
         item-value="value"
         item-title="title"
         clearable
@@ -39,7 +39,8 @@
 </template>
 
 <script setup lang="ts">
-import { biomes, difficulties, EncounterFilters } from '@/types/encounterFilters';
+import { difficulties, EncounterFilters } from '@/types/encounterFilters';
+import { habitatArray } from '@/types/habitats';
 import { ModelRef } from 'vue';
 
 const filters: ModelRef<EncounterFilters> = defineModel<EncounterFilters>({ required: true });

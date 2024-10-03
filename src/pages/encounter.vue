@@ -24,6 +24,14 @@
           <pokemon-sheet v-model="characters[index]"/>
         </v-col>
       </v-row>
+
+      <v-snackbar
+        v-model="showError"
+        :text="errorMessage"
+        color="error"
+        close-on-content-click
+        close-delay="3000"
+      />
     </v-responsive>
   </v-container>
 </template>
@@ -44,14 +52,23 @@ export default defineComponent({
       amount: 1,
       level: 5,
     } as EncounterFilters,
+    showError: false,
+    errorMessage: ''
   }),
   methods: {
     async generateEncounter() {
       this.loading = true;
       this.characters = [];
       for (let i = 0; i < this.filters.amount; i++) {
-        const pokemonDetails = await encounterService.getRandomPokemon(this.filters.biome);
-        this.characters.push(await createCharacter(pokemonDetails, this.filters.level));
+        try {
+          const pokemonDetails = await encounterService.getRandomPokemon(this.filters.biome);
+          this.characters.push(await createCharacter(pokemonDetails, this.filters.level));
+        } catch (e) {
+          if (e instanceof Error) {
+            this.showError = true;
+            this.errorMessage = e.message;
+          }
+        }
       }
       this.loading = false;
     },

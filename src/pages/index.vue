@@ -4,8 +4,8 @@
       class="align-centerfill-height mx-auto"
     >
       <v-card title="Mes personnages" class="pa-4 mb-8" rounded="lg">
-        <v-row align="center">
-          <v-col cols="12" md="">
+        <v-row align="center" dense>
+          <v-col cols="12" sm>
             <v-select
               v-model="character"
               :items="characters"
@@ -16,26 +16,62 @@
               no-data-text="Aucun Pokémon enregistré"
             />
           </v-col>
-          <v-col cols="auto" v-if="character">
-            <v-btn
-              @click="exportSheet"
-              prepend-icon="mdi-file-export"
-              text="Exporter"
-            />
+          <v-col sm="auto"></v-col>
+          <v-col cols="auto" v-show="character && characters.some(e => e.uuid === character?.uuid)">
+            <v-tooltip text="Supprimer" location="top">
+              <template #activator="{ props }">
+                <v-btn
+                  @click="confirmDelete = true"
+                  icon="mdi-delete"
+                  density="compact"
+                  elevation="0"
+                  size="x-large"
+                  v-bind="props"
+                />
+              </template>
+            </v-tooltip>
+          </v-col>
+          <v-col cols="auto" v-show="character">
+            <v-tooltip text="Exporter" location="top">
+              <template #activator="{ props }">
+                <v-btn
+                  @click="exportSheet"
+                  icon="mdi-file-export"
+                  density="compact"
+                  elevation="0"
+                  size="x-large"
+                  v-bind="props"
+                />
+              </template>
+            </v-tooltip>
           </v-col>
           <v-col cols="auto">
-            <v-btn
-              @click="startImportSheet"
-              prepend-icon="mdi-file-import"
-              text="Importer"
-            />
+            <v-tooltip text="Importer" location="top">
+              <template #activator="{ props }">
+                <v-btn
+                  @click="startImportSheet"
+                  icon="mdi-file-import"
+                  density="compact"
+                  elevation="0"
+                  size="x-large"
+                  v-bind="props"
+                />
+              </template>
+            </v-tooltip>
           </v-col>
           <v-col cols="auto">
-            <v-btn
-              @click="newCharacter"
-              prepend-icon="mdi-plus-circle"
-              text="Nouveau"
-            />
+            <v-tooltip text="Nouveau" location="top">
+              <template #activator="{ props }">
+                <v-btn
+                  @click="newCharacter"
+                  icon="mdi-plus-circle"
+                  density="compact"
+                  elevation="0"
+                  size="x-large"
+                  v-bind="props"
+                />
+              </template>
+            </v-tooltip>
           </v-col>
         </v-row>
       </v-card>
@@ -52,6 +88,12 @@
         :text="errorMessage"
         color="error"
         close-delay="5000"
+      />
+
+      <confirm-cancel-dialog
+        v-model="confirmDelete"
+        @confirm="deleteSheet"
+        title="Supprimer la fiche ?"
       />
     </v-responsive>
   </v-container>
@@ -70,6 +112,7 @@ export default defineComponent({
     characters: [] as Character[],
     showError: false,
     errorMessage: '',
+    confirmDelete: false,
   }),
   methods: {
     async newCharacter() {
@@ -112,6 +155,16 @@ export default defineComponent({
         document.body.removeChild(dlAnchorElem);
       }
     },
+    deleteSheet() {
+      if (this.character) {
+        const saved = JSON.parse(localStorage.getItem('saved-characters') ?? '{}');
+        delete saved[this.character.uuid];
+        localStorage.setItem('saved-characters', JSON.stringify(saved));
+        localStorage.setItem('last-saved', '""');
+        this.character = undefined;
+        this.reloadCharacters();
+      }
+    }
   },
   mounted() {
     this.reloadCharacters();

@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    ConfirmCancelDialog: typeof import('./components/ConfirmCancelDialog.vue')['default']
     EncounterFilters: typeof import('./components/EncounterFilters.vue')['default']
     PokemonSheet: typeof import('./components/PokemonSheet.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
