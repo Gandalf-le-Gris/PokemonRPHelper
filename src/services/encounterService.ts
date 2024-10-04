@@ -31,4 +31,29 @@ export class EncounterService {
     }
     return this.getPokemonSpecies(Math.floor(Math.random() * TOTAL_POKEMON_COUNT));
   }
+
+  public async getRandomPokemonWithLevel(level: number, habitat?: Habitat) {
+    let pokemon;
+    let base;
+    let evolution;
+    let tier;
+    do {
+      pokemon = await this.getRandomPokemon(habitat);
+      base = (await axios.get(pokemon.evolution_chain.url)).data.chain;
+      evolution = undefined;
+      tier = 0;
+      while (base.evolves_to.length) {
+        evolution = base.evolves_to[Math.floor(Math.random() * base.evolves_to.length)];
+        tier++;
+        if (!evolution.evolution_details[0]
+          || evolution.evolution_details[0].min_level && evolution.evolution_details[0].min_level > level
+          || !evolution.evolution_details[0].min_level && tier * 20 > level
+        ) {
+          break;
+        }
+        base = evolution;
+      }
+    } while (pokemon.name !== base.species.name);
+    return pokemon;
+  }
 }

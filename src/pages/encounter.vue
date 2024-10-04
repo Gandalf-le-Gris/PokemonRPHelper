@@ -8,6 +8,7 @@
         <div class="d-flex justify-space-around mt-4">
           <v-btn
             @click="generateEncounter"
+            :loading
             class="centered"
           >
             Générer une rencontre
@@ -61,8 +62,20 @@ export default defineComponent({
       this.characters = [];
       for (let i = 0; i < this.filters.amount; i++) {
         try {
-          const pokemonDetails = await encounterService.getRandomPokemon(this.filters.biome);
-          this.characters.push(await createCharacter(pokemonDetails, this.filters.level));
+          let level;
+          switch (this.filters.difficulty) {
+            case 'easy':
+              level = Math.round(this.filters.level * .8);
+              break;
+            case 'hard':
+              level = Math.round(this.filters.level * 1.2);
+              break;
+            default:
+              level = this.filters.level;
+          }
+          level = Math.round(level * (.9 + .2 * Math.random()));
+          const pokemonSpecies = await encounterService.getRandomPokemonWithLevel(level, this.filters.biome);
+          this.characters.push(await createCharacter(pokemonSpecies, level));
         } catch (e) {
           if (e instanceof Error) {
             this.showError = true;
