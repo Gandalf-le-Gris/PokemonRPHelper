@@ -417,7 +417,7 @@
             @click="selectStatusMove(move)"
             tile
             elevation="0"
-            class="text-body-2"
+            class="text-body-2 auto-height"
           >
             <span class="status-move-btn">{{ move }}</span>
           </v-btn>

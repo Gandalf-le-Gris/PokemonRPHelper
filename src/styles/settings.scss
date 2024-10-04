@@ -16,3 +16,8 @@
 .inner-compact .v-field__append-inner {
   margin-left: -4px;
 }
+
+.v-btn.auto-height {
+  height: auto;
+  min-height: var(--v-btn-height);
+}
