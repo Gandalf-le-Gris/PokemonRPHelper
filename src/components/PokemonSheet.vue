@@ -410,14 +410,14 @@
       >
         <template v-if="statusMoves[character.attacks[selectedStatus].type ?? 'normal'][i].length">
           <v-divider v-if="i > 1" class="my-4"/>
-          <span class="text-body-1 font-weight-bold mt-2 mb-1 ml-6">Rang {{ i }}</span>
+          <span class="text-body-1 font-weight-bold my-2 ml-6">Rang {{ i }}</span>
           <v-btn
             v-for="move in statusMoves[character.attacks[selectedStatus].type ?? 'normal'][i]"
             :key="move"
             @click="selectStatusMove(move)"
             tile
             elevation="0"
-            class="text-body-2 auto-height"
+            class="text-body-2 auto-height py-1"
           >
             <span class="status-move-btn">{{ move }}</span>
           </v-btn>
