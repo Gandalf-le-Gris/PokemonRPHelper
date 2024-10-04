@@ -302,7 +302,9 @@
               <v-col
                 v-for="(_, index) in character.iqSkills"
                 :key="index"
-                cols="4"
+                cols="12"
+                sm="6"
+                md="4"
               >
                 <v-tooltip location="top" :text="character.iqSkills[index].desc" open-on-click>
                   <template #activator="{ props }">

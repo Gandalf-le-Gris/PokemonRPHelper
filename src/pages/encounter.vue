@@ -5,7 +5,7 @@
     >
       <v-card title="Paramètres de la rencontre" class="pa-4" rounded="lg">
         <encounter-filters v-model="filters"/>
-        <div class="d-flex justify-space-around">
+        <div class="d-flex justify-space-around mt-4">
           <v-btn
             @click="generateEncounter"
             class="centered"
