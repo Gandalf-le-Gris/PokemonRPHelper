@@ -185,7 +185,7 @@
                 </v-row>
                 <v-row v-for="specificity in character.specificities" :key="specificity" class="mx-0 my-n3">
                   <v-col>
-                    <v-tooltip location="top" :text="specificityArray.find(s => s.value === specificity)?.desc" open-on-click>
+                    <v-tooltip location="top" :text="specificityArray.find(s => s.value === specificity)?.desc" max-width="512" open-on-click>
                       <template #activator="{ props }">
                         <span v-bind="props">
                           {{ specificityArray.find(s => s.value === specificity)?.title }}
