@@ -1,10 +1,11 @@
 import { encounterService } from "@/services/instances/encounterService.instance";
 import { talentArray, TalentType } from "./talents";
 import { getPokemonSpecificities, SpecificityType } from "./specificities";
-import { Type } from "./types";
+import { Type, typeArray } from "./types";
 import { Ability, getAbility } from "./abilities";
 import { IQSkill, iqSkillArray } from "./iqSkills";
 import { Experience } from "./experience";
+import statusMoves from "./statusMoves";
 
 export interface Pokemon {
   id: number,
@@ -141,6 +142,36 @@ export async function createCharacter(pokemon: Pokemon, level: number, uuid?: st
       } while (character.talents[ind].mod)
       character.talents[ind].mod = 1;
     }
+
+    if (character.pokemon.types.length > 1 && !character.pokemon.types.includes('normal')) {
+      character.attacks[0].type = character.pokemon.types[0];
+      character.attacks[1].type = character.pokemon.types[1];
+      character.attacks[2].type = 'normal';
+    } else {
+      if (character.pokemon.types.length > 1) {
+        character.attacks[0].type = character.pokemon.types[0];
+        character.attacks[1].type = character.pokemon.types[1];
+      } else if (character.pokemon.types[0] === 'normal') {
+        character.attacks[0].type = character.pokemon.types[0];
+        const types = typeArray.map(e => e.value).filter(e => e !== 'normal' && e !== 'stellar' && e !== 'unknown');
+        character.attacks[1].type = types[Math.floor(Math.random() * types.length)];
+      } else {
+        character.attacks[0].type = character.pokemon.types[0];
+        character.attacks[1].type = 'normal';
+      }
+      character.attacks[2].type = 'normal';
+      let status = statusMoves['normal'][Math.min(3, 1 + Math.floor(Math.random() * character.level / 20))];
+      if (!status.length) {
+        status = statusMoves['normal'][2];
+      }
+      character.attacks[2].detail = status[Math.floor(Math.random() * status.length)];
+    }
+    character.attacks[3].type = character.pokemon.types[Math.floor(Math.random() * character.pokemon.types.length)];
+    let status = statusMoves[character.attacks[3].type][Math.min(3, 1 + Math.floor(Math.random() * character.level / 10))];
+    if (!status.length) {
+      status = statusMoves[character.attacks[3].type][2];
+    }
+    character.attacks[3].detail = status[Math.floor(Math.random() * status.length)];
   }
   character.specificities = getPokemonSpecificities(character);
   character.ability = getAbility(character);
