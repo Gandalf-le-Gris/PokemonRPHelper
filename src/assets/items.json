@@ -459,7 +459,7 @@
     },
     {
       "name": "Escalorbe",
-      "desc": "Révèle la position des escaliers. Il faudra 2 fois moins de temps pour l'atteindre, et aucun ennemi ne sera rencontré sur le chemin",
+      "desc": "Révèle la position des escaliers. Il faudra 2 fois moins de temps pour les atteindre, et aucun ennemi ne sera rencontré sur le chemin",
       "buy": 100,
       "sell": 20
     },
@@ -482,7 +482,7 @@
       "sell": 20
     },
     {
-      "name": "Echangeorbe",
+      "name": "Permutorbe",
       "desc": "Echange la position de l'utilisateur et d'un Pokémon aléatoire dans un rayon de 1km",
       "buy": 100,
       "sell": 20
@@ -522,6 +522,393 @@
       "desc": "Fait chuter à 1 les PV de tous les ennemis de la salle, mais divise par 2 les PV de l'utilisateur pour chaque Pokémon affecté",
       "buy": 150,
       "sell": 30
+    }
+  ],
+  "wands": [
+    {
+      "name": "Branche Détonation",
+      "desc": "Inflige 30 dégâts",
+      "buy": 25,
+      "sell": 5
+    },
+    {
+      "name": "Branche Guide",
+      "desc": "Ne tire aucun projectile mais révèle la position des escaliers. Il faudra 2 fois moins de temps pour les atteindre, et aucun ennemi ne sera rencontré sur le chemin",
+      "buy": 60,
+      "sell": 12
+    },
+    {
+      "name": "Branche Permu-PV",
+      "desc": "Echange les PV de l'utilisateur et du Pokémon touché",
+      "buy": 80,
+      "sell": 16
+    },
+    {
+      "name": "Branche Pétrifiante",
+      "desc": "Pétrifie la cible, ce qui l'empêche d'agir jusqu'à être touchée par une attaque",
+      "buy": 60,
+      "sell": 12
+    },
+    {
+      "name": "Branche Bond",
+      "desc": "Téléporte l'utilisateur et ses alliés à l'endroit touché par le projectile",
+      "buy": 35,
+      "sell": 7
+    },
+    {
+      "name": "Branche Quart",
+      "desc": "Fixe les PV du Pokémon touché à 25% de ses PV max",
+      "buy": 50,
+      "sell": 10
+    },
+    {
+      "name": "Branche Lenteur",
+      "desc": "Ralentit le Pokémon touché",
+      "buy": 50,
+      "sell": 10
+    },
+    {
+      "name": "Branche Envoûte",
+      "desc": "Pétrifie et téléporte la cible à un endroit aléatoire de l'étage. Le Pokémon touché ne pourra plus agir avant d'avoir été touchée par une attaque",
+      "buy": 50,
+      "sell": 10
+    },
+    {
+      "name": "Branche Encercle",
+      "desc": "Téléporte l'utilisateur et ses alliés autour du Pokémon touché. N'a aucun effet si le projectile touche un mur ou un obstacle",
+      "buy": 35,
+      "sell": 7
+    },
+    {
+      "name": "Branche Permute",
+      "desc": "Echange la position du Pokémon touché avec celle de l'utilisateur",
+      "buy": 35,
+      "sell": 7
+    },
+    {
+      "name": "Branche Supermute",
+      "desc": "Echange la position du Pokémon touché avec celle de l'utilisateur. Téléporte aussi les alliés de l'utilisateur à côté de lui",
+      "buy": 45,
+      "sell": 9
+    },
+    {
+      "name": "Branche Paresse",
+      "desc": "Ralentit le Pokémon touché",
+      "buy": 50,
+      "sell": 10
+    },
+    {
+      "name": "Branche Tunnel",
+      "desc": "Si le projectile touche un mur, y creuse un tunnel de 20m de long de taille moyenne. Les grands Pokémon peuvent s'y faufiler. Si le projectile touche un Pokémon, il lui inflige 10 dégâts",
+      "buy": 30,
+      "sell": 6
+    },
+    {
+      "name": "Branche Fracasse",
+      "desc": "Fixe les PV du Pokémon touché à 1, mais divise aussi par 2 les PV de l'utilisateur",
+      "buy": 60,
+      "sell": 12
+    },
+    {
+      "name": "Branche Téléport",
+      "desc": "Téléporte le Pokémon touché et les objets et Pokémon en contact avec lui à un endroit aléatoire de l'étage",
+      "buy": 35,
+      "sell": 7
+    },
+    {
+      "name": "Branche Cyclone",
+      "desc": "Repousse le Pokémon touché de 20m. Il subit 30 dégâts s'il percute un obstacle",
+      "buy": 35,
+      "sell": 7
+    }
+  ],
+  "clothing": [
+    {
+      "name": "Capuche de Trappeur",
+      "desc": "Tout piège déclenché par le porteur est détruit",
+      "buy": 1000,
+      "sell": 200,
+      "head": true
+    },
+    {
+      "name": "Ruban Pêcha",
+      "desc": "Le porteur subit deux fois moins de dégâts des attaques de type poison et ne peut pas être empoisonné",
+      "buy": 1200,
+      "sell": 240,
+      "neck": true
+    },
+    {
+      "name": "Ruban Kika",
+      "desc": "Le porteur subit deux fois moins de dégâts des attaques de type psy",
+      "buy": 1000,
+      "sell": 200,
+      "head": true,
+      "neck": true
+    },
+    {
+      "name": "Bandana Climaprotect",
+      "desc": "Le porteur ne subit pas de dégâts liés à la météo",
+      "buy": 1500,
+      "sell": 300,
+      "head": true,
+      "neck": true
+    },
+    {
+      "name": "Echarpe Déf+",
+      "desc": "Augmente la défense du porteur de 20%",
+      "buy": 1000,
+      "sell": 200,
+      "neck": true
+    },
+    {
+      "name": "Bandeau de Détection",
+      "desc": "Augmente la finesse du porteur de 2",
+      "buy": 1000,
+      "sell": 200,
+      "head": true,
+      "neck": true
+    },
+    {
+      "name": "Obi Goinfrex",
+      "desc": "Augmente l'attaque et l'attaque spéciale du porteur de 50%, mais lui inflige 5 dégâts par tour",
+      "sell": 500,
+      "belt": true
+    },
+    {
+      "name": "Bandana Force+",
+      "desc": "Augmente l'attaque du porteur de 20%",
+      "buy": 1000,
+      "sell": 200,
+      "head": true,
+      "neck": true
+    },
+    {
+      "name": "Ruban Spé",
+      "desc": "Augmente l'attaque spéciale du porteur de 20%",
+      "buy": 1000,
+      "sell": 200,
+      "head": true,
+      "neck": true
+    },
+    {
+      "name": "Turban Entortillé",
+      "desc": "Empêche les ennemis de baisser les stats du porteur",
+      "buy": 1200,
+      "sell": 240,
+      "head": true
+    },
+    {
+      "name": "Bandana Zinc",
+      "desc": "Augmente la défense spéciale du porteur de 20%",
+      "buy": 1000,
+      "sell": 200,
+      "head": true,
+      "neck": true
+    },
+    {
+      "name": "Ruban Dévi'Objet",
+      "desc": "Les objets lancés vers le porteur sont retournés à l'envoyeur",
+      "buy": 1300,
+      "sell": 260,
+      "head": true,
+      "neck": true
+    },
+    {
+      "name": "Ruban Choix",
+      "desc": "Lorsque le porteur attaque, il peut relancer les dés pour chaque tour consécutif où il a utilisé la même attaque",
+      "buy": 1200,
+      "sell": 240,
+      "head": true,
+      "neck": true
+    },
+    {
+      "name": "Bandeau Couverture",
+      "desc": "Lorsqu'un allié ayant 20% de ses PV ou moins est attaqué, le porteur peut subir l'attaque à sa place",
+      "buy": 1200,
+      "sell": 240,
+      "head": true,
+      "neck": true
+    },
+    {
+      "name": "Bandana Ricoch'Objet",
+      "desc": "Les objets lancés par le porteur rebondissent sur les murs et les obstacles",
+      "buy": 1000,
+      "sell": 200,
+      "head": true,
+      "neck": true
+    },
+    {
+      "name": "Echarpe Evit'Objet",
+      "desc": "Le porteur esquive tous les objets lancés sur lui",
+      "buy": 2000,
+      "sell": 400,
+      "neck": true
+    },
+    {
+      "name": "Ceinture Force",
+      "desc": "Lorsque le porteur est touché par une attaque qui devrait le mettre KO, il lance une pièce. Si c'est face, il résiste avec 1 PV",
+      "buy": 2500,
+      "sell": 500,
+      "belt": true
+    },
+    {
+      "name": "Ruban Doré",
+      "desc": "Aucun effet",
+      "sell": 2000,
+      "head": true,
+      "neck": true
+    },
+    {
+      "name": "Ruban Soin",
+      "desc": "Le porteur récupère 2 PV par tour",
+      "buy": 1100,
+      "sell": 220,
+      "head": true,
+      "neck": true
+    },
+    {
+      "name": "Ruban Veinard",
+      "desc": "Le porteur ne subit aucun dégât supplémentaire en cas de coup critique",
+      "sell": 1000,
+      "head": true,
+      "neck": true
+    },
+    {
+      "name": "Echarpe Passmuraille",
+      "desc": "Le porteur peut traverser les murs et marcher sur des liquides, mais subit 5 dégâts tous les 2m ainsi parcourus",
+      "buy": 1500,
+      "sell": 300,
+      "neck": true
+    },
+    {
+      "name": "Voile Cible",
+      "desc": "Le porteur subit deux fois plus de dégâts",
+      "buy": 800,
+      "sell": 160,
+      "head": true,
+      "neck": true
+    },
+    {
+      "name": "Bandana Passetout",
+      "desc": "Les objets lancés par le porteur traversent les murs et les obstacles",
+      "buy": 1500,
+      "sell": 300,
+      "head": true,
+      "neck": true
+    },
+    {
+      "name": "Ruban Simple",
+      "desc": "Aucun effet",
+      "buy": 50,
+      "sell": 10,
+      "head": true,
+      "neck": true
+    },
+    {
+      "name": "Ruban Alarme",
+      "desc": "Le porteur peut réveiller les Pokémon endormis à proximité à volonté",
+      "buy": 1300,
+      "sell": 260,
+      "head": true,
+      "neck": true
+    },
+    {
+      "name": "Cape Appel",
+      "desc": "Téléporte le porteur près de son allié le plus proche au début de chaque tour s'il se trouve dans une autre salle",
+      "buy": 1200,
+      "sell": 240,
+      "neck": true
+    },
+    {
+      "name": "Echarpe Discrète",
+      "desc": "Augmente la discrétion du porteur de 2",
+      "buy": 1400,
+      "sell": 280,
+      "neck": true
+    },
+    {
+      "name": "Echarpe de Trappeur",
+      "desc": "Le porteur ne déclenche pas les pièges",
+      "buy": 1600,
+      "sell": 320,
+      "neck": true
+    },
+    {
+      "name": "Télécharpe",
+      "desc": "Téléporte le porteur tous les 3 à 5 tours à un endroit aléatoire de l'étage. Permet de trouver les escaliers en moitié moins de temps. Le porteur peut choisir la destination en réussissant un jet de concentration",
+      "buy": 200,
+      "sell": 40,
+      "neck": true
+    },
+    {
+      "name": "Révélateur",
+      "desc": "Augmente la perception du porteur de 2. Particulièrement ridicule",
+      "buy": 2500,
+      "sell": 500,
+      "head": true
+    },
+    {
+      "name": "Viseur",
+      "desc": "Les objets lancés par le porteur touchent toujours leur cible",
+      "buy": 1500,
+      "sell": 300,
+      "head": true
+    },
+    {
+      "name": "Radar Lingots",
+      "desc": "Permet au porteur de détecter l'or à proximité",
+      "buy": 1200,
+      "sell": 240,
+      "head": true
+    },
+    {
+      "name": "Insomniscope",
+      "desc": "Empêche le porteur de s'endormir",
+      "buy": 1500,
+      "sell": 300,
+      "head": true
+    },
+    {
+      "name": "Lentilscope",
+      "desc": "Le porteur assène un coup critique sur 11 et 12",
+      "buy": 1700,
+      "sell": 340,
+      "head": true
+    },
+    {
+      "name": "Lentilscope",
+      "desc": "Le porteur assène un coup critique sur 11 et 12",
+      "buy": 1700,
+      "sell": 340,
+      "head": true
+    },
+    {
+      "name": "Binocles",
+      "desc": "Les objets lancés par le porteur ne touchent jamais leur cible",
+      "buy": 700,
+      "sell": 140,
+      "head": true
+    },
+    {
+      "name": "Rayons X",
+      "desc": "Le porteur peut voir à travers les murs en réussissant un jet de concentration. En cas d'échec, il faut 10h à cet objet pour se recharger",
+      "buy": 3000,
+      "sell": 600,
+      "head": true
+    },
+    {
+      "name": "Armure de Plaques",
+      "desc": "Le porteur subit deux fois moins de dégâts des attaques physiques, mais sa vitesse est réduite de moitié",
+      "buy": 2000,
+      "sell": 400,
+      "belt": true
+    },
+    {
+      "name": "Gros Manteau",
+      "desc": "Le porteur ne craint plus le froid. Les attaques de type glace lui infligent deux fois moins de dégâts, mais les attaques de type feu lui en infligent deux fois plus",
+      "buy": 1000,
+      "sell": 200,
+      "belt": true
     }
   ]
 }
