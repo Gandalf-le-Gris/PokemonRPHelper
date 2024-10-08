@@ -662,7 +662,7 @@
     },
     {
       "name": "Bandeau de Détection",
-      "desc": "Augmente la finesse du porteur de 2",
+      "desc": "Augmente la dextérité du porteur de 2",
       "buy": 1000,
       "sell": 200,
       "head": true,
@@ -1160,6 +1160,224 @@
       "name": "Théière Fêlée",
       "buy": 100,
       "sell": 20
+    },
+    {
+      "name": "Rouleau de l'Eau",
+      "buy": 1000,
+      "sell": 200
+    },
+    {
+      "name": "Rouleau des Ténèbres",
+      "buy": 1000,
+      "sell": 200
+    },
+    {
+      "name": "Bracelet Galanoa",
+      "buy": 500,
+      "sell": 100
+    },
+    {
+      "name": "Couronne Galanoa",
+      "buy": 500,
+      "sell": 100
+    },
+    {
+      "name": "Armure de la Fortune",
+      "buy": 2500,
+      "sell": 500
+    },
+    {
+      "name": "Armure de la Rancune",
+      "buy": 2500,
+      "sell": 500
+    },
+    {
+      "name": "Eclat de Souhait",
+      "desc": "Permet de dynamaxer un autre Pokémon une fois par jour"
+    },
+    {
+      "name": "Téra-Éclat",
+      "desc": "Résonne avec un type en particulier. Permet de se transformer en ce type lors de la téracristallisation"
+    },
+    {
+      "name": "Orbe Téracristal",
+      "desc": "Permet de téracristalliser un autre Pokémon une fois par jour"
+    }
+  ],
+  "miscellaneous": [
+    {
+      "name": "Corde",
+      "desc": "Une simple corde de 20m",
+      "buy": 50,
+      "sell": 10
+    },
+    {
+      "name": "Grappin",
+      "desc": "Un crochet en métal à fixer au bout d'une corde. Permet d'éviter les jets d'escalade si utilisé correctement",
+      "buy": 100,
+      "sell": 20
+    },
+    {
+      "name": "Gourde",
+      "desc": "Une petite gourde que l'on peut porter accrochée sur soi",
+      "buy": 50,
+      "sell": 10
+    },
+    {
+      "name": "Lanterne à bois",
+      "desc": "Une lanterne qui utilise du petit bois comme combustible pour illuminer une petite pièce",
+      "buy": 100,
+      "sell": 20
+    },
+    {
+      "name": "Allume-feu",
+      "desc": "Une petite boîte contenant le nécessaire pour allumer un feu",
+      "buy": 50,
+      "sell": 10
+    },
+    {
+      "name": "Lanterne à huile",
+      "desc": "Une lanterne qui utilise de l'huile comme combustible pour illuminer une petite pièce",
+      "buy": 100,
+      "sell": 20
+    },
+    {
+      "name": "Huile",
+      "desc": "Environ 1L d'huile inflammable",
+      "buy": 50,
+      "sell": 10
+    },
+    {
+      "name": "Torche",
+      "desc": "Un bâton enveloppé d'un tissu imbibé d'huile inflammable. Peut illuminer faiblement une pièce, ou être utilisée comme arme infligeant des dégâts physiques de type feu",
+      "buy": 50,
+      "sell": 10
+    },
+    {
+      "name": "Sac de couchage",
+      "desc": "Confère 10 PV max supplémentaires lors d'un repos d'au moins 5h par temps calme, actifs jusqu'au repos suivant",
+      "buy": 100,
+      "sell": 20
+    },
+    {
+      "name": "Petite tente",
+      "desc": "Confère 10 PV max supplémentaires lors d'un repos d'au moins 5h, actifs jusqu'au repos suivant",
+      "buy": 300,
+      "sell": 60
+    },
+    {
+      "name": "Grande tente",
+      "desc": "Confère 10 PV max supplémentaires lors d'un repos d'au moins 5h, actifs jusqu'au repos suivant. Peut accueillir 2 Pokémon",
+      "buy": 500,
+      "sell": 100
+    },
+    {
+      "name": "Marmite",
+      "desc": "Une marmite en métal, permettant de cuisiner des plats rudimentaires n'importe où",
+      "buy": 100,
+      "sell": 20
+    },
+    {
+      "name": "Panier en osier",
+      "desc": "Un panier léger d'une contenance de 5L idéal pour transporter de petits objets",
+      "buy": 50,
+      "sell": 10
+    },
+    {
+      "name": "Seau en bois",
+      "desc": "Un lourd seau d'une contenance de 30L pour transporter toutes sortes de choses, dont des liquides",
+      "buy": 50,
+      "sell": 10
+    },
+    {
+      "name": "Chausse-trappe",
+      "desc": "Petit objet métallique à disposer par terre pour blesser tout Pokémon qui marcherait dessus et lui infliger 20 dégâts physiques de type acier",
+      "buy": 100,
+      "sell": 20
+    },
+    {
+      "name": "Menottes",
+      "desc": "Permet de restreindre les mouvements d'un Pokémon, ce qui l'empêche d'effectuer des actions de fouille, escalade, soin, nage, ou lancer",
+      "buy": 100,
+      "sell": 20
+    },
+    {
+      "name": "Chaîne",
+      "desc": "5m de chaîne robuste",
+      "buy": 100,
+      "sell": 20
+    },
+    {
+      "name": "Longue-vue",
+      "desc": "Un astucieux dispositif qui permet de voir des objets lointains comme s'ils étaient proches",
+      "buy": 1000,
+      "sell": 200
+    },
+    {
+      "name": "Marteau",
+      "desc": "Un morceau de métal au bout d'une poignée en bois, utile pour toutes sortes de tâches de construction",
+      "buy": 50,
+      "sell": 10
+    },
+    {
+      "name": "Pelle",
+      "desc": "Un morceau de métal aplati fixé à un manche en bois, utilisé pour creuser et déplacer des masses de terre ou de sable",
+      "buy": 50,
+      "sell": 10
+    },
+    {
+      "name": "Parchemin",
+      "desc": "Une grande page de parchemin sur laquelle il est possible d'écrire à la plume",
+      "buy": 50,
+      "sell": 10
+    },
+    {
+      "name": "Encre",
+      "desc": "Un flacon d'encre bien fermé",
+      "buy": 50,
+      "sell": 10
+    },
+    {
+      "name": "Plume",
+      "desc": "Un petit bâton avec une extrémité spécialement traitée pour l'écriture",
+      "buy": 50,
+      "sell": 10
+    },
+    {
+      "name": "Jeu de dés",
+      "desc": "Un ensemble de dés au nombre variable de faces, pour jouer à des jeux de chance",
+      "buy": 50,
+      "sell": 10
+    },
+    {
+      "name": "Jeu de cartes",
+      "desc": "Un jeu de 45 cartes de 9 couleurs différentes, pour jouer à des jeux de chance",
+      "buy": 50,
+      "sell": 10
+    },
+    {
+      "name": "Instrument à vent",
+      "desc": "Un instrument produisant des notes lorsque l'on souffle dedans",
+      "buy": 500,
+      "sell": 100
+    },
+    {
+      "name": "Instrument à cordes",
+      "desc": "Un instrument produisant des notes lorsque l'on frotte ou pince ses cordes",
+      "buy": 500,
+      "sell": 100
+    },
+    {
+      "name": "Instrument à percussions",
+      "desc": "Un instrument produisant des notes lorsque l'on entrechoque certaines parties",
+      "buy": 500,
+      "sell": 100
+    },
+    {
+      "name": "Outils de voleur",
+      "desc": "Tout ce qu'il faut pour crocheter une serrure. Augmente la dextérité de 2 lors de crochetages, mais en posséder donne mauvaise réputation",
+      "buy": 200,
+      "sell": 40
     }
   ]
 }
