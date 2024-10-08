@@ -329,7 +329,8 @@
         <v-col cols="12" sm="7">
           <v-textarea
             v-model="character.inventory"
-            hide-details
+            hide-details="auto"
+            :messages="inventoryValue"
             label="Inventaire"
             no-resize
             rows="10"
@@ -439,6 +440,7 @@
 import { typeService } from '@/services/instances/typeService.instance';
 import { experienceLabels } from '@/types/experience';
 import { iqSkillArray } from '@/types/iqSkills';
+import { computeValue } from '@/types/items';
 import { changeSpecies, computeHPT, createCharacter } from '@/types/pokemon';
 import { StatName, statsArray, type Character } from '@/types/pokemon';
 import { searchArray } from '@/types/search';
@@ -483,6 +485,14 @@ const varieties: ComputedRef<{ value: number, title: string }[]> = computed(() =
 const attackTypes: ComputedRef<TypeDetail[]> = computed(() =>
   typeService.typeList.filter(e => e.type !== 'stellar' && e.type !== 'unknown').sort((a, b) => a.title.localeCompare(b.title))
 );
+
+const inventoryValue: ComputedRef<string | undefined> = computed(() => {
+  const value = computeValue(character.value.inventory);
+  if (value) {
+    return `Valeur totale : ${value}P`;
+  }
+  return;
+})
 
 async function regenerateCharacter() {
   regenerateLoading.value = true;

@@ -1,5 +1,5 @@
 {
-  "berries": [
+  "berry": [
     {
       "name": "Baie Oran",
       "desc": "Restaure tous les PV",
@@ -35,7 +35,7 @@
       "sell": 3
     }
   ],
-  "seeds": [
+  "seed": [
     {
       "name": "Explograine",
       "desc": "Si mangée, fait souffler une violente explosion qui inflige 30 dégâts aux Pokémon proches. Si lancée, explose à l'impact et inflige 20 dégâts",
@@ -177,7 +177,7 @@
       "sell": 5
     }
   ],
-  "orbs": [
+  "orb": [
     {
       "name": "Boostorbe",
       "desc": "Rend les PV de tous les alliés égaux à ceux du Pokémon aux PV les plus élevés (ne peut pas dépasser les PV max)",
@@ -524,7 +524,7 @@
       "sell": 30
     }
   ],
-  "wands": [
+  "wand": [
     {
       "name": "Branche Détonation",
       "desc": "Inflige 30 dégâts",
@@ -876,13 +876,6 @@
       "head": true
     },
     {
-      "name": "Lentilscope",
-      "desc": "Le porteur assène un coup critique sur 11 et 12",
-      "buy": 1700,
-      "sell": 340,
-      "head": true
-    },
-    {
       "name": "Binocles",
       "desc": "Les objets lancés par le porteur ne touchent jamais leur cible",
       "buy": 700,
@@ -911,7 +904,7 @@
       "belt": true
     }
   ],
-  "flags": [
+  "flag": [
     {
       "name": "Fanion Encouragement",
       "desc": "Les attaques des alliés du porteur infligent 4 dégâts supplémentaires tant que ceux-ci peuvent voir le fanion",

@@ -54,8 +54,8 @@ export const iqSkillArray = [
   },
   {
     value: "Wand user",
-    title: "Connaisseur des baguettes",
-    desc: "Ce Pokémon n'a plus besoin de faire un jet pour utiliser une baguette",
+    title: "Connaisseur des bâtons",
+    desc: "Ce Pokémon n'a plus besoin de faire un jet pour utiliser un bâton",
     level: 5
   },
   {
@@ -109,7 +109,7 @@ export const iqSkillArray = [
   {
     value: "Distance dodge",
     title: "Esquive de projectiles",
-    desc: "Les Pokémon qui attaquent ce Pokémon à distance, avec un objet à jeter ou avec une baguette ont le désavantage",
+    desc: "Les Pokémon qui attaquent ce Pokémon à distance, avec un objet à jeter ou avec un bâton ont le désavantage",
     level: 20
   },
   {
