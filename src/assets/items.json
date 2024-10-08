@@ -910,5 +910,256 @@
       "sell": 200,
       "belt": true
     }
+  ],
+  "flags": [
+    {
+      "name": "Fanion Encouragement",
+      "desc": "Les attaques des alliés du porteur infligent 4 dégâts supplémentaires tant que ceux-ci peuvent voir le fanion",
+      "buy": 2500,
+      "sell": 500
+    },
+    {
+      "name": "Fanion Constant",
+      "desc": "Les stats des alliés du porteur ne peuvent pas baisser tant que ceux-ci peuvent voir le fanion",
+      "buy": 2500,
+      "sell": 500
+    },
+    {
+      "name": "Fanion Tenace",
+      "desc": "Les alliés du porteur lancent une pièce quand ils devraient tomber KO tant que ceux-ci peuvent voir le fanion. Si c'est face, ils résistent avec 1 PV",
+      "buy": 2500,
+      "sell": 500
+    }
+  ],
+  "throwing": [
+    {
+      "name": "Racaillasse",
+      "desc": "Objet à lancer. Inflige 10 dégâts",
+      "buy": 1
+    },
+    {
+      "name": "Gravalroche",
+      "desc": "Objet à lancer. Inflige 20 dégâts",
+      "buy": 2
+    },
+    {
+      "name": "Pic d'Argent",
+      "desc": "Objet à lancer. Inflige 1d6 dégâts physiques",
+      "buy": 6,
+      "sell": 1
+    },
+    {
+      "name": "Epine de Fer",
+      "desc": "Objet à lancer. Inflige 1d6 dégâts physiques",
+      "buy": 4
+    },
+    {
+      "name": "Bâton",
+      "desc": "Objet à lancer. Inflige 1d2 dégâts physiques"
+    },
+    {
+      "name": "Croc d'Or",
+      "desc": "Objet à lancer. Inflige 2d6 dégâts physiques",
+      "buy": 4
+    },
+    {
+      "name": "Epine d'Or",
+      "desc": "Objet à lancer. Inflige 2d6 dégâts physiques"
+    },
+    {
+      "name": "Fossile Rare",
+      "desc": "Objet à lancer. Inflige 100 dégâts",
+      "sell": 1000
+    },
+    {
+      "name": "Pierre Zarbi",
+      "desc": "Objet à lancer. Inflige 2d6 dégâts physiques. Existe en 26 variantes",
+      "sell": 10
+    }
+  ],
+  "rare": [
+    {
+      "name": "Pierre Feu",
+      "buy": 1000,
+      "sell": 200
+    },
+    {
+      "name": "Pierre Eau",
+      "buy": 1000,
+      "sell": 200
+    },
+    {
+      "name": "Pierre Foudre",
+      "buy": 1000,
+      "sell": 200
+    },
+    {
+      "name": "Pierre Plante",
+      "buy": 1000,
+      "sell": 200
+    },
+    {
+      "name": "Pierre Lune",
+      "buy": 1000,
+      "sell": 200
+    },
+    {
+      "name": "Pierre Soleil",
+      "buy": 1000,
+      "sell": 200
+    },
+    {
+      "name": "Pierre Eclat",
+      "buy": 1000,
+      "sell": 200
+    },
+    {
+      "name": "Pierre Nuit",
+      "buy": 1000,
+      "sell": 200
+    },
+    {
+      "name": "Pierre Aube",
+      "buy": 1000,
+      "sell": 200
+    },
+    {
+      "name": "Pierre Glace",
+      "buy": 1000,
+      "sell": 200
+    },
+    {
+      "name": "Ecaille Océan",
+      "desc": "Augmente de 50% la défense spéciale de Coquiperl",
+      "buy": 1600,
+      "sell": 320
+    },
+    {
+      "name": "Dent Océan",
+      "desc": "Augmente de 50% l'attaque spéciale de Coquiperl",
+      "buy": 1600,
+      "sell": 320
+    },
+    {
+      "name": "Ecaille Draco",
+      "buy": 1000,
+      "sell": 200
+    },
+    {
+      "name": "CD douteux",
+      "buy": 2500,
+      "sell": 500
+    },
+    {
+      "name": "Electriseur",
+      "desc": "Si on l'abîme, il se fêle et explose en infligeant 20 dégâts spéciaux de type électrik à tous les Pokémon proches",
+      "buy": 2500,
+      "sell": 500
+    },
+    {
+      "name": "Magmariseur",
+      "desc": "Si on l'abîme, il se fêle et projette de la lave en infligeant 20 dégâts spéciaux de type feu à tous les Pokémon proches",
+      "buy": 2500,
+      "sell": 500
+    },
+    {
+      "name": "Roche Royale",
+      "desc": "Les coup critiques assénés par le porteur paralysent de peur les Pokémon touchés",
+      "buy": 1000,
+      "sell": 200
+    },
+    {
+      "name": "Peau Métal",
+      "desc": "Augmente de 50% les dégâts des attaques de type acier du porteur",
+      "buy": 1000,
+      "sell": 200
+    },
+    {
+      "name": "Bel'Ecaille",
+      "buy": 1000,
+      "sell": 200
+    },
+    {
+      "name": "Protecteur",
+      "buy": 2500,
+      "sell": 500
+    },
+    {
+      "name": "Tissu Fauche",
+      "buy": 1000,
+      "sell": 200
+    },
+    {
+      "name": "Sachet Senteur",
+      "buy": 1000,
+      "sell": 200
+    },
+    {
+      "name": "Améliorator",
+      "buy": 2500,
+      "sell": 500
+    },
+    {
+      "name": "Chantibonbon",
+      "buy": 1000,
+      "sell": 200
+    },
+    {
+      "name": "Pierre Ovale",
+      "buy": 500,
+      "sell": 100
+    },
+    {
+      "name": "Griffe Rasoir",
+      "desc": "Le porteur assène un coup critique sur 11 et 12",
+      "buy": 500,
+      "sell": 100
+    },
+    {
+      "name": "Croc Rasoir",
+      "desc": "Les coup critiques assénés par le porteur paralysent de peur les Pokémon touchés",
+      "buy": 500,
+      "sell": 100
+    },
+    {
+      "name": "Friandise",
+      "buy": 500,
+      "sell": 100
+    },
+    {
+      "name": "Pomme Sucrée",
+      "buy": 500,
+      "sell": 100
+    },
+    {
+      "name": "Pomme Acidulée",
+      "buy": 500,
+      "sell": 100
+    },
+    {
+      "name": "Obsidienne",
+      "buy": 500,
+      "sell": 100
+    },
+    {
+      "name": "Bloc de Tourbe",
+      "buy": 500,
+      "sell": 100
+    },
+    {
+      "name": "Obsidienne",
+      "buy": 500,
+      "sell": 100
+    },
+    {
+      "name": "Théière Ebréchée",
+      "buy": 2500,
+      "sell": 500
+    },
+    {
+      "name": "Théière Fêlée",
+      "buy": 100,
+      "sell": 20
+    }
   ]
 }
