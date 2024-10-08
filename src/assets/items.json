@@ -213,6 +213,315 @@
       "desc": "Pendant 1 tour, toutes les attaques contre les alliés échouent",
       "buy": 600,
       "sell": 120
+    },
+    {
+      "name": "Orbe Désintérêt",
+      "desc": "Tous les ennemis lâchent leurs objets tenus",
+      "buy": 40,
+      "sell": 8
+    },
+    {
+      "name": "Soufflorbe",
+      "desc": "Tous les ennemis dans un rayon de 10m sont projetés dans une direction aléatoire. En cas de collision avec un mur, ils subissent 30 dégâts",
+      "buy": 50,
+      "sell": 10
+    },
+    {
+      "name": "Nettoyorbe",
+      "desc": "Nettoie les choses sales",
+      "buy": 15,
+      "sell": 3
+    },
+    {
+      "name": "Appâtorbe",
+      "desc": "Force tous les ennemis à attaquer l'utilisateur pendant 5 tours",
+      "buy": 40,
+      "sell": 8
+    },
+    {
+      "name": "Stockorbe",
+      "desc": "Un objet choisi à l'avance est téléporté dans un lieu déjà visité par l'utilisateur et choisi à l'avance",
+      "buy": 100,
+      "sell": 20
+    },
+    {
+      "name": "Vaporisorbe",
+      "desc": "L'eau et le magma dans un rayon de 1km disparaissent et réapparaissent 1h plus tard",
+      "buy": 150,
+      "sell": 30
+    },
+    {
+      "name": "Echapporbe",
+      "desc": "Permet de sortir immédiatement du donjon",
+      "buy": 150,
+      "sell": 30
+    },
+    {
+      "name": "Orbe Discorde",
+      "desc": "Pousse les ennemis de l'étage à se battre entre eux",
+      "buy": 200,
+      "sell": 40
+    },
+    {
+      "name": "Solidifiorbe",
+      "desc": "Crée un passage avec un pont liquide, d'une longueur maximale de 1km",
+      "buy": 150,
+      "sell": 30
+    },
+    {
+      "name": "Epouvantorbe",
+      "desc": "Tous les ennemis de l'étage ont peur de l'utilisateur et le fuient pendant 10 tours",
+      "buy": 150,
+      "sell": 30
+    },
+    {
+      "name": "Stupéfiorbe",
+      "desc": "Tous les ennemis de l'étage sont pétrifiés et ne peuvent plus agir jusqu'à être attaqués",
+      "buy": 150,
+      "sell": 30
+    },
+    {
+      "name": "Immobilisorbe",
+      "desc": "Tous les ennemis de l'étage sont léthargiques et ne peuvent plus se déplacer pendant 10 tours",
+      "buy": 100,
+      "sell": 20
+    },
+    {
+      "name": "Tempêtorbe",
+      "desc": "Provoque une tempête de grêle pendant 10 tours",
+      "buy": 35,
+      "sell": 7
+    },
+    {
+      "name": "Projectorbe",
+      "desc": "Projette un ennemi visible vers un autre ennemi visible. Les deux subissent 20 dégâts en cas de collision",
+      "buy": 150,
+      "sell": 30
+    },
+    {
+      "name": "Identificorbe",
+      "desc": "Confère à l'utilisateur la capacité de savoir où se trouvent les Pokémon proches tenant des objets pendant 10h",
+      "buy": 150,
+      "sell": 30
+    },
+    {
+      "name": "Objetorbe",
+      "desc": "Transforme une cible en objet de valeur 1000 P ou moins choisi par le MJ. Toutes les 5h, la cible fait un jet de concentration. En cas de réussite ou si l'objet est utilisé ou détruit, la cible réapparaît à côté de l'emplacement de l'objet",
+      "buy": 300,
+      "sell": 60
+    },
+    {
+      "name": "Orbe Coup de Filet",
+      "desc": "Entasse tous les ennemis de la salle au même endroit. Toute attaque dirigée vers l'un d'entre eux les touche tous pendant 3 tours",
+      "buy": 75,
+      "sell": 15
+    },
+    {
+      "name": "Catapultorbe",
+      "desc": "Pendant 1h, les objets lancés par l'utilisateur ne retombent pas et continuent leur course jusqu'à rencontrer un obstacle",
+      "buy": 150,
+      "sell": 30
+    },
+    {
+      "name": "Lumiorbe",
+      "desc": "Informe l'utilisateur de la structure de l'étage",
+      "buy": 125,
+      "sell": 25
+    },
+    {
+      "name": "Passemurorbe",
+      "desc": "Permet à l'utilisateur de passer à travers les murs et de marcher sur l'eau, la lave et les nuages pendant 10h ou jusqu'à quitter le donjon",
+      "buy": 500,
+      "sell": 100
+    },
+    {
+      "name": "Monstrorbe",
+      "desc": "Fait apparaître 10 Pokémon hostiles"
+    },
+    {
+      "name": "Dépouillorbe",
+      "desc": "Un Pokémon visible par l'utilisateur subit 30 dégât et se fait voler l'objet qu'il tient",
+      "buy": 150,
+      "sell": 30
+    },
+    {
+      "name": "Orbe Anti-Talent",
+      "desc": "Annule les effets des talents des ennemis de l'étage",
+      "buy": 75,
+      "sell": 15
+    },
+    {
+      "name": "Bulldozorbe",
+      "desc": "Détruit tous les murs de l'étage. Les déplacements n'y prennent plus de temps, et les jets de fouille y ont un bonus de 2",
+      "buy": 150,
+      "sell": 30
+    },
+    {
+      "name": "Fulgurorbe",
+      "desc": "Lancez 1d3. Sur un 3, tous les ennemis de la pièce ou dans un rayon de 1km sont mis KO (inefficace contre les Pokémon mythiques et légendaires)",
+      "buy": 150,
+      "sell": 30
+    },
+    {
+      "name": "Pétrifiorbe",
+      "desc": "Tous les ennemis de la salle sont pétrifiés et ne peuvent plus agir pendant 10 tours",
+      "buy": 75,
+      "sell": 15
+    },
+    {
+      "name": "Perçorbe",
+      "desc": "Pendant 1h, les objets lancés par l'utilisateur transpercent les murs et les Pokémon",
+      "buy": 150,
+      "sell": 30
+    },
+    {
+      "name": "Possessorbe",
+      "desc": "Lorsqu'un Pokémon tenant cet objet est mis KO, il échange de corps avec le Pokémon le plus proche. Cet effet se termine lorsque les deux Pokémon sont inconscients (KO ou endormis)",
+      "sell": 150
+    },
+    {
+      "name": "Ecrasorbe",
+      "desc": "L'utilisateur fonce en avant jusqu'à rencontrer un mur, un Pokémon, ou avoir parcouru 1km. Si un Pokémon est percuté de la sorte, il subit 40 dégâts",
+      "buy": 150,
+      "sell": 30
+    },
+    {
+      "name": "Radarorbe",
+      "desc": "Révèle la position de tous les Pokémon hostiles dans un rayon de 1km",
+      "buy": 150,
+      "sell": 30
+    },
+    {
+      "name": "Aversorbe",
+      "desc": "Le temps devient pluvieux pendant 10 tours",
+      "buy": 35,
+      "sell": 7
+    },
+    {
+      "name": "Rebondorbe",
+      "desc": "L'utilisateur renvoie 25% des dégâts qu'il subit à l'attaquant pendant 10h ou jusqu'à la fin du donjon",
+      "buy": 150,
+      "sell": 30
+    },
+    {
+      "name": "Orbe Résurrection",
+      "desc": "Ranime tous les alliés de l'utilisateur avec tous leurs PV",
+      "buy": 300,
+      "sell": 60
+    },
+    {
+      "name": "Rochorbe",
+      "desc": "Un Pokémon visible par l'utilisateur est attrapé par le sol. Il subit 30 dégâts et est ralenti",
+      "buy": 300,
+      "sell": 60
+    },
+    {
+      "name": "Convocorbe",
+      "desc": "Téléporte à l'utilisateur tous ses alliés",
+      "buy": 100,
+      "sell": 20
+    },
+    {
+      "name": "Sablorbe",
+      "desc": "Provoque une tempête de sable pendant 10 tours",
+      "buy": 35,
+      "sell": 7
+    },
+    {
+      "name": "Révélorbe",
+      "desc": "Tous les objets proches, au sol et dissimulés, sont révélés à l'utilisateur pendant 10h ou jusqu'à la fin du donjon",
+      "buy": 50,
+      "sell": 10
+    },
+    {
+      "name": "Détectorbe",
+      "desc": "Tous les pièges sont révélés à l'utilisateur pendant 10h ou jusqu'à la fin du donjon",
+      "buy": 150,
+      "sell": 30
+    },
+    {
+      "name": "Lentorbe",
+      "desc": "Ralentit tous les ennemis de la salle",
+      "buy": 150,
+      "sell": 30
+    },
+    {
+      "name": "Saisiorbe",
+      "desc": "Permet à l'utilisateur de voler les changements de statistiques des ennemis pendant 10 tours",
+      "buy": 150,
+      "sell": 30
+    },
+    {
+      "name": "Repoussorbe",
+      "desc": "Téléporte tous les ennemis de la salle ailleurs dans l'étage",
+      "buy": 200,
+      "sell": 40
+    },
+    {
+      "name": "Escalorbe",
+      "desc": "Révèle la position des escaliers. Il faudra 2 fois moins de temps pour l'atteindre, et aucun ennemi ne sera rencontré sur le chemin",
+      "buy": 100,
+      "sell": 20
+    },
+    {
+      "name": "Envoûtorbe",
+      "desc": "Pétrifie un ennemi visible par l'utilisateur et le téléporte vers les escaliers",
+      "buy": 50,
+      "sell": 10
+    },
+    {
+      "name": "Héliorbe",
+      "desc": "Le temps devient ensoleillé",
+      "buy": 35,
+      "sell": 7
+    },
+    {
+      "name": "Encerclorbe",
+      "desc": "L'utilisateur et ses alliés se téléportent autour d'un ennemi visible, et les dégâts du Pokémon visé diminuent de 50% tant qu'il reste encerclé",
+      "buy": 100,
+      "sell": 20
+    },
+    {
+      "name": "Echangeorbe",
+      "desc": "Echange la position de l'utilisateur et d'un Pokémon aléatoire dans un rayon de 1km",
+      "buy": 100,
+      "sell": 20
+    },
+    {
+      "name": "Transferorbe",
+      "desc": "Echange la position d'un Pokémon visible par l'utilisateur et d'un de ses alliés choisi au hasard dans un rayon de 1km",
+      "buy": 150,
+      "sell": 30
+    },
+    {
+      "name": "Désamorbe",
+      "desc": "Pendant 10h ou jusqu'à la fin du donjon, tout piège déclenché par l'utilisateur est détruit",
+      "buy": 120,
+      "sell": 24
+    },
+    {
+      "name": "Piègeorbe",
+      "desc": "Place un piège de nature choisie par l'utilisateur à ses pieds, qui infligera 50 dégât à tout ennemi marchant dessus",
+      "buy": 100,
+      "sell": 20
+    },
+    {
+      "name": "Aspirorbe",
+      "desc": "Attire 1d6 objets mineurs aléatoires vers l'utilisateur",
+      "buy": 150,
+      "sell": 30
+    },
+    {
+      "name": "Doublorbe",
+      "desc": "Fait chuter à 1 les PV de tous les ennemis de la salle, mais divise par 2 les PV de l'utilisateur pour chaque Pokémon affecté",
+      "buy": 150,
+      "sell": 30
+    },
+    {
+      "name": "Doublorbe",
+      "desc": "Fait chuter à 1 les PV de tous les ennemis de la salle, mais divise par 2 les PV de l'utilisateur pour chaque Pokémon affecté",
+      "buy": 150,
+      "sell": 30
     }
   ]
 }
