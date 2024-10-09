@@ -32,6 +32,11 @@ const routes = [
     value: '/encounter',
     title: 'Rencontres',
     icon: 'mdi-fencing',
+  },
+  {
+    value: '/items',
+    title: 'Objets',
+    icon: 'mdi-sack'
   }
 ];
 

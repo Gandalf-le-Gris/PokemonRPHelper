@@ -59,14 +59,13 @@ export default items as Record<ItemType, Item[]>;
 export function computeValue(inventory: string): number {
   const lines = inventory.split('\n');
   return lines.reduce((acc, x) => {
-    if (x.match(/\d+ *P/gi)?.length) {
+    if (x.match(/\d+ *P(?:[^\w]|$)/gi)?.length) {
       return acc + Number(x.match(/\d+/g)?.[0]);
     }
-    const item = Object.values(items).flat().find(e => x.startsWith(e.name));
+    const item = Object.values(items).flat().find(e => x.toLowerCase().includes(e.name.toLowerCase()));
     if (item && item.sell) {
-      const arr = x.split(' ');
-      const mult = Number(arr[arr.length - 1]);
-      if (!Number.isNaN(mult) && mult > 0) {
+      const mult = x.match(/(\d+)/gi)?.map(e => Number(e)).find(e => e > 0);
+      if (mult) {
         return acc + item.sell * mult;
       }
       return acc + item.sell;
