@@ -21,6 +21,18 @@ export const itemTypeArray = [
     title: 'Baies',
   },
   {
+    value: 'seed',
+    title: 'Graines',
+  },
+  {
+    value: 'orb',
+    title: 'Orbes',
+  },
+  {
+    value: 'wand',
+    title: 'Bâtons',
+  },
+  {
     value: 'clothing',
     title: 'Vêtements',
   },
@@ -29,28 +41,16 @@ export const itemTypeArray = [
     title: 'Fanions',
   },
   {
-    value: 'miscellaneous',
-    title: 'Divers',
-  },
-  {
-    value: 'orb',
-    title: 'Orbes',
+    value: 'throwing',
+    title: 'Objets à lancer',
   },
   {
     value: 'rare',
     title: 'Objets rares',
   },
   {
-    value: 'seed',
-    title: 'Graines',
-  },
-  {
-    value: 'throwing',
-    title: 'Objets à lancer',
-  },
-  {
-    value: 'wand',
-    title: 'Bâtons',
+    value: 'miscellaneous',
+    title: 'Divers',
   },
 ] as { value: ItemType, title: string }[];
 

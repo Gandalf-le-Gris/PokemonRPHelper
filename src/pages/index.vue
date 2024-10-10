@@ -3,7 +3,7 @@
     <v-responsive
       class="align-centerfill-height mx-auto"
     >
-      <v-card title="Mes personnages" class="pa-4 mb-8" rounded="lg">
+      <v-card title="Mes personnages" class="px-4 pb-4 pt-2 mb-8" rounded="lg">
         <v-row align="center" dense>
           <v-col cols="12" sm>
             <v-select
@@ -103,7 +103,6 @@
 import { encounterService } from '@/services/instances/encounterService.instance';
 import { isCharacter } from '@/types/pokemon'
 import { Character, createCharacter } from '@/types/pokemon';
-
 
 export default defineComponent({
   name: 'CharacterSheet',

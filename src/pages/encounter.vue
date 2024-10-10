@@ -3,7 +3,7 @@
     <v-responsive
       class="align-centerfill-height mx-auto"
     >
-      <v-card title="Paramètres de la rencontre" class="pa-4" rounded="lg">
+      <v-card title="Paramètres de la rencontre" class="px-4 pb-4 pt-2" rounded="lg">
         <encounter-filters v-model="filters"/>
         <div class="d-flex justify-space-around mt-4">
           <v-btn

@@ -10,6 +10,7 @@ declare module 'vue' {
     ConfirmCancelDialog: typeof import('./components/ConfirmCancelDialog.vue')['default']
     EncounterFilters: typeof import('./components/EncounterFilters.vue')['default']
     PokemonSheet: typeof import('./components/PokemonSheet.vue')['default']
+    RandomItemCard: typeof import('./components/RandomItemCard.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TypeImage: typeof import('./components/TypeImage.vue')['default']

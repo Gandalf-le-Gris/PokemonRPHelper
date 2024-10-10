@@ -5,15 +5,29 @@
     <v-responsive
       class="align-centerfill-height mx-auto"
     >
-      <v-card title="Aide aux objets" class="pa-4" rounded="lg">
+      <v-card title="Aide aux objets" class="px-4 pb-4 pt-2" rounded="lg">
         <v-row align="center" dense>
-          <v-col cols="12" md="6">
+          <v-col>
             <v-text-field
               v-model="filters.name"
               label="Nom"
               hide-details
               clearable
             />
+          </v-col>
+          <v-col cols="auto">
+            <v-tooltip text="Aléatoire" location="top">
+              <template #activator="{ props }">
+                <v-btn
+                  @click="openRandom = true"
+                  icon="mdi-shuffle-variant"
+                  density="compact"
+                  elevation="0"
+                  size="x-large"
+                  v-bind="props"
+                />
+              </template>
+            </v-tooltip>
           </v-col>
         </v-row>
       </v-card>
@@ -22,7 +36,7 @@
         v-for="itemType in Object.keys(filteredItems)"
         :key="itemType"
         :title="itemTypeArray.find(e => e.value === itemType)?.title"
-        class="pa-4 mt-8"
+        class="px-4 pb-2 mt-8"
         rounded="lg"
       >
         <v-data-table
@@ -66,6 +80,8 @@
       <div v-if="!Object.keys(filteredItems).length" class="mt-8 text-h6 text-center">Aucun objet trouvé...</div>
     </v-responsive>
   </v-container>
+
+  <random-item-card v-model="openRandom"/>
 </template>
 
 <script setup lang="ts">
@@ -74,6 +90,8 @@ import items, { Clothing, Item, ItemType, itemTypeArray } from '@/types/items';
 const filters: Ref<{ name: string | null }> = ref({ name: '' });
 const debouncedName: Ref<string> = ref('');
 let nameTimeout: number = -1;
+
+const openRandom: Ref<boolean> = ref(false);
 
 watch(() => filters.value.name, (val: string | null) => {
   clearTimeout(nameTimeout);
