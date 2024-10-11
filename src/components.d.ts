@@ -7,6 +7,8 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    BattleMap: typeof import('./components/BattleMap.vue')['default']
+    BattleMapTile: typeof import('./components/BattleMapTile.vue')['default']
     ConfirmCancelDialog: typeof import('./components/ConfirmCancelDialog.vue')['default']
     EncounterFilters: typeof import('./components/EncounterFilters.vue')['default']
     PokemonSheet: typeof import('./components/PokemonSheet.vue')['default']

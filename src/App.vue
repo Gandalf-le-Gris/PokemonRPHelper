@@ -17,11 +17,20 @@
         </v-list>
       </v-navigation-drawer>
       <router-view />
+      <v-snackbar
+        v-model="snackbarService.snackbarInfo.display"
+        :text="snackbarService.snackbarInfo.message"
+        :color="snackbarService.snackbarInfo.color"
+        close-delay="5000"
+        close-on-content-click
+      />
     </v-main>
   </v-app>
 </template>
 
 <script lang="ts">
+import { snackbarService } from './services/instances/snackbarService.instance';
+
 const routes = [
   {
     value: '/',
@@ -29,14 +38,19 @@ const routes = [
     icon: 'mdi-pencil',
   },
   {
-    value: '/encounter',
-    title: 'Rencontres',
-    icon: 'mdi-fencing',
-  },
-  {
     value: '/items',
     title: 'Objets',
     icon: 'mdi-sack'
+  },
+  {
+    value: '/encounter',
+    title: 'Rencontres',
+    icon: 'mdi-alert-decagram',
+  },
+  {
+    value: '/room',
+    title: 'Combat',
+    icon: 'mdi-fencing'
   }
 ];
 
@@ -45,6 +59,7 @@ export default defineComponent({
   data: () => ({
     routes,
     drawer: false,
+    snackbarService,
   }),
   watch: {
     drawer() {
