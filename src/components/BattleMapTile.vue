@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import { findTilePosition } from '@/assets/map-sprites/tileMap';
+import { findTilePosition } from '@/utils/tileMap';
 import { webSocketService } from '@/services/instances/webSocketService.instance';
 import { BattleCharacter, RoomTile } from '@/types/Room';
 import { PropType } from 'vue';
@@ -45,16 +45,18 @@ const props = defineProps({
 
 const canvas: Ref<HTMLCanvasElement | undefined> = ref();
 
-function paintTiles() {
+async function paintTiles() {
   const ctx = canvas.value?.getContext('2d');
   if (ctx) {
-    const img = new Image();
+    const img: HTMLImageElement = await new Promise(r => {
+      const i = new Image();
+      i.onload = (() => r(i));
+      i.src = `/map-sprites/${props.spriteSheet}.png`;
+    });
+    console.log(img);
     ctx.imageSmoothingEnabled = false;
     const { i, j } = findTilePosition(props.map, props.i, props.j);
-    img.addEventListener('load', () => {
-      ctx.drawImage(img, j * 24, i * 24, 24, 24, 0, 0, canvas.value!.width, canvas.value!.height);
-    });
-    img.src = `/src/assets/map-sprites/${props.spriteSheet}.png`;
+    ctx.drawImage(img, j * 24, i * 24, 24, 24, 0, 0, canvas.value!.width, canvas.value!.height);
   }
 }
 

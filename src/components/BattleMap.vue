@@ -210,7 +210,7 @@
 </template>
 
 <script setup lang="ts">
-import { spriteSheetArray } from '@/assets/map-sprites/spriteSheets';
+import { spriteSheetArray } from '@/utils/spriteSheets';
 import { webSocketService } from '@/services/instances/webSocketService.instance';
 import { Character, computeHPT } from '@/types/pokemon';
 import { computeGlobalModifiers } from '@/types/specificities';
