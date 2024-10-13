@@ -14,6 +14,7 @@
           </v-col>
           <v-col cols="12" sm="6" class="d-flex flex-column">
             <v-text-field
+              @keypress.enter="joinRoom"
               v-model="roomId"
               hide-details
               label="Code de la salle"
@@ -54,7 +55,9 @@ async function createRoom() {
 }
 
 async function joinRoom() {
-  webSocketService.joinRoom(roomId.value);
+  if (roomId.value.match(/^\d{6}$/g)) {
+    webSocketService.joinRoom(roomId.value);
+  }
 }
 
 watch(() => webSocketService.getRoom().value?.uuid, (val) => {

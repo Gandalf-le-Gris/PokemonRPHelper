@@ -16,7 +16,12 @@
           density="compact"
           class="ma-2"
         />
-        <PokemonSheet v-model="character!" :is-player-sheet="!isMaster"/>
+        <PokemonSheet
+          v-model="character!"
+          :is-player-sheet="!isMaster"
+          is-battle-sheet
+          @saved="updateCharacter"
+        />
       </div>
     </v-navigation-drawer>
     <v-btn
@@ -24,9 +29,14 @@
       @click="showSheet = true"
       icon="mdi-chevron-left"
       class="rounded-s-pill position-absolute right-0"
+      style="z-index: 1"
     />
-
-    <BattleMap/>
+    <BattleMap
+      @update-character="updateCharacter"
+      v-model="character"
+      :is-master
+      :my-character="character?.uuid"
+    />
   </div>
 
   <v-dialog
@@ -61,7 +71,7 @@
             class="mb-2"
           />
           <v-btn
-            @click="connectAsPlayer"
+            @click="connectAsPlayer(false)"
             text="Joueur"
             :disabled="!character"
             class="w-100"
@@ -83,20 +93,44 @@ const characters: Ref<Character[]> = ref([]);
 const showSheet: Ref<boolean> = ref(false);
 
 const router = useRouter();
+const route = useRoute();
 
 onMounted(() => {
-  characters.value = Object.values(JSON.parse(localStorage.getItem('saved-characters') ?? '{}'));
+  webSocketService.connectThen(() => {
+    characters.value = Object.values(JSON.parse(localStorage.getItem('saved-characters') ?? '{}'));
+    if (!webSocketService.getRoom().value?.uuid) {
+      webSocketService.joinRoom((route.params as { id: string }).id);
+    }
+    const reconnect = JSON.parse(localStorage.getItem('room-connection') ?? '{}')[(route.params as { id: string }).id];
+    if (reconnect && (reconnect.isMaster || reconnect.character)) {
+      if (reconnect.isMaster) {
+        connectAsDM();
+      } else {
+        character.value = reconnect.character;
+        connectAsPlayer(true);
+      }
+    }
+  });
 });
 
 function connectAsDM() {
   isMaster.value = true;
   character.value = undefined;
   justArrived.value = false;
+  const connection: any = {};
+  connection[(route.params as { id: string }).id] = { isMaster: true };
+  localStorage.setItem('room-connection', JSON.stringify(connection));
 }
 
-function connectAsPlayer() {
+function connectAsPlayer(reconnecting: boolean) {
   isMaster.value = false;
   justArrived.value = false;
+  if (!reconnecting) {
+    webSocketService.addCharacter(character.value!, !isMaster.value);
+  }
+  const connection: any = {};
+  connection[(route.params as { id: string }).id] = { character: character.value };
+  localStorage.setItem('room-connection', JSON.stringify(connection));
 }
 
 watch(() => justArrived.value, (val) => {
@@ -109,5 +143,15 @@ watch(() => webSocketService.getRoom().value?.uuid, (val) => {
   if (!val) {
     router.push('/room');
   }
-})
+});
+
+function updateCharacter() {
+  const battleCharacter = webSocketService.getRoom().value?.characters.find(c => c.character.uuid === character.value?.uuid);
+  if (battleCharacter) {
+    webSocketService.updateCharacter({
+      ...battleCharacter,
+      character: character.value!
+    });
+  }
+}
 </script>

@@ -21,3 +21,7 @@
   height: auto;
   min-height: var(--v-btn-height);
 }
+
+.v-overlay.bg-semi-transparent > .v-overlay__content {
+  background-color: #0008;
+}

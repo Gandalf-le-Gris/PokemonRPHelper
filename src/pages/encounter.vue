@@ -5,13 +5,19 @@
     >
       <v-card title="Paramètres de la rencontre" class="px-4 pb-4 pt-2" rounded="lg">
         <encounter-filters v-model="filters"/>
-        <div class="d-flex justify-space-around mt-4">
+        <div class="d-flex justify-center mt-4">
           <v-btn
             @click="generateEncounter"
             :loading
-            class="centered"
           >
             Générer une rencontre
+          </v-btn>
+          <v-btn
+            v-if="characters.length && webSocketService.getRoom().value?.uuid"
+            @click="sendEncounterToRoom"
+            class="ml-4"
+          >
+            Utiliser cette rencontre
           </v-btn>
         </div>
       </v-card>
@@ -39,6 +45,7 @@
 
 <script lang="ts">
 import { encounterService } from '@/services/instances/encounterService.instance';
+import { webSocketService } from '@/services/instances/webSocketService.instance';
 import { EncounterFilters } from '@/types/encounterFilters';
 import { Character, createCharacter } from '@/types/pokemon';
 
@@ -54,7 +61,8 @@ export default defineComponent({
       level: 5,
     } as EncounterFilters,
     showError: false,
-    errorMessage: ''
+    errorMessage: '',
+    webSocketService,
   }),
   methods: {
     async generateEncounter() {
@@ -85,6 +93,12 @@ export default defineComponent({
       }
       this.loading = false;
     },
+    async sendEncounterToRoom() {
+      this.characters.forEach(c => {
+        webSocketService.addCharacter(c, false);
+      });
+      this.$router.push('/room')
+    }
   },
 });
 </script>

@@ -57,8 +57,9 @@
               <TypeImage :type="character.pokemon.types[0]" defensive open-on-click/>
               <TypeImage v-if="character.pokemon.types[1]" :type="character.pokemon.types[1]" defensive open-on-click class="mt-2"/>
             </v-col>
-            <v-col v-if="!isPlayerSheet" class="d-flex justify-end">
+            <v-col class="d-flex justify-end">
               <v-btn
+                v-if="!isPlayerSheet"
                 @click="regenerateCharacter"
                 icon="mdi-refresh"
                 density="compact"
@@ -66,9 +67,8 @@
                 size="x-large"
                 :loading="regenerateLoading"
               />
-            </v-col>
-            <v-col v-else class="d-flex justify-end">
               <v-btn
+                v-if="isPlayerSheet && !isBattleSheet"
                 @click="confirmReset = true"
                 icon="mdi-refresh"
                 density="compact"
@@ -76,6 +76,7 @@
                 size="x-large"
               />
               <v-btn
+                v-if="isPlayerSheet || isBattleSheet"
                 @click="saveCharacter"
                 icon="mdi-content-save"
                 density="compact"
@@ -452,8 +453,9 @@ import { TypeDetail } from '@/types/types';
 import { getVarieties } from '@/utils/varieties';
 import { ModelRef } from 'vue';
 
-defineProps({
-  isPlayerSheet: Boolean
+const props = defineProps({
+  isPlayerSheet: Boolean,
+  isBattleSheet: Boolean,
 });
 
 const character: ModelRef<Character> = defineModel<Character>({required: true});
@@ -506,11 +508,13 @@ async function updateSpecies() {
 }
 
 function saveCharacter() {
-  const saved = JSON.parse(localStorage.getItem('saved-characters') ?? '{}');
-  saved[character.value.uuid] = JSON.parse(JSON.stringify(character.value));
-  localStorage.setItem('saved-characters', JSON.stringify(saved));
-  localStorage.setItem('last-saved', JSON.stringify(character.value.uuid));
-  emit('saved');
+  if (props.isPlayerSheet) {
+    const saved = JSON.parse(localStorage.getItem('saved-characters') ?? '{}');
+    saved[character.value.uuid] = JSON.parse(JSON.stringify(character.value));
+    localStorage.setItem('saved-characters', JSON.stringify(saved));
+    localStorage.setItem('last-saved', JSON.stringify(character.value.uuid));
+  }
+  emit('saved', character.value);
 }
 
 async function resetCharacter() {
