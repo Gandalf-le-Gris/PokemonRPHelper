@@ -3,7 +3,11 @@
     <v-responsive
       class="align-centerfill-height mx-auto"
     >
-      <v-card title="Rejoindre ou créer une salle" class="px-4 pb-4 pt-2 mb-8" rounded="lg">
+      <v-card
+        title="Rejoindre ou créer une salle"
+        class="px-4 pb-4 pt-2 mb-8"
+        rounded="lg"
+      >
         <v-row class="mt-n2">
           <v-col cols="12" sm="6" class="d-flex flex-column justify-end">
             <v-btn
