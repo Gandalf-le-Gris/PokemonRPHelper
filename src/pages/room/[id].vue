@@ -17,7 +17,8 @@
           class="ma-2"
         />
         <PokemonSheet
-          v-model="character!"
+          v-if="character"
+          v-model="character"
           :is-player-sheet="!isMaster"
           is-battle-sheet
           @saved="updateCharacter"
