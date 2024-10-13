@@ -34,13 +34,16 @@ export class WebSocketService {
     const data = JSON.parse(ev.data);
     switch (data.event) {
       case 'post-room':
-        console.log(data.room)
+        console.log(data.room);
         this.room.value = data.room;
         break;
       case 'error':
         snackbarService.setError(data.message);
         break;
       case 'connected':
+        break;
+      case 'ping':
+        this.ws?.send(JSON.stringify({ event: 'pong' }));
         break;
       default:
         console.log('Uncaught message:', data);

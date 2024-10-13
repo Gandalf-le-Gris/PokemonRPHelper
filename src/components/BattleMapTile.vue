@@ -67,7 +67,6 @@ const character: ComputedRef<BattleCharacter | undefined> = computed(() =>
 );
 
 function onDrop(evt: DragEvent) {
-  console.log('aaa  ')
   const characterUuid = evt.dataTransfer?.getData('character');
   const movedCharacter = webSocketService.getRoom().value?.characters.find(e => e.character.uuid === characterUuid);
   if (movedCharacter) {

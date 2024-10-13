@@ -531,7 +531,6 @@ export function findTilePosition(map: RoomTile[][], i: number, j: number): { i: 
       ));
   }
   if (ri < 0) {
-    console.log(pattern);
     return { i: 2, j: 5 };
   }
   let rj = neighborhoodMap[ri]
