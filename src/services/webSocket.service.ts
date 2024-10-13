@@ -128,4 +128,16 @@ export class WebSocketService {
       snackbarService.setError('Non connecté');
     }
   }
+
+  public updateEnvironment = (environment: string) => {
+    if (this.ws && this.ws.OPEN) {
+      this.ws.send(JSON.stringify({
+        event: 'update-environment',
+        uuid: this.room.value?.uuid,
+        environment,
+      }));
+    } else {
+      snackbarService.setError('Non connecté');
+    }
+  }
 }

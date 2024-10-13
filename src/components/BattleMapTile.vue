@@ -87,6 +87,7 @@ function onDrop(evt: DragEvent) {
   aspect-ratio: 1 / 1;
   border-right: 1px solid rgb(var(--v-theme-background));
   border-bottom: 1px solid rgb(var(--v-theme-background));
+  display: flex;
 }
 
   .tile > canvas {

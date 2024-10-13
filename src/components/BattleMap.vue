@@ -351,6 +351,18 @@ watch(() => room.value?.activeCharacter, (val) => {
     character.value = room.value?.characters.find(c => c.character.uuid === val)?.character;
   }
 });
+
+watch(() => room.value?.environment, (val) => {
+  if (val && val !== spriteSheet.value) {
+    spriteSheet.value = val;
+  }
+});
+
+watch(() => spriteSheet.value, (val) => {
+  if (val && val !== room.value?.environment) {
+    webSocketService.updateEnvironment(val);
+  }
+});
 </script>
 
 <style scoped>
