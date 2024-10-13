@@ -5,8 +5,23 @@
     >
       <v-row>
         <v-col cols="3">
-          <div class="text-h5 font-weight-bold">
-            Détails du combat
+          <div class="d-flex align-center justify-space-between">
+            <div class="text-h5 font-weight-bold">
+              Détails du combat
+            </div>
+            <v-tooltip text="Quitter" location="right">
+              <template #activator="{ props }">
+                <v-btn
+                  @click="leaveRoom"
+                  icon="mdi-exit-to-app"
+                  size="x-large"
+                  density="compact"
+                  variant="flat"
+                  class="bg-transparent"
+                  v-bind="props"
+                />
+              </template>
+            </v-tooltip>
           </div>
           <v-expansion-panels class="mt-4" variant="accordion">
             <v-expansion-panel v-if="isMaster" title="Génération">
@@ -312,6 +327,12 @@ function updateInitiative() {
 const isSelectedPlayer: ComputedRef<boolean> = computed(() =>
   !!room.value?.characters.find(c => c.character.uuid === character.value?.uuid)?.isPlayer
 )
+
+function leaveRoom() {
+  localStorage.setItem('room-connection', '{}');
+  webSocketService.getRoom().value = undefined;
+  router.push('/room');
+}
 
 watch(() => room.value?.environment, (val) => {
   if (val) {

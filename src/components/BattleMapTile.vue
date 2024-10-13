@@ -53,7 +53,6 @@ async function paintTiles() {
       i.onload = (() => r(i));
       i.src = `/map-sprites/${props.spriteSheet}.png`;
     });
-    console.log(img);
     ctx.imageSmoothingEnabled = false;
     const { i, j } = findTilePosition(props.map, props.i, props.j);
     ctx.drawImage(img, j * 24, i * 24, 24, 24, 0, 0, canvas.value!.width, canvas.value!.height);
