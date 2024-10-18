@@ -204,20 +204,22 @@
             </v-row>
           </v-card>
         </v-col>
-        <v-col class="map-grid">
-          <template v-for="(row, i) in room?.map" :key="i">
-            <battle-map-tile
-              @mousedown="selectCharacter(i, j)"
-              v-for="(_, j) in row"
-              :key="j"
-              :map="room!.map"
-              :i
-              :j
-              :sprite-sheet
-              :my-character
-              :is-master
-            />
-          </template>
+        <v-col cols="9">
+          <div class="map-grid">
+            <template v-for="(row, i) in room?.map" :key="i">
+              <battle-map-tile
+                @mousedown="selectCharacter(i, j)"
+                v-for="(_, j) in row"
+                :key="j"
+                :map="room!.map"
+                :i
+                :j
+                :sprite-sheet
+                :my-character
+                :is-master
+              />
+            </template>
+          </div>
         </v-col>
       </v-row>
     </v-responsive>

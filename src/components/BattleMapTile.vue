@@ -18,6 +18,7 @@
         <CharacterIcon
           v-if="character"
           @click.stop
+          @mousedown="emit('mousedown')"
           :character
           :my-character
           :is-master
@@ -87,7 +88,9 @@ const props = defineProps({
     type: String,
     required: false
   }
-})
+});
+
+const emit = defineEmits(['mousedown']);
 
 const canvas: Ref<HTMLCanvasElement | undefined> = ref();
 const showMenu: Ref<boolean> = ref(false);
