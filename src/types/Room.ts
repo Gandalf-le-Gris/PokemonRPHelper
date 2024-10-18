@@ -15,6 +15,21 @@ export interface RoomTile {
 
 export type RoomTileType = 'p' | 's' | 'w'
 
+export const roomTileTypeArray: { value: RoomTileType, title: string }[] = [
+  {
+    value: 'p',
+    title: 'Primaire'
+  },
+  {
+    value: 's',
+    title: 'Secondaire'
+  },
+  {
+    value: 'w',
+    title: 'Mur'
+  }
+]
+
 export interface BattleCharacter {
   i: number,
   j: number,

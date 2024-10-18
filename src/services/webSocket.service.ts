@@ -140,4 +140,18 @@ export class WebSocketService {
       snackbarService.setError('Non connecté');
     }
   }
+
+  public updateTile = (i: number, j: number) => {
+    if (this.ws && this.ws.OPEN) {
+      this.ws.send(JSON.stringify({
+        event: 'update-tile',
+        uuid: this.room.value?.uuid,
+        i,
+        j,
+        tile: this.room.value?.map[i][j],
+      }));
+    } else {
+      snackbarService.setError('Non connecté');
+    }
+  }
 }
