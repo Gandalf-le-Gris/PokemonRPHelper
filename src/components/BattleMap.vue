@@ -72,6 +72,37 @@
                 />
               </v-expansion-panel-text>
             </v-expansion-panel>
+            <v-expansion-panel v-if="isMaster" title="Décor">
+              <v-expansion-panel-text class="scrollable-expansion-panel">
+                <v-expansion-panels>
+                  <v-expansion-panel title="Pièges">
+                    <v-expansion-panel-text>
+                      <v-row
+                        dense
+                        align="center"
+                      >
+                        <v-col
+                          v-for="trap in trapsArray.sort((a, b) => a.title.localeCompare(b.title))"
+                          :key="trap.value"
+                          lg="6"
+                          xl="4"
+                          cols="12"
+                          class="d-flex flex-column align-center"
+                        >
+                          <v-img
+                            :src="`/props/${trap.value}.png`"
+                            width="50"
+                            aspect-ratio="1"
+                            class="pixelated"
+                          />
+                          <span class="text-caption py-1">{{ trap.title }}</span>
+                        </v-col>
+                      </v-row>
+                    </v-expansion-panel-text>
+                  </v-expansion-panel>
+                </v-expansion-panels>
+              </v-expansion-panel-text>
+            </v-expansion-panel>
             <v-expansion-panel v-if="isMaster" title="Ennemis">
               <v-expansion-panel-text class="d-flex flex-column">
                 <template v-for="enemy in room?.characters.filter(e => !e.isPlayer)" :key="enemy.character.uuid">
@@ -232,6 +263,7 @@ import { webSocketService } from '@/services/instances/webSocketService.instance
 import { Character, computeHPT } from '@/types/pokemon';
 import { computeGlobalModifiers } from '@/types/specificities';
 import { ModelRef } from 'vue';
+import { trapsArray } from '@/types/props';
 
 const props = defineProps({
   isMaster: {
@@ -371,5 +403,10 @@ watch(() => spriteSheet.value, (val) => {
 .map-grid {
   display: grid;
   grid-template-columns: v-bind(gridTemplate);
+}
+
+.scrollable-expansion-panel {
+  max-height: 400px;
+  overflow-y: auto;
 }
 </style>
