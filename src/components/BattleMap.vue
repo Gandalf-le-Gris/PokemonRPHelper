@@ -73,29 +73,38 @@
               </v-expansion-panel-text>
             </v-expansion-panel>
             <v-expansion-panel v-if="isMaster" title="Décor">
-              <v-expansion-panel-text class="scrollable-expansion-panel">
+              <v-expansion-panel-text>
                 <v-expansion-panels>
-                  <v-expansion-panel title="Pièges">
-                    <v-expansion-panel-text>
+                  <v-expansion-panel
+                    v-for="{ value, title } in assetsLabelArray"
+                    :key="value"
+                    :title="title"
+                  >
+                    <v-expansion-panel-text class="scrollable-expansion-panel">
                       <v-row
                         dense
                         align="center"
                       >
                         <v-col
-                          v-for="trap in trapsArray.sort((a, b) => a.title.localeCompare(b.title))"
-                          :key="trap.value"
+                          v-for="asset in assetsArray[value].sort((a, b) => a.title.localeCompare(b.title))"
+                          :key="asset.value"
                           lg="6"
                           xl="4"
                           cols="12"
-                          class="d-flex flex-column align-center"
                         >
-                          <v-img
-                            :src="`/props/${trap.value}.png`"
-                            width="50"
-                            aspect-ratio="1"
-                            class="pixelated"
-                          />
-                          <span class="text-caption py-1">{{ trap.title }}</span>
+                          <button
+                            draggable
+                            @dragstart="(evt) => startDrag(evt, asset.value)"
+                            class="d-flex flex-column align-center w-100 cursor-pointer pa-0 pt-1 hover-lighten"
+                          >
+                            <v-img
+                              :src="`/props/${asset.value}.png`"
+                              width="50"
+                              aspect-ratio="1"
+                              class="pixelated"
+                            />
+                            <span class="text-caption pt-1">{{ asset.title }}</span>
+                          </button>
                         </v-col>
                       </v-row>
                     </v-expansion-panel-text>
@@ -263,7 +272,7 @@ import { webSocketService } from '@/services/instances/webSocketService.instance
 import { Character, computeHPT } from '@/types/pokemon';
 import { computeGlobalModifiers } from '@/types/specificities';
 import { ModelRef } from 'vue';
-import { trapsArray } from '@/types/props';
+import { assetsArray, assetsLabelArray } from '@/types/props';
 
 const props = defineProps({
   isMaster: {
@@ -368,6 +377,14 @@ function leaveRoom() {
   router.push('/room');
 }
 
+function startDrag(evt: DragEvent, asset: string) {
+  if (asset && evt.dataTransfer) {
+    evt.dataTransfer.dropEffect = 'move';
+    evt.dataTransfer.effectAllowed = 'move';
+    evt.dataTransfer.setData('asset', JSON.stringify({ value: asset }));
+  }
+}
+
 watch(() => room.value?.environment, (val) => {
   if (val) {
     spriteSheet.value = val;
@@ -406,7 +423,11 @@ watch(() => spriteSheet.value, (val) => {
 }
 
 .scrollable-expansion-panel {
-  max-height: 400px;
+  max-height: 80vh;
   overflow-y: auto;
+}
+
+.hover-lighten:hover {
+  background-color: rgba(255, 255, 255, .04);
 }
 </style>

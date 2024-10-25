@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    AssetIcon: typeof import('./components/AssetIcon.vue')['default']
     BattleMap: typeof import('./components/BattleMap.vue')['default']
     BattleMapTile: typeof import('./components/BattleMapTile.vue')['default']
     CharacterIcon: typeof import('./components/CharacterIcon.vue')['default']

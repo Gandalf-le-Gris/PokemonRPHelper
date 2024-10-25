@@ -15,6 +15,15 @@
         v-bind="props"
       >
         <canvas ref="canvas"/>
+        <template
+          v-for="asset in room?.map[i][j].assets"
+          :key="asset.uuid"
+        >
+          <AssetIcon
+            v-if="asset.visible || isMaster"
+            :asset
+          />
+        </template>
         <CharacterIcon
           v-if="character"
           @click.stop
@@ -25,6 +34,7 @@
         />
       </div>
     </template>
+
     <v-card
       rounded="lg"
       width="200"
@@ -41,7 +51,7 @@
           size="x-small"
         />
       </template>
-      <div class="pa-2 pt-0">
+      <div class="pa-2 pt-0 d-flex flex-column">
         <v-select
           @update:model-value="updateTile"
           v-model="room!.map[i][j].terrain"
@@ -52,6 +62,41 @@
           density="compact"
           hide-details
         />
+        <v-divider v-if="room!.map[i][j].assets.length" class="mt-3" color="transparent"/>
+        <v-row
+          v-for="asset in room!.map[i][j].assets"
+          :key="asset.uuid"
+          dense
+          align="center"
+        >
+          <v-col class="text-body-2">
+            {{ Object.values(assetsArray).flat().find(e => e.value === asset.value)?.title }}
+          </v-col>
+          <v-col cols="auto">
+            <v-tooltip :text="asset.visible ? 'Masquer' : 'Afficher'" location="top">
+              <template #activator="{ props }">
+                <v-icon
+                  @click="toggleAssetVisibility(asset)"
+                  :icon="asset.visible ? 'mdi-eye' : 'mdi-eye-off'"
+                  size="x-small"
+                  v-bind="props"
+                />
+              </template>
+            </v-tooltip>
+          </v-col>
+          <v-col cols="auto">
+            <v-tooltip text="Supprimer" location="top">
+              <template #activator="{ props }">
+                <v-icon
+                  @click="removeAsset(asset)"
+                  icon="mdi-delete"
+                  size="x-small"
+                  v-bind="props"
+                />
+              </template>
+            </v-tooltip>
+          </v-col>
+        </v-row>
       </div>
     </v-card>
   </v-menu>
@@ -60,8 +105,9 @@
 <script setup lang="ts">
 import { findTilePosition } from '@/utils/tileMap';
 import { webSocketService } from '@/services/instances/webSocketService.instance';
-import { Room, BattleCharacter, RoomTile, roomTileTypeArray } from '@/types/Room';
+import { Room, BattleCharacter, RoomTile, roomTileTypeArray, TileAsset } from '@/types/Room';
 import { PropType } from 'vue';
+import { assetsArray } from '@/types/props';
 
 const props = defineProps({
   map: {
@@ -120,17 +166,44 @@ const character: ComputedRef<BattleCharacter | undefined> = computed(() =>
 
 function onDrop(evt: DragEvent) {
   const characterUuid = evt.dataTransfer?.getData('character');
-  const movedCharacter = room.value?.characters.find(e => e.character.uuid === characterUuid);
-  if (movedCharacter) {
-    webSocketService.updateCharacter({
-      ...movedCharacter,
-      i: props.i,
-      j: props.j,
-    })
+  const assetRaw = evt.dataTransfer?.getData('asset');
+  if (characterUuid) {
+    const movedCharacter = room.value?.characters.find(e => e.character.uuid === characterUuid);
+    if (movedCharacter) {
+      webSocketService.updateCharacter({
+        ...movedCharacter,
+        i: props.i,
+        j: props.j,
+      })
+    }
+  } else if (assetRaw && props.isMaster) {
+    const asset = JSON.parse(assetRaw);
+    if (asset.value) {
+      room.value?.map[props.i][props.j].assets.push({ uuid: crypto.randomUUID(), value: asset.value, visible: !asset.value.includes('trap') });
+      webSocketService.updateTile(props.i, props.j);
+    } else if (asset.uuid) {
+      webSocketService.moveAsset(asset.uuid, props.i, props.j);
+    }
   }
 }
 
+function toggleAssetVisibility(asset: TileAsset) {
+  if (room.value?.map[props.i][props.j].assets.find(a => a.uuid === asset.uuid)) {
+    asset.visible = !asset.visible;
+    webSocketService.updateTile(props.i, props.j);
+  }
+}
+
+function removeAsset(asset: TileAsset) {
+  if (room.value) {
+    room.value.map[props.i][props.j].assets.splice(room.value.map[props.i][props.j].assets.findIndex(a => a.uuid === asset.uuid), 1);
+    webSocketService.updateTile(props.i, props.j);
+  }
+  showMenu.value = false;
+}
+
 async function updateTile() {
+  showMenu.value = false;
   await nextTick();
   webSocketService.updateTile(props.i, props.j);
 }

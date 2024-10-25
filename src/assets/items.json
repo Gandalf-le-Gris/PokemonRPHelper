@@ -902,6 +902,13 @@
       "buy": 1000,
       "sell": 200,
       "belt": true
+    },
+    {
+      "name": "Eau Mystique",
+      "desc": "Les attaques de type eau du porteur infligent 1 dégât supplémentaire",
+      "buy": 100,
+      "sell": 20,
+      "neck": true
     }
   ],
   "flag": [

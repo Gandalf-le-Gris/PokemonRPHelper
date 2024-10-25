@@ -154,4 +154,18 @@ export class WebSocketService {
       snackbarService.setError('Non connecté');
     }
   }
+
+  public moveAsset = (uuid: string, i: number, j: number) => {
+    if (this.ws && this.ws.OPEN) {
+      this.ws.send(JSON.stringify({
+        event: 'move-asset',
+        uuid: this.room.value?.uuid,
+        i,
+        j,
+        assetUuid: uuid
+      }));
+    } else {
+      snackbarService.setError('Non connecté');
+    }
+  }
 }

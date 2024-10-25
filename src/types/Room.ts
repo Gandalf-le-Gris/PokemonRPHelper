@@ -10,7 +10,8 @@ export interface Room {
 }
 
 export interface RoomTile {
-  terrain: RoomTileType
+  terrain: RoomTileType,
+  assets: TileAsset[]
 }
 
 export type RoomTileType = 'p' | 's' | 'w'
@@ -35,4 +36,10 @@ export interface BattleCharacter {
   j: number,
   isPlayer: boolean,
   character: Character
+}
+
+export interface TileAsset {
+  uuid: string,
+  value: string,
+  visible: boolean
 }
