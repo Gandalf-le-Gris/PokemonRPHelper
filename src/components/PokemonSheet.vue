@@ -335,7 +335,17 @@
             label="Inventaire"
             no-resize
             rows="10"
-          />
+          >
+            <template #append-inner>
+              <v-btn
+                @click.stop="showNotes = true"
+                icon="mdi-notebook-edit"
+                density="compact"
+                variant="plain"
+                size="large"
+              />
+            </template>
+          </v-textarea>
         </v-col>
         <v-col cols="12" sm="5" class="d-flex flex-column justify-space-between">
           <v-text-field
@@ -377,16 +387,33 @@
             <v-row align="center" dense class="mt-4 mx-2">
               <v-col v-for="key in Object.keys(experienceLabels)" :key cols="6" md="3">
                 <v-checkbox
+                  v-if="key !== 'ko'"
                   v-model="character.experience[key as 'ko']"
                   :label="experienceLabels[key as 'ko']"
                   hide-details
                   density="compact"
                 />
+                <v-text-field
+                  v-else
+                  v-model="character.experience['ko']"
+                  label="Pokémon KO"
+                  type="number"
+                  hide-details
+                  density="compact"
+                  variant="outlined"
+                  min="0"
+                  max-width="120"
+                  class="inner-compact font-weight-bold"
+                >
+                  <template #append-inner>
+                    /5
+                  </template>
+                </v-text-field>
               </v-col>
               <v-col cols="6" md="3">
                 <v-btn
                   @click="levelUp"
-                  :disabled="Object.values(character.experience).filter(e => e).length < 4"
+                  :disabled="Object.values(character.experience).filter(e => e === true || e >= 5).length < 4"
                   text="Gain de niveau"
                   prepend-icon="mdi-creation"
                   rounded="lg"
@@ -435,6 +462,22 @@
     @confirm="resetCharacter"
     title="Réinitialiser la fiche ?"
   />
+
+  <v-dialog v-model="showNotes" max-width="600">
+    <v-card
+      title="Mes notes"
+      rounded="xl"
+      class="py-4"
+    >
+      <v-textarea
+        v-model="character.notes"
+        hide-details
+        no-resize
+        rows="15"
+        class="mx-4"
+      />
+    </v-card>
+  </v-dialog>
 </template>
 
 <script setup lang="ts">
@@ -464,6 +507,7 @@ const autoOpen: Ref<number> = ref<number>(-1);
 const showStatusDialog: Ref<boolean> = ref<boolean>(false);
 const selectedStatus: Ref<number> = ref<number>(-1);
 const confirmReset: Ref<boolean> = ref<boolean>(false);
+const showNotes: Ref<boolean> = ref<boolean>(false);
 
 const characterMods: ComputedRef<Mod> = computed<Mod>(() => computeGlobalModifiers(character.value));
 const maxHP: ComputedRef<number> = computed<number>(() => computeHPT(character.value));
@@ -494,7 +538,14 @@ const inventoryValue: ComputedRef<string | undefined> = computed(() => {
     return `Valeur totale : ${value}P`;
   }
   return;
-})
+});
+
+onUnmounted(() => {
+  const saved = JSON.parse(localStorage.getItem('saved-characters') ?? '{}');
+  if (saved[character.value.uuid]) {
+    saveCharacter();
+  }
+});
 
 async function regenerateCharacter() {
   regenerateLoading.value = true;
@@ -538,7 +589,7 @@ function levelUp() {
     fail: false,
     success: false,
     friend: false,
-    ko: false,
+    ko: character.value.experience.ko - (character.value.experience.ko >= 5 ? 5 : 0),
     help: false,
   }
   character.value.level++;

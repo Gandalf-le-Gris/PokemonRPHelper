@@ -78,7 +78,8 @@ export interface Character {
     belt: string
   },
   iqSkills: IQSkill[],
-  experience: Experience
+  experience: Experience,
+  notes: string
 }
 
 export async function createCharacter(pokemon: Pokemon, level: number, uuid?: string): Promise<Character> {
@@ -128,9 +129,10 @@ export async function createCharacter(pokemon: Pokemon, level: number, uuid?: st
       fail: false,
       success: false,
       friend: false,
-      ko: false,
+      ko: 0,
       help: false,
-    }
+    },
+    notes: ''
   };
 
   if (level > 0) {

@@ -23,6 +23,9 @@
               </template>
             </v-tooltip>
           </div>
+          <div class="text-body-2">
+            Code : <b>{{ webSocketService.getRoom().value?.uuid }}</b>
+          </div>
           <v-expansion-panels class="mt-4" variant="accordion">
             <v-expansion-panel v-if="isMaster" title="Génération">
               <v-expansion-panel-text class="d-flex flex-column justify-between">
@@ -402,6 +405,12 @@ watch(() => room.value?.activeCharacter, (val) => {
     character.value = room.value?.characters.find(c => c.character.uuid === val)?.character;
   }
 });
+
+watch(() => room.value?.characters, () => {
+  if (character.value?.uuid) {
+    character.value = room.value?.characters.find(e => e.character.uuid === character.value?.uuid)?.character;
+  }
+})
 
 watch(() => room.value?.environment, (val) => {
   if (val && val !== spriteSheet.value) {

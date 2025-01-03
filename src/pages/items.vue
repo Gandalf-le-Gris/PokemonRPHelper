@@ -29,7 +29,60 @@
               </template>
             </v-tooltip>
           </v-col>
+          <v-col cols="auto">
+            <v-tooltip text="Filtres" location="top">
+              <template #activator="{ props }">
+                <v-btn
+                  @click="openFilters = !openFilters"
+                  icon="mdi-filter"
+                  density="compact"
+                  elevation="0"
+                  size="x-large"
+                  v-bind="props"
+                />
+              </template>
+            </v-tooltip>
+          </v-col>
         </v-row>
+        <v-expand-transition>
+          <v-row
+            v-if="openFilters"
+            align="center"
+            dense
+          >
+            <v-col cols="12" sm="6">
+              <v-select
+                v-model="filters.type"
+                label="Type"
+                :items="itemTypeArray"
+                item-value="value"
+                item-title="title"
+                hide-details
+                clearable
+              />
+            </v-col>
+            <v-col cols="6" sm="3">
+              <v-text-field
+                v-model="filters.minPrice"
+                :min="0"
+                type="number"
+                label="Prix minimal"
+                hide-details
+                clearable
+              />
+            </v-col>
+            <v-col cols="6" sm="3">
+              <v-text-field
+                v-model="filters.maxPrice"
+                :min="filters.minPrice ?? 0"
+                type="number"
+                label="Prix maximal"
+                hide-details
+                clearable
+              />
+            </v-col>
+          </v-row>
+        </v-expand-transition>
       </v-card>
 
       <v-card
@@ -87,11 +140,19 @@
 <script setup lang="ts">
 import items, { Clothing, Item, ItemType, itemTypeArray } from '@/types/items';
 
-const filters: Ref<{ name: string | null }> = ref({ name: '' });
+interface Filters {
+  name: string | null,
+  type?: ItemType,
+  minPrice?: number,
+  maxPrice?: number
+}
+
+const filters: Ref<Filters> = ref({ name: '' });
 const debouncedName: Ref<string> = ref('');
 let nameTimeout: number = -1;
 
 const openRandom: Ref<boolean> = ref(false);
+const openFilters: Ref<boolean> = ref(false);
 
 watch(() => filters.value.name, (val: string | null) => {
   clearTimeout(nameTimeout);
@@ -105,10 +166,14 @@ watch(() => filters.value.name, (val: string | null) => {
 const filteredItems: ComputedRef<Record<ItemType, Item[]>> = computed(() => {
   let res = {} as Record<ItemType, Item[]>;
   for (const itemType in items) {
-    const values = items[itemType as ItemType]
-      .filter(e => debouncedName.value.toLowerCase().split(' ').every(t => e.name.toLowerCase().includes(t)));
-    if (values.length) {
-      res[itemType as ItemType] = values.sort((a, b) => a.name.localeCompare(b.name));
+    if (!filters.value.type || itemType === filters.value.type) {
+      const values = items[itemType as ItemType]
+        .filter(e => debouncedName.value.toLowerCase().split(' ').every(t => e.name.toLowerCase().includes(t)))
+        .filter(e => !filters.value.minPrice || e.buy && e.buy >= filters.value.minPrice)
+        .filter(e => !filters.value.maxPrice || e.buy && e.buy <= filters.value.maxPrice);
+      if (values.length) {
+        res[itemType as ItemType] = values.sort((a, b) => a.name.localeCompare(b.name));
+      }
     }
   }
   return res;

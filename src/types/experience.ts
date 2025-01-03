@@ -4,7 +4,7 @@ export interface Experience {
   fail: boolean,
   success: boolean,
   friend: boolean,
-  ko: boolean,
+  ko: number,
   help: boolean,
 }
 

@@ -516,12 +516,6 @@
       "desc": "Fait chuter à 1 les PV de tous les ennemis de la salle, mais divise par 2 les PV de l'utilisateur pour chaque Pokémon affecté",
       "buy": 150,
       "sell": 30
-    },
-    {
-      "name": "Doublorbe",
-      "desc": "Fait chuter à 1 les PV de tous les ennemis de la salle, mais divise par 2 les PV de l'utilisateur pour chaque Pokémon affecté",
-      "buy": 150,
-      "sell": 30
     }
   ],
   "wand": [
