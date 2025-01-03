@@ -129,6 +129,9 @@ function connectAsPlayer(reconnecting: boolean) {
   if (!reconnecting) {
     webSocketService.addCharacter(character.value!, !isMaster.value);
   }
+  const savedCharacters = JSON.parse(localStorage.getItem('saved-characters') ?? '{}');
+  character.value = savedCharacters[character.value?.uuid ?? ''];
+  updateCharacter();
   const connection: any = {};
   connection[(route.params as { id: string }).id] = { character: character.value };
   localStorage.setItem('room-connection', JSON.stringify(connection));
