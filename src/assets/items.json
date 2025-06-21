@@ -33,6 +33,48 @@
       "desc": "Soigne la brûlure. Particulièrement délicieux",
       "buy": 15,
       "sell": 3
+    },
+    {
+      "name": "Baie Prine",
+      "desc": "Soigne toute anomalie de statut",
+      "buy": 50,
+      "sell": 10
+    },
+    {
+      "name": "Baie Lichii",
+      "desc": "Augmente de 50% l'attaque pendant 1 minute",
+      "buy": 50,
+      "sell": 10
+    },
+    {
+      "name": "Baie Lingan",
+      "desc": "Augmente de 50% la défense pendant 1 minute",
+      "buy": 50,
+      "sell": 10
+    },
+    {
+      "name": "Baie Pitaye",
+      "desc": "Augmente de 50% l'attaque spéciale pendant 1 minute",
+      "buy": 50,
+      "sell": 10
+    },
+    {
+      "name": "Baie Abriko",
+      "desc": "Augmente de 50% la défense spéciale pendant 1 minute",
+      "buy": 50,
+      "sell": 10
+    },
+    {
+      "name": "Baie Sailak",
+      "desc": "Augmente de 50% la vitesse pendant 1 minute",
+      "buy": 50,
+      "sell": 10
+    },
+    {
+      "name": "Baie Mepo",
+      "desc": "Restaure une utilisation d'une capacité puissante",
+      "buy": 25,
+      "sell": 5
     }
   ],
   "seed": [
@@ -95,7 +137,7 @@
     },
     {
       "name": "Famigraine",
-      "desc": "Provoque de violentes douleurs d'estomac, comme si le Pokémon était affamé, pendant 5 tours. Le Pokémon affecté est vulnérable et ne peut ni se déplacer, ni attaquer",
+      "desc": "Provoque de violentes douleurs d'estomac, comme si le Pokémon était affamé, pendant 3 tours. Le Pokémon affecté est vulnérable et ne peut ni se déplacer, ni attaquer",
       "buy": 50,
       "sell": 10
     },
@@ -1196,6 +1238,29 @@
     {
       "name": "Orbe Téracristal",
       "desc": "Permet de téracristalliser un autre Pokémon une fois par jour"
+    },
+    {
+      "name": "Boue noire",
+      "desc": "Soigne de 5PV le porteur à la fin de son tour s'il est de type poison, ou lui inflige 5 dégâts sinon",
+      "buy": 500,
+      "sell": 100
+    },
+    {
+      "name": "PP Plus",
+      "desc": "Permet d'utiliser une capacité puissante supplémentaire entre chaque repos",
+      "buy": 1000,
+      "sell": 200
+    },
+    {
+      "name": "PP Max",
+      "desc": "Permet d'utiliser deux capacités puissantes supplémentaires entre chaque repos",
+      "buy": 2500,
+      "sell": 500
+    },
+    {
+      "name": "Pépite",
+      "buy": 15000,
+      "sell": 3000
     }
   ],
   "miscellaneous": [
