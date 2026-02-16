@@ -37,3 +37,9 @@
   image-rendering: -moz-crisp-edges;
   image-rendering: crisp-edges;
 }
+
+.opacity-100-deep {
+  i.v-icon {
+    opacity: 1 !important;
+  }
+}

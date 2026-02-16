@@ -1,4 +1,5 @@
-import { Character } from "./pokemon"
+import { Character, StatName } from "./pokemon"
+import { StatusEffect } from "./statusEffects"
 
 export interface Room {
   uuid: string,
@@ -31,11 +32,16 @@ export const roomTileTypeArray: { value: RoomTileType, title: string }[] = [
   }
 ]
 
+export type BattleCharacterStatus = Partial<Record<StatusEffect, boolean>>
+export type BattleCharacterStats = Partial<Record<StatName, number>>
+
 export interface BattleCharacter {
   i: number,
   j: number,
   isPlayer: boolean,
   character: Character
+  status: BattleCharacterStatus
+  stats: BattleCharacterStats
 }
 
 export interface TileAsset {

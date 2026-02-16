@@ -85,7 +85,7 @@ const poisonAbilities: TypeAbilities = {
   A: {
     value: 'Venom Spray',
     title: 'Jet de venin',
-    desc: 'Lorsqu\'un ennemi rate ce Pokémon, il devient ébloui pendant 4 tours'
+    desc: 'Une fois par combat, lorsqu\'un ennemi rate ce Pokémon, il devient ébloui pendant 4 tours'
   },
   B: {
     value: 'Sticky hold',
@@ -159,7 +159,7 @@ const bugAbilities: TypeAbilities = {
   B: {
     value: 'Buzzer',
     title: 'Bourdonnement',
-    desc: 'Lorsque ce Pokémon réussit une attaque, lancez 1d6. Sur un 5 ou un 6, ce Pokémon devient accéléré pendant 3 tours'
+    desc: 'Lorsque ce Pokémon réussit une attaque, lancez 1d6. Sur un 5 ou un 6, ce Pokémon devient accéléré'
   },
   C: {
     value: 'Compound eyes',
@@ -944,7 +944,7 @@ const specialAbilities: Record<string, Ability> = {
     title: "Expuls'Organes",
     desc: "Lorsque ce Pokémon est mis KO, il inflige à l'attaquant le double des dégâts subis"
   },
-  mimikyu: {
+  'mimikyu-disguised': {
     value: "Disguise",
     title: "Déguisement",
     desc: "La première attaque chaque combat n'inflige aucun dégât à ce Pokémon"

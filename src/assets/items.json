@@ -35,6 +35,24 @@
       "sell": 3
     },
     {
+      "name": "Baie Maron",
+      "desc": "Soigne le sommeil. Rend un peu nerveux",
+      "buy": 15,
+      "sell": 3
+    },
+    {
+      "name": "Baie Willia",
+      "desc": "Soigne le gel. Particulièrement acide",
+      "buy": 15,
+      "sell": 3
+    },
+    {
+      "name": "Baie Kika",
+      "desc": "Soigne la confusion. Rend plus lucide pendant 10h",
+      "buy": 15,
+      "sell": 3
+    },
+    {
       "name": "Baie Prine",
       "desc": "Soigne toute anomalie de statut",
       "buy": 50,
@@ -114,7 +132,7 @@
     },
     {
       "name": "Encouragraine",
-      "desc": "Pendant 2 tours par allié, les attaques du Pokémon affecté réussissent toujours",
+      "desc": "Pendant 2 tours, les attaques du Pokémon affecté réussissent toujours",
       "buy": 100,
       "sell": 20
     },
@@ -168,8 +186,8 @@
     {
       "name": "Hâtigraine",
       "desc": "Permet d'agir deux fois par tour pendant 5 tours",
-      "buy": 25,
-      "sell": 5
+      "buy": 50,
+      "sell": 10
     },
     {
       "name": "Rézutgraine",
@@ -223,8 +241,8 @@
     {
       "name": "Boostorbe",
       "desc": "Rend les PV de tous les alliés égaux à ceux du Pokémon aux PV les plus élevés (ne peut pas dépasser les PV max)",
-      "buy": 75,
-      "sell": 15
+      "buy": 150,
+      "sell": 30
     },
     {
       "name": "Esquivorbe Tous",
@@ -319,14 +337,14 @@
     {
       "name": "Stupéfiorbe",
       "desc": "Tous les ennemis de l'étage sont pétrifiés et ne peuvent plus agir jusqu'à être attaqués",
-      "buy": 150,
-      "sell": 30
+      "buy": 300,
+      "sell": 60
     },
     {
       "name": "Immobilisorbe",
       "desc": "Tous les ennemis de l'étage sont léthargiques et ne peuvent plus se déplacer pendant 10 tours",
-      "buy": 100,
-      "sell": 20
+      "buy": 150,
+      "sell": 30
     },
     {
       "name": "Tempêtorbe",
@@ -355,14 +373,14 @@
     {
       "name": "Orbe Coup de Filet",
       "desc": "Entasse tous les ennemis de la salle au même endroit. Toute attaque dirigée vers l'un d'entre eux les touche tous pendant 3 tours",
-      "buy": 75,
-      "sell": 15
+      "buy": 100,
+      "sell": 20
     },
     {
       "name": "Catapultorbe",
       "desc": "Pendant 1h, les objets lancés par l'utilisateur ne retombent pas et continuent leur course jusqu'à rencontrer un obstacle",
-      "buy": 150,
-      "sell": 30
+      "buy": 50,
+      "sell": 10
     },
     {
       "name": "Lumiorbe",
@@ -382,7 +400,7 @@
     },
     {
       "name": "Dépouillorbe",
-      "desc": "Un Pokémon visible par l'utilisateur subit 30 dégât et se fait voler l'objet qu'il tient",
+      "desc": "Un Pokémon visible par l'utilisateur subit 30 dégâts et se fait voler l'objet qu'il tient",
       "buy": 150,
       "sell": 30
     },
@@ -401,14 +419,14 @@
     {
       "name": "Fulgurorbe",
       "desc": "Lancez 1d3. Sur un 3, tous les ennemis de la pièce ou dans un rayon de 1km sont mis KO (inefficace contre les Pokémon mythiques et légendaires)",
-      "buy": 150,
-      "sell": 30
+      "buy": 250,
+      "sell": 50
     },
     {
       "name": "Pétrifiorbe",
       "desc": "Tous les ennemis de la salle sont pétrifiés et ne peuvent plus agir pendant 10 tours",
-      "buy": 75,
-      "sell": 15
+      "buy": 200,
+      "sell": 40
     },
     {
       "name": "Perçorbe",
@@ -447,7 +465,7 @@
     },
     {
       "name": "Orbe Résurrection",
-      "desc": "Ranime tous les alliés de l'utilisateur avec tous leurs PV",
+      "desc": "Réanime tous les alliés de l'utilisateur avec tous leurs PV",
       "buy": 300,
       "sell": 60
     },
@@ -472,8 +490,8 @@
     {
       "name": "Révélorbe",
       "desc": "Tous les objets proches, au sol et dissimulés, sont révélés à l'utilisateur pendant 10h ou jusqu'à la fin du donjon",
-      "buy": 50,
-      "sell": 10
+      "buy": 100,
+      "sell": 20
     },
     {
       "name": "Détectorbe",
@@ -543,7 +561,7 @@
     },
     {
       "name": "Piègeorbe",
-      "desc": "Place un piège de nature choisie par l'utilisateur à ses pieds, qui infligera 50 dégât à tout ennemi marchant dessus",
+      "desc": "Place un piège de nature choisie par l'utilisateur à ses pieds, qui infligera 30 dégâts à tout ennemi marchant dessus",
       "buy": 100,
       "sell": 20
     },
@@ -556,16 +574,16 @@
     {
       "name": "Doublorbe",
       "desc": "Fait chuter à 1 les PV de tous les ennemis de la salle, mais divise par 2 les PV de l'utilisateur pour chaque Pokémon affecté",
-      "buy": 150,
-      "sell": 30
+      "buy": 250,
+      "sell": 50
     }
   ],
   "wand": [
     {
       "name": "Branche Détonation",
       "desc": "Inflige 30 dégâts",
-      "buy": 25,
-      "sell": 5
+      "buy": 30,
+      "sell": 6
     },
     {
       "name": "Branche Guide",
@@ -576,14 +594,14 @@
     {
       "name": "Branche Permu-PV",
       "desc": "Echange les PV de l'utilisateur et du Pokémon touché",
-      "buy": 80,
-      "sell": 16
+      "buy": 125,
+      "sell": 25
     },
     {
       "name": "Branche Pétrifiante",
       "desc": "Pétrifie la cible, ce qui l'empêche d'agir jusqu'à être touchée par une attaque",
-      "buy": 60,
-      "sell": 12
+      "buy": 75,
+      "sell": 15
     },
     {
       "name": "Branche Bond",
@@ -594,8 +612,8 @@
     {
       "name": "Branche Quart",
       "desc": "Fixe les PV du Pokémon touché à 25% de ses PV max",
-      "buy": 50,
-      "sell": 10
+      "buy": 100,
+      "sell": 20
     },
     {
       "name": "Branche Lenteur",
@@ -606,8 +624,8 @@
     {
       "name": "Branche Envoûte",
       "desc": "Pétrifie et téléporte la cible à un endroit aléatoire de l'étage. Le Pokémon touché ne pourra plus agir avant d'avoir été touchée par une attaque",
-      "buy": 50,
-      "sell": 10
+      "buy": 75,
+      "sell": 15
     },
     {
       "name": "Branche Encercle",
@@ -642,8 +660,8 @@
     {
       "name": "Branche Fracasse",
       "desc": "Fixe les PV du Pokémon touché à 1, mais divise aussi par 2 les PV de l'utilisateur",
-      "buy": 60,
-      "sell": 12
+      "buy": 100,
+      "sell": 20
     },
     {
       "name": "Branche Téléport",
@@ -950,19 +968,43 @@
   "flag": [
     {
       "name": "Fanion Encouragement",
-      "desc": "Les attaques des alliés du porteur infligent 4 dégâts supplémentaires tant que ceux-ci peuvent voir le fanion",
+      "desc": "Les attaques des alliés du porteur infligent 4 dégâts supplémentaires tant qu'ils peuvent voir le fanion",
       "buy": 2500,
       "sell": 500
     },
     {
       "name": "Fanion Constant",
-      "desc": "Les stats des alliés du porteur ne peuvent pas baisser tant que ceux-ci peuvent voir le fanion",
+      "desc": "Les stats des alliés du porteur ne peuvent pas baisser tant qu'ils peuvent voir le fanion",
       "buy": 2500,
       "sell": 500
     },
     {
       "name": "Fanion Tenace",
-      "desc": "Les alliés du porteur lancent une pièce quand ils devraient tomber KO tant que ceux-ci peuvent voir le fanion. Si c'est face, ils résistent avec 1 PV",
+      "desc": "Les alliés du porteur lancent une pièce la première fois qu'ils devraient tomber KO alors que ceux-ci peuvent voir le fanion. Si c'est face, ils résistent avec 1 PV",
+      "buy": 2500,
+      "sell": 500
+    },
+    {
+      "name": "Fanion Véloce",
+      "desc": "Les alliés du porteur sont accélérés tant qu'ils peuvent voir le fanion",
+      "buy": 2500,
+      "sell": 500
+    },
+    {
+      "name": "Fanion Résilient",
+      "desc": "Les alliés du porteur ne peuvent pas être affectés par des anomalies de statut tant qu'ils peuvent voir le fanion",
+      "buy": 2500,
+      "sell": 500
+    },
+    {
+      "name": "Fanion Économe",
+      "desc": "Les alliés du porteur lancent un d6 quand ils utilisent un objet tant qu'ils peuvent voir le fanion. Sur un 6, l'objet n'est pas consommé",
+      "buy": 2500,
+      "sell": 500
+    },
+    {
+      "name": "Fanion Brutal",
+      "desc": "Les alliés du porteur assènent des coups critiques sur 11 et 12 tant qu'ils peuvent voir le fanion",
       "buy": 2500,
       "sell": 500
     }
@@ -971,17 +1013,17 @@
     {
       "name": "Racaillasse",
       "desc": "Objet à lancer. Inflige 10 dégâts",
-      "buy": 1
+      "buy": 5
     },
     {
       "name": "Gravalroche",
       "desc": "Objet à lancer. Inflige 20 dégâts",
-      "buy": 2
+      "buy": 10
     },
     {
       "name": "Pic d'Argent",
       "desc": "Objet à lancer. Inflige 1d6 dégâts physiques",
-      "buy": 6,
+      "buy": 5,
       "sell": 1
     },
     {
@@ -996,7 +1038,7 @@
     {
       "name": "Croc d'Or",
       "desc": "Objet à lancer. Inflige 2d6 dégâts physiques",
-      "buy": 4
+      "buy": 8
     },
     {
       "name": "Epine d'Or",

@@ -63,7 +63,7 @@
       "Avance l'utilisateur et un allié proche d'un rang dans l'ordre de priorité au début du prochain tour"
     ],
     "3": [
-
+      "Révèle et détruit tous les pièges de la pièce"
     ]
   },
   "poison": {
@@ -89,6 +89,7 @@
   },
   "ground": {
     "1": [
+      "Lève une tempête de sable",
       "Eblouit un ennemi",
       "Réduit la puissance des attaques électrik de 25% pendant 2 tours"
     ],
@@ -99,7 +100,7 @@
       "Réduit la puissance des attaques électrik de 50% pendant 2 tours"
     ],
     "3": [
-
+      "Fait disparaître l'utilisateur sous terre pendant un tour, et il pourra ressortir où il veut dans la pièce à son prochain tour"
     ]
   },
   "rock": {
@@ -171,7 +172,7 @@
       "Nullife les dégâts de la prochaine attaque subie et réduit l'attaque de l'attaquant de 25%"
     ],
     "3": [
-
+      "Si l'utilisateur ne se déplace pas ce tour-ci, il ne subit plus de dégâts d'attaque jusqu'à son prochain tour"
     ]
   },
   "fire": {

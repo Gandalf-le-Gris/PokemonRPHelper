@@ -30,7 +30,7 @@ export const itemTypeArray = [
   },
   {
     value: 'wand',
-    title: 'Bâtons',
+    title: 'Branches',
   },
   {
     value: 'clothing',

@@ -134,6 +134,7 @@
                 min="0"
                 :max="maxHP"
                 class="inner-compact font-weight-bold"
+                @change="changeHP"
               >
                 <template #append-inner>
                   {{ `/${maxHP}` }}
@@ -570,6 +571,12 @@ function saveCharacter() {
 
 async function resetCharacter() {
   character.value = await createCharacter(character.value.pokemon, 0, character.value.uuid);
+}
+
+function changeHP() {
+  if (props.isBattleSheet) {
+    saveCharacter()
+  }
 }
 
 function updateLevel() {

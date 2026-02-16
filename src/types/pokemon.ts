@@ -48,6 +48,8 @@ export const statsArray = [
   },
 ] as { value: StatName, title: string }[];
 
+export const modifiableStatsArray = statsArray.filter(v => v.value !== 'hp')
+
 export interface Stats {
   hp: number,
   atk: number,

@@ -28,6 +28,8 @@
           v-if="character"
           @click.stop
           @mousedown="emit('mousedown')"
+          @status="characterStatusUpdated"
+          @stats="characterStatsUpdated"
           :character
           :my-character
           :is-master
@@ -105,7 +107,7 @@
 <script setup lang="ts">
 import { findTilePosition } from '@/utils/tileMap';
 import { webSocketService } from '@/services/instances/webSocketService.instance';
-import { Room, BattleCharacter, RoomTile, roomTileTypeArray, TileAsset } from '@/types/Room';
+import { Room, BattleCharacter, RoomTile, roomTileTypeArray, TileAsset, BattleCharacterStatus, BattleCharacterStats } from '@/types/Room';
 import { PropType } from 'vue';
 import { assetsArray } from '@/types/props';
 
@@ -184,6 +186,28 @@ function onDrop(evt: DragEvent) {
     } else if (asset.uuid) {
       webSocketService.moveAsset(asset.uuid, props.i, props.j);
     }
+  }
+}
+
+function characterStatusUpdated(status: BattleCharacterStatus) {
+  if (character.value) {
+    webSocketService.updateCharacter({
+      ...character.value,
+      i: props.i,
+      j: props.j,
+      status,
+    })
+  }
+}
+
+function characterStatsUpdated(stats: BattleCharacterStats) {
+  if (character.value) {
+    webSocketService.updateCharacter({
+      ...character.value,
+      i: props.i,
+      j: props.j,
+      stats,
+    })
   }
 }
 
