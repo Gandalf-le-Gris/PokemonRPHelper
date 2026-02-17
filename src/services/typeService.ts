@@ -2,11 +2,11 @@ import { Type, TypeDetail, typeArray } from "@/types/types";
 import axios from "axios";
 
 export class TypeService {
-  public typeList: TypeDetail[] = [];
+  public typeList: Ref<TypeDetail[]> = ref([]);
 
   constructor() {
     typeArray.forEach(t => {
-      this.getTypeDetail(t.value).then(r => this.typeList.push(r));
+      this.getTypeDetail(t.value).then(r => this.typeList.value.push(r));
     });
   }
 
@@ -20,7 +20,7 @@ export class TypeService {
   }
 
   public async getOrFetchTypeIcon(type: Type): Promise<string> {
-    return this.typeList.find(e => e.type === type)?.src ?? await this.getTypeIcon(type);
+    return this.typeList.value.find(e => e.type === type)?.src ?? await this.getTypeIcon(type);
   }
 
   public async getTypeDetail(type: Type): Promise<TypeDetail> {
@@ -43,6 +43,6 @@ export class TypeService {
   }
 
   public async getOrFetchTypeDetail(type: Type): Promise<TypeDetail> {
-    return this.typeList.find(e => e.type === type) ?? await this.getTypeDetail(type);
+    return this.typeList.value.find(e => e.type === type) ?? await this.getTypeDetail(type);
   }
 }

@@ -51,7 +51,7 @@ export const statusEffectArray = [
   },
   {
     value: 'infatuated',
-    title: 'Amoureux',
+    title: 'Charmé',
     color: 'pink-lighten-2',
     icon: 'mdi-heart'
   },

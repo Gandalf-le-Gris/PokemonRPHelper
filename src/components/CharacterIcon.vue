@@ -2,7 +2,8 @@
   <v-menu
     v-model="showMenu"
     :close-on-content-click="false"
-    location="top"
+    location="top center"
+    origin="bottom center"
     :disabled="!isMaster && !owned"
     width="200"
   >

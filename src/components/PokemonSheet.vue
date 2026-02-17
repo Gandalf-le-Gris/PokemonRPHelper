@@ -43,19 +43,27 @@
                 rounded="lg"
                 class="bg-grey-darken-3 pa-2"
               >
-                <v-tooltip location="top" max-width="512" :text="character.ability.desc" open-on-click>
+                <v-tooltip
+                  location="top"
+                  max-width="512"
+                  open-on-click
+                  content-class="accept-linebreak"
+                >
                   <template #activator="{ props }">
                     <div class="text-subtitle-1 text-center" v-bind="props">
                       <span class="text-subtitle-2">Talent : </span>
                       {{ character.ability.title }}
+                      <span v-if="character.extraAbility"> + {{ character.extraAbility.title }}</span>
                     </div>
                   </template>
+                  <span>{{ character.ability.desc }}</span>
+                  <span v-if="character.extraAbility"><br/>{{ character.extraAbility.desc }}</span>
                 </v-tooltip>
               </v-sheet>
             </v-col>
             <v-col cols="auto" class="d-flex flex-column">
-              <TypeImage :type="character.pokemon.types[0]" defensive open-on-click/>
-              <TypeImage v-if="character.pokemon.types[1]" :type="character.pokemon.types[1]" defensive open-on-click class="mt-2"/>
+              <TypeImage :type="alteredTypes[0]" defensive open-on-click/>
+              <TypeImage v-if="alteredTypes[1]" :type="alteredTypes[1]" defensive open-on-click class="mt-2"/>
             </v-col>
             <v-col class="d-flex justify-end">
               <v-btn
@@ -123,7 +131,7 @@
                 class="font-weight-bold"
               />
             </v-col>
-            <v-col>
+            <v-col class="d-flex align-center ga-2">
               <v-text-field
                 v-model="character.hpt"
                 label="PV"
@@ -140,6 +148,52 @@
                   {{ `/${maxHP}` }}
                 </template>
               </v-text-field>
+              <v-menu
+                v-model="showExtraHpMenu"
+                :close-on-content-click="false"
+                location="top center"
+                origin="bottom center"
+              >
+                <template v-slot:activator="{ props: menuProps }">
+                  <v-tooltip location="top">
+                    <template v-slot:activator="{ props: tooltipProps }">
+                      <v-btn
+                        icon="mdi-fruit-pear"
+                        size="sm"
+                        v-bind="mergeProps(menuProps, tooltipProps)"
+                      />
+                    </template>
+                    PV supplémentaires
+                  </v-tooltip>
+                </template>
+                <v-card
+                  rounded="lg"
+                  width="200"
+                >
+                  <template #title>
+                    <div class="text-subtitle-2">
+                      PV supplémentaires
+                    </div>
+                  </template>
+                  <template #append>
+                    <v-icon
+                      @click="showExtraHpMenu = false"
+                      icon="mdi-close"
+                      size="x-small"
+                    />
+                  </template>
+                  <div class="pa-2 pt-0 d-flex flex-column">
+                    <v-text-field
+                      type="number"
+                      v-model="character.extraHp"
+                      min="0"
+                      variant="outlined"
+                      density="compact"
+                      hide-details
+                    />
+                  </div>
+                </v-card>
+              </v-menu>
             </v-col>
           </v-row>
           <v-row v-for="stat in statsArray" :key="stat.value" class="ma-0" align="center">
@@ -185,7 +239,7 @@
                     Spécificités
                   </v-col>
                 </v-row>
-                <v-row v-for="specificity in character.specificities" :key="specificity" class="mx-0 my-n3">
+                <v-row v-for="specificity in alteredSpecificities" :key="specificity" class="mx-0 my-n3">
                   <v-col>
                     <v-tooltip location="top" :text="specificityArray.find(s => s.value === specificity)?.desc" max-width="512" open-on-click>
                       <template #activator="{ props }">
@@ -319,6 +373,7 @@
                       return-object
                       :items="iqSkillArray.filter(s => (s.level <= (index + 1) * 5) && (!character.iqSkills.some((k, i) => k.value === s.value && i !== index)))"
                       v-bind="props"
+                      @update:model-value="triggerIqChange(index)"
                     />
                   </template>
                 </v-tooltip>
@@ -414,7 +469,7 @@
               <v-col cols="6" md="3">
                 <v-btn
                   @click="levelUp"
-                  :disabled="Object.values(character.experience).filter(e => e === true || e >= 5).length < 4"
+                  :disabled="!canLevelUp"
                   text="Gain de niveau"
                   prepend-icon="mdi-creation"
                   rounded="lg"
@@ -479,23 +534,181 @@
       />
     </v-card>
   </v-dialog>
+
+  <v-dialog
+    v-model="showTypeChange"
+    max-width="300"
+    persistent
+  >
+    <v-card
+      :title="`Changement de type ${typeChangeIndex + 1}`"
+      rounded="xl"
+      class="py-4"
+    >
+      <v-card-text>
+        <v-row
+          dense
+          align="center"
+        >
+          <v-col class="d-flex justify-center">
+            <TypeImage :type="alteredTypes[typeChangeIndex]" defensive open-on-click/>
+          </v-col>
+          <v-col cols="auto">
+            <v-icon icon="mdi-arrow-right-bold" />
+          </v-col>
+          <v-col class="d-flex justify-center">
+            <v-select
+              v-model="newType"
+              :items="attackTypes.filter(t => !alteredTypes.includes(t.type))"
+              item-value="type"
+              item-title="title"
+              hide-details
+              density="compact"
+              variant="outlined"
+              @update:model-value="changeType"
+            />
+          </v-col>
+        </v-row>
+      </v-card-text>
+    </v-card>
+  </v-dialog>
+
+  <v-dialog
+    v-model="showSpecificityChange"
+    max-width="500"
+    persistent
+  >
+    <v-card
+      :title="`Changement de spécificité`"
+      rounded="xl"
+      class="py-4"
+    >
+      <template #append>
+        <v-btn
+          icon="mdi-content-save"
+          variant="flat"
+          class="mt-n4"
+          :disabled="(!oldSpecificity && !hideOldSpecificity) || !newSpecificity"
+          @click="changeSpecificities"
+        />
+      </template>
+      <v-card-text>
+        <v-row
+          dense
+          align="center"
+        >
+          <v-col class="d-flex justify-center">
+            <v-tooltip
+              v-if="!hideOldSpecificity"
+              location="bottom"
+              :disabled="!oldSpecificity"
+              :text="specificityArray.find(s => s.value === oldSpecificity)?.desc"
+              max-width="512"
+              open-on-click
+            >
+              <template #activator="{ props }">
+                <v-select
+                  v-model="oldSpecificity"
+                  :items="specificityArray.filter(s => character.specificities.includes(s.value))"
+                  item-value="value"
+                  item-title="title"
+                  hide-details
+                  density="compact"
+                  variant="outlined"
+                  v-bind="props"
+                />
+              </template>
+            </v-tooltip>
+          </v-col>
+          <v-col cols="auto">
+            <v-icon icon="mdi-arrow-right-bold" />
+          </v-col>
+          <v-col class="d-flex justify-center">
+            <v-tooltip
+              location="bottom"
+              :disabled="!newSpecificity"
+              :text="specificityArray.find(s => s.value === newSpecificity)?.desc"
+              max-width="512"
+              open-on-click
+            >
+              <template #activator="{ props }">
+                <v-select
+                  v-model="newSpecificity"
+                  :items="specificityArray.filter(s => !character.specificities.includes(s.value))"
+                  item-value="value"
+                  item-title="title"
+                  hide-details
+                  density="compact"
+                  variant="outlined"
+                  v-bind="props"
+                />
+              </template>
+            </v-tooltip>
+          </v-col>
+        </v-row>
+      </v-card-text>
+    </v-card>
+  </v-dialog>
+
+  <v-dialog
+    v-model="showNewAbility"
+    max-width="500"
+    persistent
+  >
+    <v-card
+      title="Gain de talent"
+      rounded="xl"
+      class="py-4"
+    >
+      <template #append>
+        <v-btn
+          icon="mdi-content-save"
+          variant="flat"
+          class="mt-n4"
+          :disabled="!newAbility"
+          @click="learnAbility"
+        />
+      </template>
+      <v-card-text>
+        <v-tooltip
+          location="bottom"
+          :disabled="!newAbility"
+          :text="newAbility?.desc"
+          max-width="512"
+          open-on-click
+        >
+          <template #activator="{ props }">
+            <v-select
+              v-model="newAbility"
+              :items="availableAbilities"
+              return-object
+              item-title="title"
+              hide-details
+              density="compact"
+              variant="outlined"
+              v-bind="props"
+            />
+          </template>
+        </v-tooltip>
+      </v-card-text>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script setup lang="ts">
 import { typeService } from '@/services/instances/typeService.instance';
+import { Ability, abilityRecord } from '@/types/abilities';
 import { experienceLabels } from '@/types/experience';
 import { iqSkillArray } from '@/types/iqSkills';
 import { computeValue } from '@/types/items';
-import { changeSpecies, computeHPT, createCharacter } from '@/types/pokemon';
-import { StatName, statsArray, type Character } from '@/types/pokemon';
+import { changeSpecies, computeHPT, createCharacter, StatName, statsArray, type Character } from '@/types/pokemon';
 import { searchArray } from '@/types/search';
-import { computeGlobalModifiers } from '@/types/specificities';
-import { specificityArray, type Mod } from '@/types/specificities';
+import { computeGlobalModifiers, specificityArray, SpecificityType, type Mod } from '@/types/specificities';
 import statusMoves from '@/types/statusMoves';
 import { talentArray } from '@/types/talents';
-import { TypeDetail } from '@/types/types';
+import { Type, TypeDetail } from '@/types/types';
 import { getVarieties } from '@/utils/varieties';
-import { ModelRef } from 'vue';
+import { mergeProps, ModelRef } from 'vue';
 
 const props = defineProps({
   isPlayerSheet: Boolean,
@@ -509,6 +722,17 @@ const showStatusDialog: Ref<boolean> = ref<boolean>(false);
 const selectedStatus: Ref<number> = ref<number>(-1);
 const confirmReset: Ref<boolean> = ref<boolean>(false);
 const showNotes: Ref<boolean> = ref<boolean>(false);
+const showExtraHpMenu: Ref<boolean> = ref<boolean>(false);
+const showTypeChange: Ref<boolean> = ref<boolean>(false);
+const typeChangeIndex: Ref<number> = ref<number>(0);
+const newType: Ref<Type | undefined> = ref();
+const oldSpecificity: Ref<SpecificityType | undefined> = ref();
+const newSpecificity: Ref<SpecificityType | undefined> = ref();
+const currentIqSkill: Ref<number> = ref<number>(0);
+const showSpecificityChange: Ref<boolean> = ref<boolean>(false);
+const hideOldSpecificity: Ref<boolean> = ref<boolean>(false);
+const newAbility: Ref<Ability | undefined> = ref();
+const showNewAbility: Ref<boolean> = ref<boolean>(false);
 
 const characterMods: ComputedRef<Mod> = computed<Mod>(() => computeGlobalModifiers(character.value));
 const maxHP: ComputedRef<number> = computed<number>(() => computeHPT(character.value));
@@ -530,7 +754,7 @@ const varieties: ComputedRef<{ value: number, title: string }[]> = computed(() =
 );
 
 const attackTypes: ComputedRef<TypeDetail[]> = computed(() =>
-  typeService.typeList.filter(e => e.type !== 'stellar' && e.type !== 'unknown').sort((a, b) => a.title.localeCompare(b.title))
+  typeService.typeList.value.filter(e => e.type !== 'stellar' && e.type !== 'unknown').sort((a, b) => a.title.localeCompare(b.title))
 );
 
 const inventoryValue: ComputedRef<string | undefined> = computed(() => {
@@ -540,6 +764,100 @@ const inventoryValue: ComputedRef<string | undefined> = computed(() => {
   }
   return;
 });
+
+const alteredTypes: ComputedRef<Type[]> = computed(() => {
+  const types: Type[] = [...character.value.pokemon.types];
+  if (character.value.swappedTypes) {
+    Object.values(character.value.swappedTypes).forEach(([index, type]) => types[index] = type);
+  }
+  return types;
+});
+
+function triggerIqChange(index: number) {
+  if (character.value.swappedTypes?.[index]) {
+    delete character.value.swappedTypes[index]
+  }
+  if (character.value.swappedSpecificities?.[index]) {
+    delete character.value.swappedSpecificities[index]
+  }
+  if (!character.value.iqSkills.some(iq => iq.value === 'Versatile')) {
+    delete character.value.extraAbility;
+  }
+  newType.value = undefined;
+  oldSpecificity.value = undefined;
+  newSpecificity.value = undefined;
+  newAbility.value = undefined;
+  hideOldSpecificity.value = false;
+  currentIqSkill.value = index;
+  switch (character.value.iqSkills[index].value) {
+    case 'Type change':
+      showTypeChange.value = true;
+      typeChangeIndex.value = 1;
+      break;
+    case 'Advanced type change':
+      showTypeChange.value = true;
+      typeChangeIndex.value = 0;
+      break;
+    case 'Capable':
+      showSpecificityChange.value = true;
+      break;
+    case 'Advanced capable':
+      showSpecificityChange.value = true;
+      hideOldSpecificity.value = true;
+      break;
+    case 'Versatile':
+      showNewAbility.value = true;
+      break;
+  }
+}
+
+function changeType() {
+  if (!character.value.swappedTypes) {
+    character.value.swappedTypes = {};
+  }
+  character.value.swappedTypes[currentIqSkill.value] = [typeChangeIndex.value, newType.value!];
+  showTypeChange.value = false;
+}
+
+const alteredSpecificities: ComputedRef<SpecificityType[]> = computed(() => {
+  const specificities: SpecificityType[] = [...character.value.specificities]
+  if (character.value.swappedSpecificities) {
+    Object.values(character.value.swappedSpecificities).forEach(([old, specificity]) => {
+      const i = specificities.indexOf(old);
+      if (i >= 0) {
+        specificities.splice(i, 1);
+      }
+      specificities.push(specificity);
+    });
+  }
+  return specificities;
+});
+
+function changeSpecificities() {
+  if (!character.value.swappedSpecificities) {
+    character.value.swappedSpecificities = {};
+  }
+  character.value.swappedSpecificities[currentIqSkill.value] = [oldSpecificity.value!, newSpecificity.value!];
+  showSpecificityChange.value = false;
+}
+
+const canLevelUp: ComputedRef<boolean> = computed(() => {
+  const target = character.value.iqSkills.some(iq=> iq.value === 'Fast learner') ? 3 : 4
+  return Object.values(character.value.experience).filter(e => e === true || e >= 5).length >= target;
+});
+
+const availableAbilities: ComputedRef<Ability[]> = computed(() => {
+  const allAvailable = Object.values(abilityRecord[alteredTypes.value[0]]);
+  if (alteredTypes.value.length > 1) {
+    allAvailable.push(...Object.values(abilityRecord[alteredTypes.value[1]]));
+  }
+  return allAvailable.filter(a => character.value.ability.value !== a.value);
+});
+
+function learnAbility() {
+  character.value.extraAbility = newAbility.value;
+  showNewAbility.value = false;
+}
 
 onUnmounted(() => {
   const saved = JSON.parse(localStorage.getItem('saved-characters') ?? '{}');

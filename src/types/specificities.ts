@@ -258,7 +258,17 @@ export function getPokemonSpecificities(character: Character): SpecificityType[]
 }
 
 export function computeGlobalModifiers(character: Character): Mod {
-  let mod: Mod = character.specificities
+  const specificities: SpecificityType[] = [...character.specificities]
+  if (character.swappedSpecificities) {
+    Object.values(character.swappedSpecificities).forEach(([old, specificity]) => {
+      const i = specificities.indexOf(old);
+      if (i >= 0) {
+        specificities.splice(i, 1);
+      }
+      specificities.push(specificity);
+    });
+  }
+  let mod: Mod = specificities
     .reduce((acc, x) => {
       const effect = specificityArray.find(s => s.value === x)?.effect;
       if (effect) {

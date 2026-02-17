@@ -67,6 +67,7 @@ export interface Character {
   pokemon: Pokemon,
   stats: Stats,
   hpt: number,
+  extraHp: number,
   talents: {talent: TalentType, mod: number}[],
   specificities: SpecificityType[],
   level: number,
@@ -82,6 +83,9 @@ export interface Character {
   iqSkills: IQSkill[],
   experience: Experience,
   notes: string
+  swappedTypes?: Record<number, [number, Type]>
+  swappedSpecificities?: Record<number, [SpecificityType, SpecificityType]>
+  extraAbility?: Ability
 }
 
 export async function createCharacter(pokemon: Pokemon, level: number, uuid?: string): Promise<Character> {
@@ -112,6 +116,7 @@ export async function createCharacter(pokemon: Pokemon, level: number, uuid?: st
       spd: 0,
     },
     hpt: 1,
+    extraHp: 0,
     talents: talentArray.map(e => ({talent: e.value, mod: 0})),
     specificities: [],
     level: Number(level),
@@ -258,18 +263,19 @@ function enchanceStatsOnce(character: Character) {
 }
 
 export function computeHPT(character: Character) {
+  const extraHp: number = Number(character.extraHp ?? 0)
   if (character.ability.value === 'Tank' || character.iqSkills.some(e => e.value === 'Brick house') || character.iqSkills.some(e => e.value === 'Advanced brick house')) {
     if (character.ability.value === 'Tank' && character.iqSkills.some(e => e.value === 'Brick house')
         || character.ability.value === 'Tank' && character.iqSkills.some(e => e.value === 'Advanced brick house')
         || character.iqSkills.some(e => e.value === 'Brick house') && character.iqSkills.some(e => e.value === 'Advanced brick house')) {
       if (character.ability.value === 'Tank' && character.iqSkills.some(e => e.value === 'Brick house') && character.iqSkills.some(e => e.value === 'Advanced brick house')) {
-        return Math.max(1, character.stats.hp * 9);
+        return Math.max(1, character.stats.hp * 9) + extraHp;
       }
-      return Math.max(1, character.stats.hp * 7);
+      return Math.max(1, character.stats.hp * 7) + extraHp;
     }
-    return Math.max(1, character.stats.hp * 5);
+    return Math.max(1, character.stats.hp * 5) + extraHp;
   }
-  return Math.max(1, character.stats.hp * 3);
+  return Math.max(1, character.stats.hp * 3) + extraHp;
 }
 
 export function isCharacter(obj: any): obj is Character {
