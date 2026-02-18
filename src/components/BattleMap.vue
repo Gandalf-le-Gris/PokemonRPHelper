@@ -232,17 +232,40 @@
             <v-row>
               <v-col cols="12">
                 <div class="text-caption mt-2 mb-n1">Points de vie</div>
-                <v-slider
-                  @end="emit('update-character')"
-                  v-model="character.hpt"
-                  min="0"
-                  :max="computeHPT(character)"
-                  step="1"
-                  hide-details
-                  thumb-label
-                  color="green"
-                  track-color="red"
-                />
+                <v-row>
+                  <v-col>
+                    <v-slider
+                      @end="emit('update-character')"
+                      v-model="character.hpt"
+                      min="0"
+                      :max="characterHpt"
+                      step="1"
+                      hide-details
+                      thumb-label
+                      color="green"
+                      track-color="red"
+                    />
+                  </v-col>
+                  <v-col cols="auto">
+                    <v-text-field
+                      v-model="character.hpt"
+                      label="PV"
+                      type="number"
+                      hide-details
+                      density="compact"
+                      variant="outlined"
+                      min="0"
+                      :max="characterHpt"
+                      class="inner-compact font-weight-bold"
+                      @change="emit('update-character')"
+                      hide-spin-buttons
+                    >
+                      <template #append-inner>
+                        /{{ characterHpt }}
+                      </template>
+                    </v-text-field>
+                  </v-col>
+                </v-row>
               </v-col>
             </v-row>
           </v-card>
@@ -291,6 +314,7 @@ const props = defineProps({
 const emit = defineEmits(['update-character']);
 
 const character: ModelRef<Character | undefined> = defineModel();
+const characterHpt = computed(() => character.value ? computeHPT(character.value) : 0);
 
 const room = webSocketService.getRoom();
 const spriteSheet: Ref<string> = ref(room.value?.environment ?? 'ForestPath');
