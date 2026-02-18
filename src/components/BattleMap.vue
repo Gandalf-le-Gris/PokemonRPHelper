@@ -4,7 +4,7 @@
       class="align-centerfill-height mx-auto"
     >
       <v-row>
-        <v-col cols="3">
+        <v-col cols="12" sm="3">
           <div class="d-flex align-center justify-space-between">
             <div class="text-h5 font-weight-bold">
               Détails du combat
@@ -247,7 +247,7 @@
             </v-row>
           </v-card>
         </v-col>
-        <v-col cols="9">
+        <v-col cols="12" sm="9">
           <div class="map-grid">
             <template v-for="(row, i) in room?.map" :key="i">
               <battle-map-tile
