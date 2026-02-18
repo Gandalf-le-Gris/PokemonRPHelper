@@ -253,6 +253,7 @@ export const specificityArray = [
 export function getPokemonSpecificities(character: Character): SpecificityType[] {
   const variety = character.pokemon.varieties[character.variety].pokemon.name;
   return specificityArray
+    .sort((a, b) => a.title.localeCompare(b.title))
     .map(e => e.value)
     .filter(e => specificities[e].some(s => splitMatchPokemonName(variety, s.toLowerCase())));
 }

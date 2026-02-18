@@ -944,8 +944,15 @@
       "head": true
     },
     {
-      "name": "Armure de Plaques",
+      "name": "Armure Lourde",
       "desc": "Le porteur subit deux fois moins de dégâts des attaques physiques, mais sa vitesse est réduite de moitié",
+      "buy": 2000,
+      "sell": 400,
+      "belt": true
+    },
+    {
+      "name": "Veste de Combat",
+      "desc": "Le porteur subit deux fois moins de dégâts des attaques spéciales, mais il ne peut plus utiliser de capacités de statut",
       "buy": 2000,
       "sell": 400,
       "belt": true
@@ -963,6 +970,78 @@
       "buy": 100,
       "sell": 20,
       "neck": true
+    },
+    {
+      "name": "Ceinture Noire",
+      "desc": "Les attaques de type combat du porteur infligent 1 dégât supplémentaire",
+      "buy": 100,
+      "sell": 20,
+      "belt": true
+    },
+    {
+      "name": "Lunettes Noires",
+      "desc": "Les attaques de type ténèbres du porteur infligent 1 dégât supplémentaire",
+      "buy": 100,
+      "sell": 20,
+      "head": true
+    },
+    {
+      "name": "Mouchoir Soie",
+      "desc": "Les attaques de type normal du porteur infligent 1 dégât supplémentaire",
+      "buy": 100,
+      "sell": 20,
+      "neck": true
+    },
+    {
+      "name": "Casque Brut",
+      "desc": "Lorsque le porteur est touché par une attaque physique, l'attaquant subit 5 dégâts en retour",
+      "buy": 1000,
+      "sell": 200,
+      "head": true
+    },
+    {
+      "name": "Poids Pouvoir",
+      "desc": "La première fois chaque jour que le porteur ou un allié visible met KO un Pokémon ennemi, le porteur augmente sa statistique de PV de 1",
+      "buy": 2000,
+      "sell": 400,
+      "belt": true
+    },
+    {
+      "name": "Poignée Pouvoir",
+      "desc": "La première fois chaque jour que le porteur ou un allié visible met KO un Pokémon ennemi, le porteur augmente sa statistique d'attaque de 1",
+      "buy": 2000,
+      "sell": 400,
+      "belt": true
+    },
+    {
+      "name": "Ceinture Pouvoir",
+      "desc": "La première fois chaque jour que le porteur ou un allié visible met KO un Pokémon ennemi, le porteur augmente sa statistique de défense de 1",
+      "buy": 2000,
+      "sell": 400,
+      "belt": true
+    },
+    {
+      "name": "Lentille Pouvoir",
+      "desc": "La première fois chaque jour que le porteur ou un allié visible met KO un Pokémon ennemi, le porteur augmente sa statistique d'attaque spéciale de 1",
+      "buy": 2000,
+      "sell": 400,
+      "head": true
+    },
+    {
+      "name": "Bandeau Pouvoir",
+      "desc": "La première fois chaque jour que le porteur ou un allié visible met KO un Pokémon ennemi, le porteur augmente sa statistique de défense spéciale de 1",
+      "buy": 2000,
+      "sell": 400,
+      "neck": true,
+      "head": true
+    },
+    {
+      "name": "Chaîne Pouvoir",
+      "desc": "La première fois chaque jour que le porteur ou un allié visible met KO un Pokémon ennemi, le porteur augmente sa statistique de vitesse de 1",
+      "buy": 2000,
+      "sell": 400,
+      "neck": true,
+      "belt": true
     }
   ],
   "flag": [
@@ -1148,7 +1227,7 @@
     },
     {
       "name": "Peau Métal",
-      "desc": "Augmente de 50% les dégâts des attaques de type acier du porteur",
+      "desc": "Les attaques de type acier du porteur infligent 1 dégât supplémentaire",
       "buy": 1000,
       "sell": 200
     },
@@ -1211,6 +1290,11 @@
     },
     {
       "name": "Pomme Acidulée",
+      "buy": 500,
+      "sell": 100
+    },
+    {
+      "name": "Pomme Nectar",
       "buy": 500,
       "sell": 100
     },
@@ -1303,6 +1387,88 @@
       "name": "Pépite",
       "buy": 15000,
       "sell": 3000
+    },
+    {
+      "name": "Aimant",
+      "desc": "Les attaques de type électrik du porteur infligent 1 dégât supplémentaire",
+      "buy": 100,
+      "sell": 20
+    },
+    {
+      "name": "Charbon",
+      "desc": "Les attaques de type feu du porteur infligent 1 dégât supplémentaire",
+      "buy": 100,
+      "sell": 20
+    },
+    {
+      "name": "Croc Dragon",
+      "desc": "Les attaques de type dragon du porteur infligent 1 dégât supplémentaire",
+      "buy": 100,
+      "sell": 20
+    },
+    {
+      "name": "Cuillère Tordue",
+      "desc": "Les attaques de type psy du porteur infligent 1 dégât supplémentaire",
+      "buy": 100,
+      "sell": 20
+    },
+    {
+      "name": "Glace Éternelle",
+      "desc": "Les attaques de type glace du porteur infligent 1 dégât supplémentaire",
+      "buy": 100,
+      "sell": 20
+    },
+    {
+      "name": "Graine Miracle",
+      "desc": "Les attaques de type plante du porteur infligent 1 dégât supplémentaire",
+      "buy": 100,
+      "sell": 20
+    },
+    {
+      "name": "Pic Venin",
+      "desc": "Les attaques de type poison du porteur infligent 1 dégât supplémentaire",
+      "buy": 100,
+      "sell": 20
+    },
+    {
+      "name": "Pierre Dure",
+      "desc": "Les attaques de type roche du porteur infligent 1 dégât supplémentaire",
+      "buy": 100,
+      "sell": 20
+    },
+    {
+      "name": "Poudre Argentée",
+      "desc": "Les attaques de type glace du porteur infligent 1 dégât supplémentaire",
+      "buy": 100,
+      "sell": 20
+    },
+    {
+      "name": "Rune Sort",
+      "desc": "Les attaques de type spectre du porteur infligent 1 dégât supplémentaire",
+      "buy": 100,
+      "sell": 20
+    },
+    {
+      "name": "Sable Doux",
+      "desc": "Les attaques de type sol du porteur infligent 1 dégât supplémentaire",
+      "buy": 100,
+      "sell": 20
+    },
+    {
+      "name": "Plume Enchantée",
+      "desc": "Les attaques de type fée du porteur infligent 1 dégât supplémentaire",
+      "buy": 100,
+      "sell": 20
+    },
+    {
+      "name": "Métal Composite",
+      "buy": 500,
+      "sell": 100
+    },
+    {
+      "name": "Capsule Technique",
+      "desc": "Permet d'apprendre une nouvelle capacité du type associé à la Capsule Technique",
+      "sell": 1500
     }
   ],
   "miscellaneous": [

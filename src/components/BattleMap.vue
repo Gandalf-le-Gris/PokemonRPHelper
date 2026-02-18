@@ -314,6 +314,7 @@ function removeEnemy(uuid: string) {
 }
 
 function selectCharacter(i: number, j: number) {
+  console.log('click')
   const char = room.value?.characters.find(c => c.i === i && c.j === j);
   if (char && props.isMaster) {
     character.value = char.character;

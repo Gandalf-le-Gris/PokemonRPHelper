@@ -428,6 +428,7 @@
     "Arctozolt",
     "Dracovish",
     "Duraludon",
+    "Archaludon",
     "Kubfu",
     "Urshifu",
     "Zarude",
@@ -832,6 +833,8 @@
     "Rolycoly",
     "Carkol",
     "Applin",
+    "Dipplin",
+    "Hydrapple",
     "Flapple",
     "Silicobra",
     "Sandaconda",
@@ -1498,7 +1501,9 @@
     "Spidops",
     "Nymble",
     "Lokix",
-    "Slither Wing"
+    "Slither Wing",
+    "Dipplin",
+    "Hydrapple"
   ],
   "twoHands": [
     "Charmander",
@@ -1900,6 +1905,7 @@
     "Dracozolt",
     "Arctozolt",
     "Duraludon",
+    "Archaludon",
     "Dreepy",
     "Drakloak",
     "Dragapult",
@@ -2838,6 +2844,7 @@
     "Cufant",
     "Copperajah",
     "Duraludon",
+    "Archaludon",
     "Zamazenta",
     "Zamazenta (Crowned)",
     "Glastrier",
@@ -2905,6 +2912,7 @@
     "Meltan",
     "Rookidee",
     "Applin",
+    "Dipplin",
     "Polteageist",
     "Milcery",
     "Nymble",
@@ -3831,6 +3839,7 @@
     "Blacephalon",
     "Dracozolt",
     "Duraludon",
+    "Archaludon",
     "Zarude",
     "Wyrdeer",
     "Kleavor",
@@ -3925,7 +3934,8 @@
     "Calyrex (Shadow)",
     "Ursaluna",
     "Ursaluna (Bloodmoon)",
-    "Terapagos (Stellar)"
+    "Terapagos (Stellar)",
+    "Hydrapple"
   ],
   "big": [
     "Lapras",

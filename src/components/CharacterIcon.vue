@@ -6,12 +6,16 @@
     origin="bottom center"
     :disabled="!isMaster && !owned"
     width="200"
+    :open-on-click="false"
   >
     <template #activator="{ props }">
       <div
         class="overlay"
         @dragstart="startDrag"
         v-bind="props"
+        @click.stop="showMenu = false"
+        @mousedown="$emit('mousedown')"
+        @contextmenu.prevent="showMenu = !showMenu"
       >
         <v-tooltip
           location="bottom"
@@ -185,7 +189,7 @@ const props = defineProps({
   }
 });
 
-const emits = defineEmits(['status', 'stats']);
+const emits = defineEmits(['status', 'stats', 'mousedown']);
 
 const showMenu: Ref<boolean> = ref(false);
 const status: Ref<BattleCharacterStatus> = ref({ ...props.character.status });
