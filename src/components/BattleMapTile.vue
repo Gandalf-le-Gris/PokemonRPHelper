@@ -34,6 +34,7 @@
           :character
           :my-character
           :is-master
+          :active="room?.activeCharacter == character.character.uuid"
         />
       </div>
     </template>
@@ -164,7 +165,7 @@ onMounted(paintTiles);
 watch(() => [props.spriteSheet, room.value?.map[props.i][props.j]], paintTiles);
 
 const character: ComputedRef<BattleCharacter | undefined> = computed(() =>
-  webSocketService.getRoom().value?.characters.find(c => c.i === props.i && c.j === props.j)
+  room.value?.characters.find(c => c.i === props.i && c.j === props.j)
 );
 
 function onDrop(evt: DragEvent) {

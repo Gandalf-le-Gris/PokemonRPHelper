@@ -10,7 +10,7 @@
   >
     <template #activator="{ props }">
       <div
-        class="overlay"
+        :class="{ overlay: true, active }"
         @dragstart="startDrag"
         v-bind="props"
         @click.stop="showMenu = false"
@@ -24,7 +24,7 @@
         >
           <template #activator="{ props }">
             <div v-bind="props">
-              <img :src="character.character.pokemon.sprites.front_default" :class="{grayscale: !character.character.hpt}"/>
+              <img :src="character.character.pokemon.sprites.front_default" :class="{ grayscale: !character.character.hpt }" />
               <v-progress-linear
                 v-if="owned"
                 v-model="hp"
@@ -65,7 +65,9 @@
                       v-bind="props"
                     />
                   </template>
-                  <div class="text-white text-caption my-n1 mx-n3">{{ statsArray.find(s => s.value === stat)?.title }} {{ (stats[stat] ?? 0) > 0 ? '+' : '' }}{{ stats[stat] }}%</div>
+                  <div class="text-white text-caption my-n1 mx-n3">
+                    {{ statsArray.find(s => s.value === stat)?.title }} {{ (stats[stat] ?? 0) > 0 ? '+' : '' }}{{ stats[stat] }}%
+                  </div>
                 </v-tooltip>
               </div>
             </div>
@@ -172,22 +174,13 @@
 import { computeHPT, modifiableStatsArray, StatName, statsArray } from '@/types/pokemon';
 import { BattleCharacter, BattleCharacterStats, BattleCharacterStatus } from '@/types/Room';
 import { StatusEffect, statusEffectArray } from '@/types/statusEffects';
-import { PropType } from 'vue';
 
-const props = defineProps({
-  character: {
-    type: Object as PropType<BattleCharacter>,
-    required: true
-  },
-  isMaster: {
-    type: Boolean,
-    default: false
-  },
-  myCharacter: {
-    type: String,
-    required: false
-  }
-});
+const props = defineProps<{
+  character: BattleCharacter
+  isMaster?: boolean
+  myCharacter?: string
+  active?: boolean
+}>();
 
 const emits = defineEmits(['status', 'stats', 'mousedown']);
 
@@ -238,6 +231,12 @@ watch(() => props.character.stats, (v) => stats.value = { ...v }, { deep: true }
   background-color: #fff4;
   cursor: pointer;
   user-select: none;
+}
+
+.overlay.active {
+  background-color: #fff7;
+  outline: #000 1px solid;
+  outline-offset: -1px;
 }
 
 .no-events {

@@ -300,16 +300,10 @@ import { computeGlobalModifiers } from '@/types/specificities';
 import { ModelRef } from 'vue';
 import { assetsArray, assetsLabelArray } from '@/types/props';
 
-const props = defineProps({
-  isMaster: {
-    type: Boolean,
-    default: false
-  },
-  myCharacter: {
-    type: String,
-    required: false
-  }
-});
+const props = defineProps<{
+  isMaster?: boolean
+  myCharacter?: string
+}>();
 
 const emit = defineEmits(['update-character']);
 
