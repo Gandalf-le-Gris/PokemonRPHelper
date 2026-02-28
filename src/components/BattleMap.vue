@@ -232,7 +232,7 @@
             <v-row>
               <v-col cols="12">
                 <div class="text-caption mt-2 mb-n1">Points de vie</div>
-                <v-row>
+                <v-row align="center">
                   <v-col>
                     <v-slider
                       @end="emit('update-character')"

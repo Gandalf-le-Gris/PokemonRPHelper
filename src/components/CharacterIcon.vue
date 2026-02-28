@@ -10,7 +10,8 @@
   >
     <template #activator="{ props }">
       <div
-        :class="{ overlay: true, active }"
+        class="overlay"
+        :class="{ active, isPlayer: character.isPlayer }"
         @dragstart="startDrag"
         v-bind="props"
         @click.stop="showMenu = false"
@@ -215,13 +216,13 @@ function changeStats(stat: StatName, diff: number) {
 }
 
 const hp: Ref<number> = ref(props.character.character.hpt);
-watch (() => props.character.character.hpt, (val) => hp.value = val);
+watch(() => props.character.character.hpt, (val) => hp.value = val);
 
 watch(() => props.character.status, (v) => status.value = { ...v }, { deep: true });
 watch(() => props.character.stats, (v) => stats.value = { ...v }, { deep: true });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .overlay {
   position: absolute;
   top: 0;
@@ -231,12 +232,28 @@ watch(() => props.character.stats, (v) => stats.value = { ...v }, { deep: true }
   background-color: #fff4;
   cursor: pointer;
   user-select: none;
-}
 
-.overlay.active {
-  background-color: #fff7;
-  outline: #000 1px solid;
-  outline-offset: -1px;
+  &.active {
+    background-color: #fff8;
+
+    &::before {
+      position: absolute;
+      top: 10%;
+      left: 10%;
+      width: 80%;
+      height: 80%;
+      content: '';
+      background: url('/props/pokeball_icon.png');
+      background-repeat: no-repeat;
+      background-size: cover;
+      opacity: 25%;
+    }
+  }
+
+  img {
+    position: relative;
+    z-index: 1;
+  }
 }
 
 .no-events {
@@ -249,6 +266,6 @@ img {
 }
 
 .grayscale {
-  filter: grayscale();
+  filter: grayscale(1);
 }
 </style>
