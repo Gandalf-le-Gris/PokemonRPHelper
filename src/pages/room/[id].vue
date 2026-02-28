@@ -42,22 +42,28 @@
 
   <v-dialog
     v-model="justArrived"
-    max-width="800"
+    max-width="700"
   >
     <v-card
       rounded="lg"
       title="Connexion comme"
-      class="pa-2 pt-0"
+      class="pa-4 pt-0"
     >
-      <v-row dense class="mt-n2">
-        <v-col cols="12" sm="6" class="d-flex flex-column justify-end">
+      <v-row class="mb-n3 mt-n2">
+        <v-col cols="12" sm="6" class="d-flex flex-column justify-end ga-2">
+          <v-btn
+            @click="connectAsSpectator"
+            text="Spectateur"
+            class="w-100"
+          />
           <v-btn
             @click="connectAsDM"
             text="Maître du jeu"
             class="w-100"
           />
         </v-col>
-        <v-col cols="12" sm="6" class="d-flex flex-column">
+        <v-divider :vertical="smAndUp" />
+        <v-col cols="12" sm="6" class="d-flex flex-column ga-2">
           <v-select
             v-model="character"
             :items="characters"
@@ -69,7 +75,6 @@
             variant="outlined"
             label="Personnage"
             density="compact"
-            class="mb-2"
           />
           <v-btn
             @click="connectAsPlayer(false)"
@@ -86,12 +91,14 @@
 <script setup lang="ts">
 import { webSocketService } from '@/services/instances/webSocketService.instance';
 import { Character } from '@/types/pokemon';
+import { useDisplay } from 'vuetify';
 
 const justArrived: Ref<boolean> = ref(true);
 const isMaster: Ref<boolean | undefined> = ref();
 const character: Ref<Character | undefined> = ref();
 const characters: Ref<Character[]> = ref([]);
 const showSheet: Ref<boolean> = ref(false);
+const { smAndUp } = useDisplay();
 
 const router = useRouter();
 const route = useRoute();
@@ -110,12 +117,14 @@ onMounted(() => {
       webSocketService.joinRoom((route.params as { id: string }).id);
     }
     const reconnect = JSON.parse(localStorage.getItem('room-connection') ?? '{}')[(route.params as { id: string }).id];
-    if (reconnect && (reconnect.isMaster || reconnect.character)) {
+    if (reconnect) {
       if (reconnect.isMaster) {
         connectAsDM();
-      } else {
+      } else if (reconnect.character) {
         character.value = reconnect.character;
         connectAsPlayer(true);
+      } else {
+        connectAsSpectator();
       }
     }
   });
@@ -130,8 +139,7 @@ function connectAsDM() {
   isMaster.value = true;
   character.value = undefined;
   justArrived.value = false;
-  const connection: any = {};
-  connection[(route.params as { id: string }).id] = { isMaster: true };
+  const connection = { [(route.params as { id: string }).id]: { isMaster: true } };
   localStorage.setItem('room-connection', JSON.stringify(connection));
 }
 
@@ -144,8 +152,14 @@ function connectAsPlayer(reconnecting: boolean) {
   const savedCharacters = JSON.parse(localStorage.getItem('saved-characters') ?? '{}');
   character.value = savedCharacters[character.value?.uuid ?? ''];
   updateCharacter();
-  const connection: any = {};
-  connection[(route.params as { id: string }).id] = { character: character.value };
+  const connection = { [(route.params as { id: string }).id]: { character: character.value } };
+  localStorage.setItem('room-connection', JSON.stringify(connection));
+}
+
+function connectAsSpectator() {
+  isMaster.value = false;
+  justArrived.value = false;
+  const connection = { [(route.params as { id: string }).id]: { character: character.value } };
   localStorage.setItem('room-connection', JSON.stringify(connection));
 }
 
