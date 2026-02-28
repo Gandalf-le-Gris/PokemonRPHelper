@@ -26,7 +26,11 @@
           <div class="text-body-2">
             Code : <b>{{ webSocketService.getRoom().value?.uuid }}</b>
           </div>
-          <v-expansion-panels class="mt-4" variant="accordion">
+          <v-expansion-panels
+            v-model="openPanel"
+            class="mt-4"
+            variant="accordion"
+          >
             <v-expansion-panel v-if="isMaster" title="Génération">
               <v-expansion-panel-text class="d-flex flex-column justify-between">
                 <v-select
@@ -308,13 +312,16 @@ const props = defineProps<{
 const emit = defineEmits(['update-character']);
 
 const character: ModelRef<Character | undefined> = defineModel();
-const characterHpt = computed(() => character.value ? computeHPT(character.value) : 0);
-
+  
 const room = webSocketService.getRoom();
 const spriteSheet: Ref<string> = ref(room.value?.environment ?? 'ForestPath');
 const generationOptions: Ref<{ size: number, difficulty: number, crammed: number }> = ref({ size: 15, difficulty: 3, crammed: 3 });
+const openPanel: Ref<number> = ref(-1);
 const router = useRouter();
-
+    
+const characterHpt: ComputedRef<number> = computed(() =>
+  character.value ? computeHPT(character.value) : 0
+);
 const gridTemplate: ComputedRef<string> = computed(() => 
   `repeat(${room.value?.map[0].length}, 1fr)`
 );
@@ -406,6 +413,76 @@ function startDrag(evt: DragEvent, asset: string) {
     evt.dataTransfer.setData('asset', JSON.stringify({ value: asset }));
   }
 }
+
+function handleKeyPress(event: KeyboardEvent) {
+  switch (event.key) {
+    case 'n':
+    case 'ArrowRight':
+      if (props.isMaster) {
+        event.preventDefault();
+        advanceInitiative();
+        openPanel.value = 3;
+      }
+      break;
+    case '+':
+      if (props.isMaster) {
+        event.preventDefault();
+        addEnemy();
+      }
+      break;
+    case 'o':
+      if (props.isMaster) {
+        event.preventDefault();
+        sortInitiative();
+        openPanel.value = 3;
+      }
+      break;
+    case 'g':
+      if (props.isMaster) {
+        event.preventDefault();
+        openPanel.value = openPanel.value === 0 ? -1 : 0;
+      }
+      break;
+    case '&':
+    case '1':
+      event.preventDefault();
+      openPanel.value = openPanel.value === 0 ? -1 : 0;
+      break;
+    case 'd':
+    case 'é':
+    case '2':
+      event.preventDefault();
+      openPanel.value = openPanel.value === 1 ? -1 : 1;
+      break;
+    case 'e':
+    case '"':
+    case '3':
+      event.preventDefault();
+      openPanel.value = openPanel.value === 2 ? -1 : 2;
+      break;
+    case 'i':
+      event.preventDefault();
+      if (!props.isMaster) {
+        openPanel.value = openPanel.value === 0 ? -1 : 0;
+      } else {
+        openPanel.value = openPanel.value === 3 ? -1 : 3;
+      }
+      break;
+    case '\'':
+    case '4':
+      event.preventDefault();
+      openPanel.value = openPanel.value === 3 ? -1 : 3;
+      break;
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('keydown', handleKeyPress);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeyPress);
+});
 
 watch(() => room.value?.environment, (val) => {
   if (val) {

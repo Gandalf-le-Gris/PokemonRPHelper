@@ -21,7 +21,7 @@
         v-model="snackbarService.snackbarInfo.display"
         :text="snackbarService.snackbarInfo.message"
         :color="snackbarService.snackbarInfo.color"
-        close-delay="5000"
+        timeout="2000"
         close-on-content-click
       />
     </v-main>

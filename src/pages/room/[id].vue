@@ -96,6 +96,13 @@ const showSheet: Ref<boolean> = ref(false);
 const router = useRouter();
 const route = useRoute();
 
+function handleKeyPress(event: KeyboardEvent) {
+  if (event.key === 'p' || event.key === ' ') {
+    event.preventDefault();
+    showSheet.value = !showSheet.value;
+  }
+}
+
 onMounted(() => {
   webSocketService.connectThen(() => {
     characters.value = Object.values(JSON.parse(localStorage.getItem('saved-characters') ?? '{}'));
@@ -112,6 +119,11 @@ onMounted(() => {
       }
     }
   });
+  window.addEventListener('keydown', handleKeyPress);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeyPress);
 });
 
 function connectAsDM() {

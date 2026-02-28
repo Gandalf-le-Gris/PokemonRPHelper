@@ -85,7 +85,7 @@
               />
               <v-btn
                 v-if="isPlayerSheet || isBattleSheet"
-                @click="saveCharacter"
+                @click="saveCharacter(true)"
                 icon="mdi-content-save"
                 density="compact"
                 variant="plain"
@@ -696,6 +696,7 @@
 </template>
 
 <script setup lang="ts">
+import { snackbarService } from '@/services/instances/snackbarService.instance';
 import { typeService } from '@/services/instances/typeService.instance';
 import { Ability, abilityRecord } from '@/types/abilities';
 import { experienceLabels } from '@/types/experience';
@@ -859,11 +860,16 @@ function learnAbility() {
   showNewAbility.value = false;
 }
 
+onMounted(() => {
+  window.addEventListener('keydown', handleKeyPress);
+});
+
 onUnmounted(() => {
   const saved = JSON.parse(localStorage.getItem('saved-characters') ?? '{}');
   if (saved[character.value.uuid]) {
-    saveCharacter();
+    saveCharacter(false);
   }
+  window.removeEventListener('keydown', handleKeyPress);
 });
 
 async function regenerateCharacter() {
@@ -877,7 +883,7 @@ async function updateSpecies() {
   setTimeout(() => changeSpecies(character.value), 0);
 }
 
-function saveCharacter() {
+function saveCharacter(showSnackbar: boolean) {
   if (props.isPlayerSheet) {
     const saved = JSON.parse(localStorage.getItem('saved-characters') ?? '{}');
     saved[character.value.uuid] = JSON.parse(JSON.stringify(character.value));
@@ -885,6 +891,9 @@ function saveCharacter() {
     localStorage.setItem('last-saved', JSON.stringify(character.value.uuid));
   }
   emit('saved', character.value);
+  if (showSnackbar) {
+    snackbarService.setSuccess('Sauvegardé');
+  }
 }
 
 async function resetCharacter() {
@@ -893,7 +902,7 @@ async function resetCharacter() {
 
 function changeHP() {
   if (props.isBattleSheet) {
-    saveCharacter()
+    saveCharacter(false)
   }
 }
 
@@ -929,6 +938,13 @@ function openStatusDialog(index: number) {
 function selectStatusMove(move: string) {
   character.value.attacks[selectedStatus.value].detail = move;
   showStatusDialog.value = false;
+}
+
+function handleKeyPress(event: KeyboardEvent) {
+  if (event.key === 's' && (event.ctrlKey || event.metaKey)) {
+    event.preventDefault();
+    saveCharacter(true);
+  }
 }
 </script>
 
