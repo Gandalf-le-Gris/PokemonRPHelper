@@ -10,13 +10,18 @@
       >
         <v-row class="mt-n2">
           <v-col cols="12" sm="6" class="d-flex flex-column justify-end">
+            <v-checkbox
+              v-model="persistentRoom"
+              label="Garder la salle ouverte"
+              hide-details
+            />
             <v-btn
               @click="createRoom"
               text="Créer"
               class="w-100"
             />
           </v-col>
-          <v-col cols="12" sm="6" class="d-flex flex-column">
+          <v-col cols="12" sm="6" class="d-flex flex-column justify-end">
             <v-text-field
               @keypress.enter="joinRoom"
               v-model="roomId"
@@ -45,6 +50,7 @@ import { webSocketService } from '@/services/instances/webSocketService.instance
 const router = useRouter();
 
 const roomId: Ref<string> = ref('');
+const persistentRoom: Ref<boolean> = ref(false);
 
 onMounted(() => {
   if (webSocketService.getRoom().value?.uuid) {
@@ -55,7 +61,7 @@ onMounted(() => {
 });
 
 async function createRoom() {
-  webSocketService.do(webSocketService.createRoom);
+  webSocketService.do(webSocketService.createRoom, persistentRoom.value);
 }
 
 async function joinRoom() {

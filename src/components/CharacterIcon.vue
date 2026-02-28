@@ -25,7 +25,10 @@
         >
           <template #activator="{ props }">
             <div v-bind="props">
-              <img :src="character.character.pokemon.sprites.front_default" :class="{ grayscale: !character.character.hpt }" />
+              <img
+                :src="character.character.pokemon.sprites.front_default"
+                :class="{ grayscale: character.character.hpt <= 0 }"
+              />
               <v-progress-linear
                 v-if="owned"
                 v-model="hp"

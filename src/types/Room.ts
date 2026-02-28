@@ -7,7 +7,8 @@ export interface Room {
   environment: string,
   characters: BattleCharacter[],
   initiativeList: string[],
-  activeCharacter?: string
+  activeCharacter?: string,
+  persistent: boolean,
 }
 
 export interface RoomTile {

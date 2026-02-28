@@ -53,9 +53,9 @@ export class WebSocketService {
     snackbarService.setError('Non connecté');
   }
 
-  public do: (callback: () => Promise<any>) => Promise<any> = async (callback: () => Promise<any>) => {
+  public do: (callback: (...args: any[]) => Promise<any>, ...args: any[]) => Promise<any> = async (callback: (...args: any[]) => Promise<any>, ...args: any[]) => {
     if (this.ws && this.ws.OPEN) {
-      return await callback();
+      return await callback(...args);
     } else {
       snackbarService.setError('Non connecté');
     }
@@ -65,11 +65,11 @@ export class WebSocketService {
     return this.room;
   }
 
-  public createRoom: () => Promise<void> = async () => {
+  public createRoom: (persistent: boolean) => Promise<void> = async (persistent: boolean) => {
     if (this.room.value?.uuid) {
       this.ws?.send(JSON.stringify({ event: 'close-room', uuid: this.room.value.uuid }));
     }
-    this.ws?.send(JSON.stringify({ event: 'create-room' }));
+    this.ws?.send(JSON.stringify({ event: 'create-room', persistent }));
   }
 
   public leaveRoom: () => void = () => {

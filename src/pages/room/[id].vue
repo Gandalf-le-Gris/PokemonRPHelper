@@ -152,6 +152,7 @@ watch(() => webSocketService.getRoom().value?.uuid, (val) => {
 function updateCharacter() {
   const battleCharacter = webSocketService.getRoom().value?.characters.find(c => c.character.uuid === character.value?.uuid);
   if (battleCharacter) {
+    console.log(character.value?.hpt)
     webSocketService.updateCharacter({
       ...battleCharacter,
       character: character.value!
