@@ -21,7 +21,7 @@
               class="w-100"
             />
           </v-col>
-          <v-divider :vertical="smAndUp" />
+          <v-divider :vertical="$vuetify.display.smAndUp" />
           <v-col cols="12" sm="6" class="d-flex flex-column justify-end">
             <v-text-field
               @keypress.enter="joinRoom"
@@ -47,14 +47,11 @@
 
 <script setup lang="ts">
 import { webSocketService } from '@/services/instances/webSocketService.instance';
-import { useDisplay } from 'vuetify';
 
 const router = useRouter();
 
 const roomId: Ref<string> = ref('');
 const persistentRoom: Ref<boolean> = ref(false);
-
-const { smAndUp } = useDisplay()
 
 onMounted(() => {
   if (webSocketService.getRoom().value?.uuid) {

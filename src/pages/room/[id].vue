@@ -62,7 +62,7 @@
             class="w-100"
           />
         </v-col>
-        <v-divider :vertical="smAndUp" />
+        <v-divider :vertical="$vuetify.display.smAndUp" />
         <v-col cols="12" sm="6" class="d-flex flex-column ga-2">
           <v-select
             v-model="character"
@@ -91,14 +91,12 @@
 <script setup lang="ts">
 import { webSocketService } from '@/services/instances/webSocketService.instance';
 import { Character } from '@/types/pokemon';
-import { useDisplay } from 'vuetify';
 
 const justArrived: Ref<boolean> = ref(true);
 const isMaster: Ref<boolean | undefined> = ref();
 const character: Ref<Character | undefined> = ref();
 const characters: Ref<Character[]> = ref([]);
 const showSheet: Ref<boolean> = ref(false);
-const { smAndUp } = useDisplay();
 
 const router = useRouter();
 const route = useRoute();
