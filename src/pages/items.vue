@@ -164,7 +164,7 @@ watch(() => filters.value.name, (val: string | null) => {
 })
 
 const filteredItems: ComputedRef<Record<ItemType, Item[]>> = computed(() => {
-  let res = {} as Record<ItemType, Item[]>;
+  const res = {} as Record<ItemType, Item[]>;
   for (const itemType in items) {
     if (!filters.value.type || itemType === filters.value.type) {
       const values = items[itemType as ItemType]

@@ -196,7 +196,7 @@ const activeStatus: ComputedRef<{ value: StatusEffect, title: string, color: str
   return statusEffectArray.filter(v => status.value[v.value])
 });
 const alteredStats: ComputedRef<StatName[]> = computed(() => {
-  return Object.entries(stats.value).filter(([_, v]) => v).map(([k]) => k as StatName);
+  return Object.entries(stats.value).filter(([, v]) => v).map(([k]) => k as StatName);
 });
 
 const owned: ComputedRef<boolean> = computed(() =>
