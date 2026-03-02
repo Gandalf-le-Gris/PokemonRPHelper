@@ -71,6 +71,9 @@
     "watchSyncEffect": true,
     "DirectiveBinding": true,
     "MaybeRef": true,
-    "MaybeRefOrGetter": true
+    "MaybeRefOrGetter": true,
+    "definePage": true,
+    "onBeforeRouteLeave": true,
+    "onBeforeRouteUpdate": true
   }
 }
