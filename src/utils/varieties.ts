@@ -141,5 +141,6 @@ export const appendVarietyMap = {
   '-zen': 'Zen',
   '-x': 'X',
   '-y': 'Y',
+  '-z': 'Z',
   '-primal': 'Primal'
 }
