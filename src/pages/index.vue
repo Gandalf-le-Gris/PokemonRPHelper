@@ -139,7 +139,7 @@ export default defineComponent({
           this.errorMessage = "Format de données invalide";
           this.showError = true;
         }
-      } catch (e) {
+      } catch {
         this.errorMessage = "Erreur lors de l'ouverture du fichier";
         this.showError = true;
       }

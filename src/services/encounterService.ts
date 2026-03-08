@@ -7,7 +7,7 @@ export class EncounterService {
   public async getPokemonSpecies(name: string | number) {
     try {
       return (await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${name}`)).data;
-    } catch (e) {
+    } catch {
       throw new Error(`Espèce ${name} non trouvée`);
     }
   }

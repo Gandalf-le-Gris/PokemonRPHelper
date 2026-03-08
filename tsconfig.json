@@ -12,8 +12,6 @@
     "resolveJsonModule": true,
     "types": [
       "vite/client",
-      "vite-plugin-vue-layouts/client",
-      "unplugin-vue-router/client"
     ],
     "allowJs": true,
     "strict": true,
@@ -30,4 +28,10 @@
   ],
   "exclude": ["dist", "node_modules", "cypress"],
   "references": [{ "path": "./tsconfig.node.json" }],
+  "vueCompilerOptions": {
+    "plugins": [
+      "vue-router/volar/sfc-route-blocks",
+      "vue-router/volar/sfc-typed-router",
+    ],
+  },
 }
