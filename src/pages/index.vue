@@ -132,7 +132,7 @@ export default defineComponent({
     },
     async importSheet(event: Event) {
       try {
-        const character: any = JSON.parse(await (event?.target as HTMLInputElement).files?.[0].text() ?? '{}');
+        const character: any = JSON.parse(await (event.target as HTMLInputElement).files?.[0].text() ?? '{}');
         if (isCharacter(character)) {
           this.character = character;
         } else {

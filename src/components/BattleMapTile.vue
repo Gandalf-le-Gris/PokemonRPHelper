@@ -151,7 +151,7 @@ async function paintTiles() {
   if (ctx) {
     const img: HTMLImageElement = await new Promise(r => {
       const i = new Image();
-      i.onload = (() => r(i));
+      i.addEventListener('load', () => r(i));
       i.src = `/map-sprites/${props.spriteSheet}.png`;
     });
     ctx.imageSmoothingEnabled = false;

@@ -253,23 +253,23 @@ export const specificityArray = [
 export function getPokemonSpecificities(character: Character): SpecificityType[] {
   const variety = character.pokemon.varieties[character.variety].pokemon.name;
   return specificityArray
-    .sort((a, b) => a.title.localeCompare(b.title))
+    .toSorted((a, b) => a.title.localeCompare(b.title))
     .map(e => e.value)
     .filter(e => specificities[e].some(s => splitMatchPokemonName(variety, s.toLowerCase())));
 }
 
 export function computeGlobalModifiers(character: Character): Mod {
-  const specificities: SpecificityType[] = [...character.specificities]
+  const characterSpecificities: SpecificityType[] = [...character.specificities]
   if (character.swappedSpecificities) {
     Object.values(character.swappedSpecificities).forEach(([old, specificity]) => {
-      const i = specificities.indexOf(old);
+      const i = characterSpecificities.indexOf(old);
       if (i >= 0) {
-        specificities.splice(i, 1);
+        characterSpecificities.splice(i, 1);
       }
-      specificities.push(specificity);
+      characterSpecificities.push(specificity);
     });
   }
-  let mod: Mod = specificities
+  let mod: Mod = characterSpecificities
     .reduce((acc, x) => {
       const effect = specificityArray.find(s => s.value === x)?.effect;
       if (effect) {

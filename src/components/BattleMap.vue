@@ -349,7 +349,7 @@ function selectCharacter(i: number, j: number) {
 function sortInitiative() {
   if (room.value) {
     room.value.initiativeList = room.value.characters
-      .sort((a, b) => (b.character.stats.spd + (computeGlobalModifiers(b.character).stats?.spd ?? 0)) 
+      .toSorted((a, b) => (b.character.stats.spd + (computeGlobalModifiers(b.character).stats?.spd ?? 0)) 
         - (a.character.stats.spd + (computeGlobalModifiers(a.character).stats?.spd ?? 0)))
       .map(e => e.character.uuid);
     updateInitiative();

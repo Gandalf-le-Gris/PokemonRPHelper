@@ -14,23 +14,23 @@ export class WebSocketService {
   public connect: () => void = () => {
     if (!this.ws) {
       this.ws = new WebSocket(this.URL);
-      this.ws.onmessage = this.onMessage;
-      this.ws.onerror = this.onError;
+      this.ws.addEventListener('message', this.onMessage);
+      this.ws.addEventListener('error', this.onError);
     }
   }
 
   public connectThen: (callback: () => any) => void = (callback) => {
     if (!this.ws) {
       this.ws = new WebSocket(this.URL);
-      this.ws.onmessage = this.onMessage;
-      this.ws.onerror = this.onError;
-      this.ws.onopen = callback;
+      this.ws.addEventListener('message', this.onMessage);
+      this.ws.addEventListener('error', this.onError);
+      this.ws.addEventListener('open', callback);
     } else {
       callback();
     }
   }
 
-  private onMessage: (ev: MessageEvent<any>) => void = (ev: MessageEvent<any>) => {
+  private onMessage: (ev: MessageEvent) => void = (ev: MessageEvent) => {
     const data = JSON.parse(ev.data);
     switch (data.event) {
       case 'post-room':

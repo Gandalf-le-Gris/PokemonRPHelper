@@ -172,7 +172,7 @@ const filteredItems: ComputedRef<Record<ItemType, Item[]>> = computed(() => {
         .filter(e => !filters.value.minPrice || e.buy && e.buy >= filters.value.minPrice)
         .filter(e => !filters.value.maxPrice || e.buy && e.buy <= filters.value.maxPrice);
       if (values.length) {
-        res[itemType as ItemType] = values.sort((a, b) => a.name.localeCompare(b.name));
+        res[itemType as ItemType] = values.toSorted((a, b) => a.name.localeCompare(b.name));
       }
     }
   }
