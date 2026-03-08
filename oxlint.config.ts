@@ -4,7 +4,6 @@ export default defineConfig({
   plugins: ['eslint', 'typescript', 'unicorn', 'oxc', 'node', 'promise', 'vue'],
   jsPlugins: [
     { name: '@stylistic', specifier: '@stylistic/eslint-plugin' },
-    { name: 'eslint-vue', specifier: 'eslint-plugin-vue' },
   ],
   categories: {
     correctness: 'error',
