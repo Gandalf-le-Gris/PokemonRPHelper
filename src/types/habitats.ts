@@ -16,73 +16,73 @@ export type Habitat =
   | 'warm-oceans'
   | 'cold-oceans'
   | 'caves'
-  | 'rare'
+  | 'rare';
 
 export const habitatArray = [
   {
     value: 'any-land',
-    title: "Terrestre"
+    title: 'Terrestre'
   },
   {
     value: 'boreal-forests',
-    title: "Forêt boréale"
+    title: 'Forêt boréale'
   },
   {
     value: 'caves',
-    title: "Grotte"
+    title: 'Grotte'
   },
   {
     value: 'coastal-deserts',
-    title: "Désert côtier"
+    title: 'Désert côtier'
   },
   {
     value: 'cold-oceans',
-    title: "Océan froid"
+    title: 'Océan froid'
   },
   {
     value: 'grasslands',
-    title: "Plaine"
+    title: 'Plaine'
   },
   {
     value: 'oceans',
-    title: "Océan"
+    title: 'Océan'
   },
   {
     value: 'rare',
-    title: "Rare"
+    title: 'Rare'
   },
   {
     value: 'rivers-lakes',
-    title: "Lac ou rivière"
+    title: 'Lac ou rivière'
   },
   {
     value: 'subtropical-deserts',
-    title: "Désert subtropical"
+    title: 'Désert subtropical'
   },
   {
     value: 'swamps',
-    title: "Marais"
+    title: 'Marais'
   },
   {
     value: 'temperate-forests',
-    title: "Forêt tempérée"
+    title: 'Forêt tempérée'
   },
   {
     value: 'tropical',
-    title: "Tropical"
+    title: 'Tropical'
   },
   {
     value: 'tundras-taigas',
-    title: "Toundra ou taïga"
+    title: 'Toundra ou taïga'
   },
   {
     value: 'warm-oceans',
-    title: "Océan chaud"
+    title: 'Océan chaud'
   },
   {
     value: 'wastelands',
-    title: "Terre désolée"
+    title: 'Terre désolée'
   }
-] as { value: Habitat, title: string }[]
+] as { value: Habitat, title: string }[];
 
 export default habitatMap as Record<Habitat, string[]>;

@@ -1,4 +1,4 @@
-import { Character } from "@/types/pokemon";
+import { Character } from '@/types/pokemon';
 
 export function getVarieties(character: Character): { value: number, title: string }[] {
   return character.pokemon.varieties
@@ -133,7 +133,7 @@ const varietyMap = {
   '-sensu': 'Buyō',
   '-red-meteor': 'Météore',
   'minior-red': 'Noyau'
-}
+};
 
 export const appendVarietyMap = {
   '-gmax': 'Gigamax',
@@ -143,4 +143,4 @@ export const appendVarietyMap = {
   '-y': 'Y',
   '-z': 'Z',
   '-primal': 'Primal'
-}
+};

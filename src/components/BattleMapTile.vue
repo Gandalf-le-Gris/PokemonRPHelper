@@ -110,34 +110,17 @@
 import { findTilePosition } from '@/utils/tileMap';
 import { webSocketService } from '@/services/instances/webSocketService.instance';
 import { Room, BattleCharacter, RoomTile, roomTileTypeArray, TileAsset, BattleCharacterStatus, BattleCharacterStats } from '@/types/Room';
-import { PropType } from 'vue';
 import { assetsArray } from '@/types/props';
 
-const props = defineProps({
-  map: {
-    type: Array as PropType<RoomTile[][]>,
-    required: true
-  },
-  i: {
-    type: Number,
-    required: true
-  },
-  j: {
-    type: Number,
-    required: true
-  },
-  spriteSheet: {
-    type: String,
-    default: 'ForestPath'
-  },
-  isMaster: {
-    type: Boolean,
-    default: false
-  },
-  myCharacter: {
-    type: String,
-    required: false
-  }
+const props = withDefaults(defineProps<{
+  map: RoomTile[][]
+  i: number
+  j: number
+  spriteSheet?: string
+  isMaster?: boolean
+  myCharacter?: string
+}>(), {
+  spriteSheet: 'ForestPath',
 });
 
 const emit = defineEmits(['mousedown']);
@@ -178,7 +161,7 @@ function onDrop(evt: DragEvent) {
         ...movedCharacter,
         i: props.i,
         j: props.j,
-      })
+      });
     }
   } else if (assetRaw && props.isMaster) {
     const asset = JSON.parse(assetRaw);
@@ -198,7 +181,7 @@ function characterStatusUpdated(status: BattleCharacterStatus) {
       i: props.i,
       j: props.j,
       status,
-    })
+    });
   }
 }
 
@@ -209,7 +192,7 @@ function characterStatsUpdated(stats: BattleCharacterStats) {
       i: props.i,
       j: props.j,
       stats,
-    })
+    });
   }
 }
 

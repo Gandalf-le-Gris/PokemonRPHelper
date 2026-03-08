@@ -193,7 +193,7 @@ const status: Ref<BattleCharacterStatus> = ref({ ...props.character.status });
 const stats: Ref<BattleCharacterStats> = ref({ ...props.character.stats });
 
 const activeStatus: ComputedRef<{ value: StatusEffect, title: string, color: string, icon: string }[]> = computed(() => {
-  return statusEffectArray.filter(v => status.value[v.value])
+  return statusEffectArray.filter(v => status.value[v.value]);
 });
 const alteredStats: ComputedRef<StatName[]> = computed(() => {
   return Object.entries(stats.value).filter(([, v]) => v).map(([k]) => k as StatName);
@@ -214,7 +214,7 @@ function startDrag(evt: DragEvent) {
 function changeStats(stat: StatName, diff: number) {
   if (stats.value[stat] !== undefined) {
     stats.value[stat] += diff;
-    emits('stats', stats.value)
+    emits('stats', stats.value);
   }
 }
 

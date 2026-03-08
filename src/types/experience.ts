@@ -16,4 +16,4 @@ export const experienceLabels = {
   friend: 'Nouvel ami',
   ko: '5 KO',
   help: 'Aide altruiste',
-}
+};

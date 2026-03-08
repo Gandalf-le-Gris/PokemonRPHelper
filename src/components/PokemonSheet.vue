@@ -711,10 +711,10 @@ import { Type, TypeDetail } from '@/types/types';
 import { getVarieties } from '@/utils/varieties';
 import { mergeProps, ModelRef } from 'vue';
 
-const props = defineProps({
-  isPlayerSheet: Boolean,
-  isBattleSheet: Boolean,
-});
+const props = defineProps<{
+  isPlayerSheet?: boolean
+  isBattleSheet?: boolean
+}>();
 
 const character: ModelRef<Character> = defineModel<Character>({required: true});
 const regenerateLoading: Ref<boolean> = ref<boolean>(false);
@@ -743,11 +743,11 @@ const emit = defineEmits(['saved']);
 const maxStat: ComputedRef<number> = computed<number>(() => {
   return Object.entries(character.value.stats).reduce((acc, x) => {
     if (!characterMods.value.stats) {
-      return acc > x[1] ? acc : x[1]
+      return acc > x[1] ? acc : x[1];
     }
     const stat = x[0] as StatName;
     return acc > (x[1] + characterMods.value.stats[stat]) ? acc : (x[1] + characterMods.value.stats[stat]);
-  }, 0)
+  }, 0);
 });
 
 const varieties: ComputedRef<{ value: number, title: string }[]> = computed(() =>
@@ -776,10 +776,10 @@ const alteredTypes: ComputedRef<Type[]> = computed(() => {
 
 function triggerIqChange(index: number) {
   if (character.value.swappedTypes?.[index]) {
-    delete character.value.swappedTypes[index]
+    delete character.value.swappedTypes[index];
   }
   if (character.value.swappedSpecificities?.[index]) {
-    delete character.value.swappedSpecificities[index]
+    delete character.value.swappedSpecificities[index];
   }
   if (!character.value.iqSkills.some(iq => iq.value === 'Versatile')) {
     delete character.value.extraAbility;
@@ -821,7 +821,7 @@ function changeType() {
 }
 
 const alteredSpecificities: ComputedRef<SpecificityType[]> = computed(() => {
-  const specificities: SpecificityType[] = [...character.value.specificities]
+  const specificities: SpecificityType[] = [...character.value.specificities];
   if (character.value.swappedSpecificities) {
     Object.values(character.value.swappedSpecificities).forEach(([old, specificity]) => {
       const i = specificities.indexOf(old);
@@ -843,7 +843,7 @@ function changeSpecificities() {
 }
 
 const canLevelUp: ComputedRef<boolean> = computed(() => {
-  const target = character.value.iqSkills.some(iq=> iq.value === 'Fast learner') ? 3 : 4
+  const target = character.value.iqSkills.some(iq=> iq.value === 'Fast learner') ? 3 : 4;
   return Object.values(character.value.experience).filter(e => e === true || e >= 5).length >= target;
 });
 
@@ -902,7 +902,7 @@ async function resetCharacter() {
 
 function changeHP() {
   if (props.isBattleSheet) {
-    saveCharacter(false)
+    saveCharacter(false);
   }
 }
 
@@ -925,7 +925,7 @@ function levelUp() {
     friend: false,
     ko: character.value.experience.ko - (character.value.experience.ko >= 5 ? 5 : 0),
     help: false,
-  }
+  };
   character.value.level++;
   updateLevel();
 }

@@ -1,11 +1,11 @@
-import { encounterService } from "@/services/instances/encounterService.instance";
-import { talentArray, TalentType } from "./talents";
-import { getPokemonSpecificities, SpecificityType } from "./specificities";
-import { Type, typeArray } from "./types";
-import { Ability, getAbility } from "./abilities";
-import { IQSkill, iqSkillArray } from "./iqSkills";
-import { Experience } from "./experience";
-import statusMoves from "./statusMoves";
+import { encounterService } from '@/services/instances/encounterService.instance';
+import { talentArray, TalentType } from './talents';
+import { getPokemonSpecificities, SpecificityType } from './specificities';
+import { Type, typeArray } from './types';
+import { Ability, getAbility } from './abilities';
+import { IQSkill, iqSkillArray } from './iqSkills';
+import { Experience } from './experience';
+import statusMoves from './statusMoves';
 
 export interface Pokemon {
   id: number,
@@ -48,7 +48,7 @@ export const statsArray = [
   },
 ] as { value: StatName, title: string }[];
 
-export const modifiableStatsArray = statsArray.filter(v => v.value !== 'hp')
+export const modifiableStatsArray = statsArray.filter(v => v.value !== 'hp');
 
 export interface Stats {
   hp: number,
@@ -90,7 +90,7 @@ export interface Character {
 
 export async function createCharacter(pokemon: Pokemon, level: number, uuid?: string): Promise<Character> {
   const detail = await encounterService.getPokemonDetail(pokemon.id);
-  pokemon.types = Object.values(detail.types).map((e: any) => e.type.name)
+  pokemon.types = Object.values(detail.types).map((e: any) => e.type.name);
   pokemon.baseStats = {
     hp: detail.stats[0].base_stat,
     atk: detail.stats[1].base_stat,
@@ -148,7 +148,7 @@ export async function createCharacter(pokemon: Pokemon, level: number, uuid?: st
       let ind: number;
       do {
         ind = Math.floor(Math.random() * character.talents.length);
-      } while (character.talents[ind].mod)
+      } while (character.talents[ind].mod);
       character.talents[ind].mod = 1;
     }
 
@@ -209,7 +209,7 @@ function levelUp(character: Character, level: number) {
       let ind: number;
       do {
         ind = Math.floor(Math.random() * character.talents.length);
-      } while (character.talents[ind].mod)
+      } while (character.talents[ind].mod);
       character.talents[ind].mod = 1;
     } else {
       enchanceStatsOnce(character);
@@ -219,7 +219,7 @@ function levelUp(character: Character, level: number) {
       let ind: number;
       do {
         ind = Math.floor(Math.random() * character.talents.length);
-      } while (character.talents[ind].mod)
+      } while (character.talents[ind].mod);
       character.talents[ind].mod = 2;
     } else {
       enchanceStatsOnce(character);
@@ -257,13 +257,13 @@ function enchanceStatsOnce(character: Character) {
     do {
       rd = Math.random();
       stat = Object.keys(character.stats)[cdf.findIndex(e => rd <= e)] as StatName;
-    } while (character.stats[stat] >= lowestStat + 20)
+    } while (character.stats[stat] >= lowestStat + 20);
     character.stats[stat]++;
   }
 }
 
 export function computeHPT(character: Character) {
-  const extraHp: number = Number(character.extraHp ?? 0)
+  const extraHp: number = Number(character.extraHp ?? 0);
   if (character.ability.value === 'Tank' || character.iqSkills.some(e => e.value === 'Brick house') || character.iqSkills.some(e => e.value === 'Advanced brick house')) {
     if (character.ability.value === 'Tank' && character.iqSkills.some(e => e.value === 'Brick house')
         || character.ability.value === 'Tank' && character.iqSkills.some(e => e.value === 'Advanced brick house')
@@ -284,5 +284,5 @@ export function isCharacter(obj: any): obj is Character {
     && !!obj.species && typeof obj.species === 'string'
     && obj.variety !== undefined && typeof obj.variety === 'number'
     && !!obj.pokemon
-    && obj.level !== undefined && typeof obj.level === 'number'
+    && obj.level !== undefined && typeof obj.level === 'number';
 }

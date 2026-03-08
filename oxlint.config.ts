@@ -1,7 +1,11 @@
-import { defineConfig } from "oxlint";
+import { defineConfig } from 'oxlint';
 
 export default defineConfig({
-  plugins: ["eslint", "typescript", "unicorn", "oxc", "node", "promise", "vue"],
+  plugins: ['eslint', 'typescript', 'unicorn', 'oxc', 'node', 'promise', 'vue'],
+  jsPlugins: [
+    { name: '@stylistic', specifier: '@stylistic/eslint-plugin' },
+    { name: 'eslint-vue', specifier: 'eslint-plugin-vue' },
+  ],
   categories: {
     correctness: 'error',
     suspicious: 'error',
@@ -9,6 +13,11 @@ export default defineConfig({
   rules: {
     'typescript/no-unsafe-type-assertion': 'off',
     'typescript/no-floating-promises': 'off',
+    '@stylistic/quotes': ['warn', 'single'],
+    '@stylistic/indent': ['warn', 2],
+    '@stylistic/semi': ['warn', 'always'],
+    '@stylistic/no-trailing-spaces': 'warn',
+    'vue/define-props-declaration': ['warn', 'type-based'],
   },
   settings: {},
   env: {
@@ -16,7 +25,5 @@ export default defineConfig({
   },
   globals: {},
   ignorePatterns: [],
-  options: {
-    typeAware: true,
-  }
-})
+  options: {},
+});

@@ -12,7 +12,7 @@ export class SnackbarService {
       display: true,
       message,
       color: 'success',
-    }
+    };
   }
 
   public setError(message: string) {
@@ -20,6 +20,6 @@ export class SnackbarService {
       display: true,
       message,
       color: 'error',
-    }
+    };
   }
 }

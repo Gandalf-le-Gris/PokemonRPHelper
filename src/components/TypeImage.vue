@@ -115,29 +115,15 @@
 <script setup lang="ts">
 import { typeService } from '@/services/instances/typeService.instance';
 import { Type, TypeDetail } from '@/types/types';
-import { PropType } from 'vue';
 
-const props = defineProps({
-  type: {
-    type: String as PropType<Type>,
-    required: true
-  },
-  width: {
-    type: String,
-    default: "80"
-  },
-  offensive: {
-    type: Boolean,
-    default: false
-  },
-  defensive: {
-    type: Boolean,
-    default: false
-  },
-  openOnClick: {
-    type: Boolean,
-    default: false
-  }
+const props = withDefaults(defineProps<{
+  type: Type
+  width?: string
+  offensive?: boolean
+  defensive?: boolean
+  openOnClick?: boolean
+}>(), {
+  width: '80'
 });
 
 const detail: Ref<TypeDetail | undefined> = ref();

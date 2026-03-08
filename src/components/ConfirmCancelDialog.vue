@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import type { ModelRef } from 'vue';
 
-defineProps({
-  title: {
-    type: String,
-    default: "Êtes-vous sûr(e) ?"
-  }
-})
+withDefaults(defineProps<{
+  title?: string
+}>(), {
+  title: 'Êtes-vous sûr(e) ?',
+});
 
 const model: ModelRef<boolean> = defineModel({ required: true });
 const emit = defineEmits(['confirm', 'cancel']);

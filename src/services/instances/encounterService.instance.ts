@@ -1,3 +1,3 @@
-import { EncounterService } from "../encounterService";
+import { EncounterService } from '../encounterService';
 
 export const encounterService: EncounterService = new EncounterService();

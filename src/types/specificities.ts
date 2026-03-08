@@ -3,7 +3,7 @@ import { Character, Stats } from './pokemon';
 import { TalentType } from './talents';
 import { splitMatchPokemonName } from '@/utils/stringUtils';
 
-export type SpecificityType = 
+export type SpecificityType =
     'twoLegs'
   | 'manyLegs'
   | 'rollWiggleSlide'
@@ -34,7 +34,7 @@ export interface Mod {
   stats?: Stats,
   talents?: {
     name: TalentType,
-    mod: number 
+    mod: number
   }[]
 }
 
@@ -259,7 +259,7 @@ export function getPokemonSpecificities(character: Character): SpecificityType[]
 }
 
 export function computeGlobalModifiers(character: Character): Mod {
-  const characterSpecificities: SpecificityType[] = [...character.specificities]
+  const characterSpecificities: SpecificityType[] = [...character.specificities];
   if (character.swappedSpecificities) {
     Object.values(character.swappedSpecificities).forEach(([old, specificity]) => {
       const i = characterSpecificities.indexOf(old);
@@ -282,7 +282,7 @@ export function computeGlobalModifiers(character: Character): Mod {
             spatk: acc.stats.spatk + modTemp.stats.spatk,
             spdef: acc.stats.spdef + modTemp.stats.spdef,
             spd: acc.stats.spd + modTemp.stats.spd,
-          }
+          };
         }
         if (modTemp.talents) {
           modTemp.talents.forEach(t => {
@@ -292,7 +292,7 @@ export function computeGlobalModifiers(character: Character): Mod {
             } else {
               acc.talents.push(t);
             }
-          })
+          });
         }
       }
       return acc;
@@ -307,37 +307,37 @@ export function computeGlobalModifiers(character: Character): Mod {
       },
       talents: [] as { name: TalentType, mod: number }[]
     });
-    mod = character.iqSkills
-      .reduce((acc, x) => {
-        if (x.effect) {
-          const modTemp = x.effect(character);
-          if (modTemp.talents) {
-            modTemp.talents.forEach(t => {
-              if (acc.talents) {
-                const ind = acc.talents.findIndex(e => e.name === t.name);
-                if (ind >= 0) {
-                  acc.talents[ind].mod += t.mod;
-                } else {
-                  acc.talents.push(t);
-                }
+  mod = character.iqSkills
+    .reduce((acc, x) => {
+      if (x.effect) {
+        const modTemp = x.effect(character);
+        if (modTemp.talents) {
+          modTemp.talents.forEach(t => {
+            if (acc.talents) {
+              const ind = acc.talents.findIndex(e => e.name === t.name);
+              if (ind >= 0) {
+                acc.talents[ind].mod += t.mod;
+              } else {
+                acc.talents.push(t);
               }
-            })
-          }
+            }
+          });
         }
-        return acc;
-      }, mod);
-    if (character.ability.value === 'Force of wind') {
-      if (!mod.stats) {
-        mod.stats = {
-          hp: 0,
-          atk: 0,
-          def: 0,
-          spatk: 0,
-          spdef: 0,
-          spd: 0
-        };
       }
-      mod.stats.spd += character.stats.spd * 2;
+      return acc;
+    }, mod);
+  if (character.ability.value === 'Force of wind') {
+    if (!mod.stats) {
+      mod.stats = {
+        hp: 0,
+        atk: 0,
+        def: 0,
+        spatk: 0,
+        spdef: 0,
+        spd: 0
+      };
     }
-    return mod;
+    mod.stats.spd += character.stats.spd * 2;
+  }
+  return mod;
 }

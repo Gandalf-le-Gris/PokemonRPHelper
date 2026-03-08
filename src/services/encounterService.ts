@@ -1,5 +1,5 @@
-import habitatMap, { Habitat } from "@/types/habitats";
-import axios from "axios";
+import habitatMap, { Habitat } from '@/types/habitats';
+import axios from 'axios';
 
 const TOTAL_POKEMON_COUNT = 1025;
 

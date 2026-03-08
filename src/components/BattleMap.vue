@@ -312,17 +312,17 @@ const props = defineProps<{
 const emit = defineEmits(['update-character']);
 
 const character: ModelRef<Character | undefined> = defineModel();
-  
+
 const room = webSocketService.getRoom();
 const spriteSheet: Ref<string> = ref(room.value?.environment ?? 'ForestPath');
 const generationOptions: Ref<{ size: number, difficulty: number, crammed: number }> = ref({ size: 15, difficulty: 3, crammed: 3 });
 const openPanel: Ref<number> = ref(-1);
 const router = useRouter();
-    
+
 const characterHpt: ComputedRef<number> = computed(() =>
   character.value ? computeHPT(character.value) : 0
 );
-const gridTemplate: ComputedRef<string> = computed(() => 
+const gridTemplate: ComputedRef<string> = computed(() =>
   `repeat(${room.value?.map[0].length}, 1fr)`
 );
 
@@ -339,7 +339,7 @@ function removeEnemy(uuid: string) {
 }
 
 function selectCharacter(i: number, j: number) {
-  console.log('click')
+  console.log('click');
   const char = room.value?.characters.find(c => c.i === i && c.j === j);
   if (char && props.isMaster) {
     character.value = char.character;
@@ -349,7 +349,7 @@ function selectCharacter(i: number, j: number) {
 function sortInitiative() {
   if (room.value) {
     room.value.initiativeList = room.value.characters
-      .toSorted((a, b) => (b.character.stats.spd + (computeGlobalModifiers(b.character).stats?.spd ?? 0)) 
+      .toSorted((a, b) => (b.character.stats.spd + (computeGlobalModifiers(b.character).stats?.spd ?? 0))
         - (a.character.stats.spd + (computeGlobalModifiers(a.character).stats?.spd ?? 0)))
       .map(e => e.character.uuid);
     updateInitiative();
@@ -398,7 +398,7 @@ function updateInitiative() {
 
 const isSelectedPlayer: ComputedRef<boolean> = computed(() =>
   !!room.value?.characters.find(c => c.character.uuid === character.value?.uuid)?.isPlayer
-)
+);
 
 function leaveRoom() {
   localStorage.setItem('room-connection', '{}');
@@ -514,7 +514,7 @@ watch(() => room.value?.characters, () => {
       }
     }
   }
-})
+});
 
 watch(() => room.value?.environment, (val) => {
   if (val && val !== spriteSheet.value) {

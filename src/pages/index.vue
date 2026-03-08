@@ -101,7 +101,7 @@
 
 <script lang="ts">
 import { encounterService } from '@/services/instances/encounterService.instance';
-import { isCharacter } from '@/types/pokemon'
+import { isCharacter } from '@/types/pokemon';
 import { Character, createCharacter } from '@/types/pokemon';
 
 export default defineComponent({
@@ -126,7 +126,7 @@ export default defineComponent({
       if (fileSelect) {
         fileSelect.click();
       } else {
-        this.errorMessage = "Fonctionnalité non supportée par le navigateur";
+        this.errorMessage = 'Fonctionnalité non supportée par le navigateur';
         this.showError = true;
       }
     },
@@ -136,11 +136,11 @@ export default defineComponent({
         if (isCharacter(character)) {
           this.character = character;
         } else {
-          this.errorMessage = "Format de données invalide";
+          this.errorMessage = 'Format de données invalide';
           this.showError = true;
         }
       } catch {
-        this.errorMessage = "Erreur lors de l'ouverture du fichier";
+        this.errorMessage = 'Erreur lors de l\'ouverture du fichier';
         this.showError = true;
       }
     },

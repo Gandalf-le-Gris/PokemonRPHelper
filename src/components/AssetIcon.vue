@@ -23,14 +23,10 @@
 <script setup lang="ts">
 import { assetsArray } from '@/types/props';
 import { TileAsset } from '@/types/Room';
-import { PropType } from 'vue';
 
-const props = defineProps({
-  asset: {
-    type: Object as PropType<TileAsset>,
-    required: true
-  }
-});
+const props = defineProps<{
+  asset: TileAsset
+}>();
 
 function startDrag(evt: DragEvent) {
   if (evt.dataTransfer) {

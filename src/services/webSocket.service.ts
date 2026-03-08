@@ -1,6 +1,6 @@
-import { BattleCharacter, Room } from "@/types/Room";
-import { snackbarService } from "./instances/snackbarService.instance";
-import { Character } from "@/types/pokemon";
+import { BattleCharacter, Room } from '@/types/Room';
+import { snackbarService } from './instances/snackbarService.instance';
+import { Character } from '@/types/pokemon';
 
 export class WebSocketService {
   private URL: string = import.meta.env.VITE_WS_URL;
@@ -17,7 +17,7 @@ export class WebSocketService {
       this.ws.addEventListener('message', this.onMessage);
       this.ws.addEventListener('error', this.onError);
     }
-  }
+  };
 
   public connectThen: (callback: () => any) => void = (callback) => {
     if (!this.ws) {
@@ -28,7 +28,7 @@ export class WebSocketService {
     } else {
       callback();
     }
-  }
+  };
 
   private onMessage: (ev: MessageEvent) => void = (ev: MessageEvent) => {
     const data = JSON.parse(ev.data);
@@ -47,11 +47,11 @@ export class WebSocketService {
       default:
         console.log('Uncaught message:', data);
     }
-  }
+  };
 
   private onError = () => {
     snackbarService.setError('Non connecté');
-  }
+  };
 
   public do: (callback: (...args: any[]) => Promise<any>, ...args: any[]) => Promise<any> = async (callback: (...args: any[]) => Promise<any>, ...args: any[]) => {
     if (this.ws && this.ws.OPEN) {
@@ -59,22 +59,22 @@ export class WebSocketService {
     } else {
       snackbarService.setError('Non connecté');
     }
-  }
+  };
 
   public getRoom: () => Ref<Room | undefined> = () => {
     return this.room;
-  }
+  };
 
   public createRoom: (persistent: boolean) => Promise<void> = async (persistent: boolean) => {
     if (this.room.value?.uuid) {
       this.ws?.send(JSON.stringify({ event: 'close-room', uuid: this.room.value.uuid }));
     }
     this.ws?.send(JSON.stringify({ event: 'create-room', persistent }));
-  }
+  };
 
   public leaveRoom: () => void = () => {
     this.room.value = undefined;
-  }
+  };
 
   public joinRoom: (uuid: string) => Promise<void> = async (uuid: string) => {
     if (this.ws && this.ws.OPEN) {
@@ -82,7 +82,7 @@ export class WebSocketService {
     } else {
       snackbarService.setError('Non connecté');
     }
-  }
+  };
 
   public regenerateRoom = (options: { size: number, difficulty: number, crammed: number }, environment: string) => {
     if (this.ws && this.ws.OPEN) {
@@ -90,7 +90,7 @@ export class WebSocketService {
     } else {
       snackbarService.setError('Non connecté');
     }
-  }
+  };
 
   public addCharacter = (character: Character, isPlayer: boolean) => {
     if (this.ws && this.ws.OPEN) {
@@ -98,7 +98,7 @@ export class WebSocketService {
     } else {
       snackbarService.setError('Non connecté');
     }
-  }
+  };
 
   public updateCharacter = (character: BattleCharacter) => {
     if (this.ws && this.ws.OPEN) {
@@ -106,7 +106,7 @@ export class WebSocketService {
     } else {
       snackbarService.setError('Non connecté');
     }
-  }
+  };
 
   public removeCharacter = (uuid: string) => {
     if (this.ws && this.ws.OPEN) {
@@ -114,7 +114,7 @@ export class WebSocketService {
     } else {
       snackbarService.setError('Non connecté');
     }
-  }
+  };
 
   public updateInitiative = () => {
     if (this.ws && this.ws.OPEN) {
@@ -127,7 +127,7 @@ export class WebSocketService {
     } else {
       snackbarService.setError('Non connecté');
     }
-  }
+  };
 
   public updateEnvironment = (environment: string) => {
     if (this.ws && this.ws.OPEN) {
@@ -139,7 +139,7 @@ export class WebSocketService {
     } else {
       snackbarService.setError('Non connecté');
     }
-  }
+  };
 
   public updateTile = (i: number, j: number) => {
     if (this.ws && this.ws.OPEN) {
@@ -153,7 +153,7 @@ export class WebSocketService {
     } else {
       snackbarService.setError('Non connecté');
     }
-  }
+  };
 
   public moveAsset = (uuid: string, i: number, j: number) => {
     if (this.ws && this.ws.OPEN) {
@@ -167,5 +167,5 @@ export class WebSocketService {
     } else {
       snackbarService.setError('Non connecté');
     }
-  }
+  };
 }

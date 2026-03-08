@@ -1,4 +1,4 @@
-import { RoomTile } from "@/types/Room"
+import { RoomTile } from '@/types/Room';
 
 export interface TileNeighborhood {
   tl: boolean | null,
@@ -518,17 +518,17 @@ export function findTilePosition(map: RoomTile[][], i: number, j: number): { i: 
         .every(key => tile[key as 't'] === pattern[key as 't'])));
   if (ri < 0) {
     ri = neighborhoodMap
-    .findIndex((row: TileNeighborhood[]) => row
-      .some((tile: TileNeighborhood) =>
-        tile.t === pattern.t
-        && tile.l === pattern.l
-        && tile.r === pattern.r
-        && tile.b === pattern.b
-        && (!!tile.tl === pattern.tl || tile.tl === null && pattern.tl)
-        && (!!tile.tr === pattern.tr || tile.tr === null && pattern.tr)
-        && (!!tile.bl === pattern.bl || tile.bl === null && pattern.bl)
-        && (!!tile.br === pattern.br || tile.br === null && pattern.br)
-      ));
+      .findIndex((row: TileNeighborhood[]) => row
+        .some((tile: TileNeighborhood) =>
+          tile.t === pattern.t
+          && tile.l === pattern.l
+          && tile.r === pattern.r
+          && tile.b === pattern.b
+          && (!!tile.tl === pattern.tl || tile.tl === null && pattern.tl)
+          && (!!tile.tr === pattern.tr || tile.tr === null && pattern.tr)
+          && (!!tile.bl === pattern.bl || tile.bl === null && pattern.bl)
+          && (!!tile.br === pattern.br || tile.br === null && pattern.br)
+        ));
   }
   if (ri < 0) {
     return { i: 2, j: 5 };
@@ -538,7 +538,7 @@ export function findTilePosition(map: RoomTile[][], i: number, j: number): { i: 
       .every(key => tile[key as 't'] === pattern[key as 't']));
   if (rj < 0) {
     rj = neighborhoodMap[ri]
-      .findIndex((tile: TileNeighborhood) => 
+      .findIndex((tile: TileNeighborhood) =>
         tile.t === pattern.t
         && tile.l === pattern.l
         && tile.r === pattern.r

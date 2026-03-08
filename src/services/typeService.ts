@@ -1,5 +1,5 @@
-import { Type, TypeDetail, typeArray } from "@/types/types";
-import axios from "axios";
+import { Type, TypeDetail, typeArray } from '@/types/types';
+import axios from 'axios';
 
 export class TypeService {
   public typeList: Ref<TypeDetail[]> = ref([]);
@@ -16,7 +16,7 @@ export class TypeService {
 
   public async getTypeIcon(type: Type): Promise<string> {
     return (await this.getType(type))
-      .sprites["generation-viii"]["sword-shield"].name_icon;
+      .sprites['generation-viii']['sword-shield'].name_icon;
   }
 
   public async getOrFetchTypeIcon(type: Type): Promise<string> {
@@ -28,7 +28,7 @@ export class TypeService {
     return {
       type,
       title: typeArray.find(e => e.value === type)?.title ?? '',
-      src: r.sprites["generation-viii"]["sword-shield"].name_icon,
+      src: r.sprites['generation-viii']['sword-shield'].name_icon,
       offensive: {
         strong: r.damage_relations.double_damage_to.map((e: { name: string }) => e.name),
         weak: r.damage_relations.half_damage_to.map((e: { name: string }) => e.name),
@@ -39,7 +39,7 @@ export class TypeService {
         weak: r.damage_relations.double_damage_from.map((e: { name: string }) => e.name),
         ineffective: r.damage_relations.no_damage_from.map((e: { name: string }) => e.name),
       },
-    }
+    };
   }
 
   public async getOrFetchTypeDetail(type: Type): Promise<TypeDetail> {

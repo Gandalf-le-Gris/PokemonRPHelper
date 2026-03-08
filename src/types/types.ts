@@ -117,4 +117,4 @@ export const typeArray = [
     value: 'water',
     title: 'Eau'
   },
-] as { value: Type, title: string }[]
+] as { value: Type, title: string }[];

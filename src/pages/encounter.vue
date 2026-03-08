@@ -97,7 +97,7 @@ export default defineComponent({
       this.characters.forEach(c => {
         webSocketService.addCharacter(c, false);
       });
-      this.$router.push('/room')
+      this.$router.push('/room');
     }
   },
 });

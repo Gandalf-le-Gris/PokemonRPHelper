@@ -1,6 +1,6 @@
-import { Habitat } from "./habitats";
+import { Habitat } from './habitats';
 
-export type Difficulty = 'hard' | 'normal' | 'easy'
+export type Difficulty = 'hard' | 'normal' | 'easy';
 export const difficulties = [
   {
     value: 'hard',

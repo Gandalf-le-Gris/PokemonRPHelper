@@ -161,7 +161,7 @@ watch(() => filters.value.name, (val: string | null) => {
   } else {
     debouncedName.value = '';
   }
-})
+});
 
 const filteredItems: ComputedRef<Record<ItemType, Item[]>> = computed(() => {
   const res = {} as Record<ItemType, Item[]>;

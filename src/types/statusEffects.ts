@@ -10,7 +10,7 @@ export type StatusEffect =
   | 'blinded'
   | 'terrified'
   | 'slowed'
-  | 'quickened'
+  | 'quickened';
 
 export const statusEffectArray = [
   {
@@ -85,4 +85,4 @@ export const statusEffectArray = [
     color: 'light-green-lighten-2',
     icon: 'mdi-rabbit'
   }
-] as { value: StatusEffect, title: string, color: string, icon: string }[]
+] as { value: StatusEffect, title: string, color: string, icon: string }[];

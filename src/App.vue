@@ -64,12 +64,12 @@ export default defineComponent({
   watch: {
     drawer() {
       if (this.$vuetify.display.smAndUp) {
-        this.drawer = false
+        this.drawer = false;
       }
     },
     '$vuetify.display.smAndUp'() {
       if (this.$vuetify.display.smAndUp) {
-        this.drawer = false
+        this.drawer = false;
       }
     }
   }
