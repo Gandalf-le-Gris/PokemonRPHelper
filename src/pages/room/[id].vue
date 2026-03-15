@@ -37,6 +37,7 @@
       v-model="character"
       :is-master
       :my-character="character?.uuid"
+      :sheet-open="showSheet"
     />
   </div>
 
@@ -102,9 +103,12 @@ const router = useRouter();
 const route = useRoute();
 
 function handleKeyPress(event: KeyboardEvent) {
-  if (event.key === 'p' || event.key === ' ') {
+  if (!showSheet.value && (event.key === 'p' || event.key === ' ')) {
     event.preventDefault();
-    showSheet.value = !showSheet.value;
+    showSheet.value = true;
+  } else if (showSheet.value && event.key === 'Escape') {
+    event.preventDefault();
+    showSheet.value = false;
   }
 }
 

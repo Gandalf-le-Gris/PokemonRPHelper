@@ -307,6 +307,7 @@ import { assetsArray, assetsLabelArray } from '@/types/props';
 const props = defineProps<{
   isMaster?: boolean
   myCharacter?: string
+  sheetOpen: boolean
 }>();
 
 const emit = defineEmits(['update-character']);
@@ -339,7 +340,6 @@ function removeEnemy(uuid: string) {
 }
 
 function selectCharacter(i: number, j: number) {
-  console.log('click');
   const char = room.value?.characters.find(c => c.i === i && c.j === j);
   if (char && props.isMaster) {
     character.value = char.character;
@@ -415,64 +415,62 @@ function startDrag(evt: DragEvent, asset: string) {
 }
 
 function handleKeyPress(event: KeyboardEvent) {
-  switch (event.key) {
-    case 'n':
-    case 'ArrowRight':
-      if (props.isMaster) {
-        event.preventDefault();
-        advanceInitiative();
-        openPanel.value = 3;
-      }
-      break;
-    case '+':
-      if (props.isMaster) {
-        event.preventDefault();
-        addEnemy();
-      }
-      break;
-    case 'o':
-      if (props.isMaster) {
-        event.preventDefault();
-        sortInitiative();
-        openPanel.value = 3;
-      }
-      break;
-    case 'g':
-      if (props.isMaster) {
+  if (!props.sheetOpen) {
+    switch (event.key) {
+      case 'n':
+      case 'ArrowRight':
+        if (props.isMaster) {
+          event.preventDefault();
+          advanceInitiative();
+          openPanel.value = 3;
+        }
+        break;
+      case '+':
+        if (props.isMaster) {
+          event.preventDefault();
+          addEnemy();
+        }
+        break;
+      case 'o':
+        if (props.isMaster) {
+          event.preventDefault();
+          sortInitiative();
+          openPanel.value = 3;
+        }
+        break;
+      case 'g':
+        if (props.isMaster) {
+          event.preventDefault();
+          openPanel.value = openPanel.value === 0 ? -1 : 0;
+        }
+        break;
+      case '&':
         event.preventDefault();
         openPanel.value = openPanel.value === 0 ? -1 : 0;
-      }
-      break;
-    case '&':
-    case '1':
-      event.preventDefault();
-      openPanel.value = openPanel.value === 0 ? -1 : 0;
-      break;
-    case 'd':
-    case 'é':
-    case '2':
-      event.preventDefault();
-      openPanel.value = openPanel.value === 1 ? -1 : 1;
-      break;
-    case 'e':
-    case '"':
-    case '3':
-      event.preventDefault();
-      openPanel.value = openPanel.value === 2 ? -1 : 2;
-      break;
-    case 'i':
-      event.preventDefault();
-      if (!props.isMaster) {
-        openPanel.value = openPanel.value === 0 ? -1 : 0;
-      } else {
+        break;
+      case 'd':
+      case 'é':
+        event.preventDefault();
+        openPanel.value = openPanel.value === 1 ? -1 : 1;
+        break;
+      case 'e':
+      case '"':
+        event.preventDefault();
+        openPanel.value = openPanel.value === 2 ? -1 : 2;
+        break;
+      case 'i':
+        event.preventDefault();
+        if (!props.isMaster) {
+          openPanel.value = openPanel.value === 0 ? -1 : 0;
+        } else {
+          openPanel.value = openPanel.value === 3 ? -1 : 3;
+        }
+        break;
+      case '\'':
+        event.preventDefault();
         openPanel.value = openPanel.value === 3 ? -1 : 3;
-      }
-      break;
-    case '\'':
-    case '4':
-      event.preventDefault();
-      openPanel.value = openPanel.value === 3 ? -1 : 3;
-      break;
+        break;
+    }
   }
 }
 
