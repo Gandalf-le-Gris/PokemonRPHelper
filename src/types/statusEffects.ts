@@ -84,5 +84,23 @@ export const statusEffectArray = [
     title: 'Accéléré',
     color: 'light-green-lighten-2',
     icon: 'mdi-rabbit'
+  },
+  {
+    value: 'enraged',
+    title: 'Enragé',
+    color: 'red-darken-4',
+    icon: 'mdi-emoticon-angry'
+  },
+  {
+    value: 'dynamaxed',
+    title: 'Dynamaxé',
+    color: 'orange',
+    icon: 'mdi-arrow-up-bold'
+  },
+  {
+    value: 'terastalized',
+    title: 'Teracristallisé',
+    color: 'white',
+    icon: 'mdi-hexagon-outline'
   }
 ] as { value: StatusEffect, title: string, color: string, icon: string }[];

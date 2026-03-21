@@ -142,7 +142,6 @@
                 min="0"
                 :max="maxHP"
                 class="inner-compact font-weight-bold"
-                @change="changeHP"
               >
                 <template #append-inner>
                   {{ `/${maxHP}` }}
@@ -391,17 +390,7 @@
             label="Inventaire"
             no-resize
             rows="10"
-          >
-            <template #append-inner>
-              <v-btn
-                @click.stop="showNotes = true"
-                icon="mdi-notebook-edit"
-                density="compact"
-                variant="plain"
-                size="large"
-              />
-            </template>
-          </v-textarea>
+          />
         </v-col>
         <v-col cols="12" sm="5" class="d-flex flex-column justify-space-between">
           <v-text-field
@@ -479,6 +468,25 @@
           </v-sheet>
         </v-col>
       </v-row>
+      <v-row>
+        <v-col>
+          <v-expansion-panels>
+            <v-expansion-panel>
+              <v-expansion-panel-title>
+                Mes notes
+              </v-expansion-panel-title>
+              <v-expansion-panel-text>
+                <v-textarea
+                  v-model="character.notes"
+                  hide-details
+                  no-resize
+                  rows="25"
+                />
+              </v-expansion-panel-text>
+            </v-expansion-panel>
+          </v-expansion-panels>
+        </v-col>
+      </v-row>
     </v-card-text>
   </v-card>
 
@@ -518,22 +526,6 @@
     @confirm="resetCharacter"
     title="Réinitialiser la fiche ?"
   />
-
-  <v-dialog v-model="showNotes" max-width="600">
-    <v-card
-      title="Mes notes"
-      rounded="xl"
-      class="py-4"
-    >
-      <v-textarea
-        v-model="character.notes"
-        hide-details
-        no-resize
-        rows="15"
-        class="mx-4"
-      />
-    </v-card>
-  </v-dialog>
 
   <v-dialog
     v-model="showTypeChange"
@@ -722,7 +714,6 @@ const autoOpen: Ref<number> = ref<number>(-1);
 const showStatusDialog: Ref<boolean> = ref<boolean>(false);
 const selectedStatus: Ref<number> = ref<number>(-1);
 const confirmReset: Ref<boolean> = ref<boolean>(false);
-const showNotes: Ref<boolean> = ref<boolean>(false);
 const showExtraHpMenu: Ref<boolean> = ref<boolean>(false);
 const showTypeChange: Ref<boolean> = ref<boolean>(false);
 const typeChangeIndex: Ref<number> = ref<number>(0);
@@ -734,6 +725,7 @@ const showSpecificityChange: Ref<boolean> = ref<boolean>(false);
 const hideOldSpecificity: Ref<boolean> = ref<boolean>(false);
 const newAbility: Ref<Ability | undefined> = ref();
 const showNewAbility: Ref<boolean> = ref<boolean>(false);
+const saveTimeout: Ref<number> = ref<number>(-1);
 
 const characterMods: ComputedRef<Mod> = computed<Mod>(() => computeGlobalModifiers(character.value));
 const maxHP: ComputedRef<number> = computed<number>(() => computeHPT(character.value));
@@ -900,12 +892,6 @@ async function resetCharacter() {
   character.value = await createCharacter(character.value.pokemon, 0, character.value.uuid);
 }
 
-function changeHP() {
-  if (props.isBattleSheet) {
-    saveCharacter(false);
-  }
-}
-
 function updateLevel() {
   character.value.level = Number(character.value.level);
   while (character.value.level / 5 > character.value.iqSkills.length) {
@@ -946,6 +932,16 @@ function handleKeyPress(event: KeyboardEvent) {
     saveCharacter(true);
   }
 }
+
+watch(() => character.value, () => {
+  clearTimeout(saveTimeout.value);
+  saveTimeout.value = setTimeout(() => {
+    const saved = JSON.parse(localStorage.getItem('saved-characters') ?? '{}');
+    if (saved[character.value.uuid] || character.value.level) {
+      saveCharacter(false);
+    }
+  }, 1000);
+}, { deep: true });
 </script>
 
 <style scoped>

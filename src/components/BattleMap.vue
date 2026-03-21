@@ -503,7 +503,7 @@ watch(() => room.value?.activeCharacter, (val) => {
 watch(() => room.value?.characters, () => {
   if (character.value?.uuid) {
     const received = room.value?.characters.find(e => e.character.uuid === character.value?.uuid)?.character;
-    if (received) {
+    if (received && JSON.stringify(received) != JSON.stringify(character.value)) {
       character.value = received;
       if (!props.isMaster && props.myCharacter === character.value.uuid) {
         const saved = JSON.parse(localStorage.getItem('saved-characters') ?? '{}');
