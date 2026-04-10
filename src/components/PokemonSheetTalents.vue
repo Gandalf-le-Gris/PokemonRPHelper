@@ -6,7 +6,7 @@
     <v-col cols="auto">
       <v-text-field
         v-if="((characterMods.talents?.find(e => e.name === talent.value)?.mod ?? 0) < 1000) && (character.ability.value !== 'Healer' || talent.value !== 'Heal')"
-        v-model="character.talents[index].mod"
+        v-model.number="character.talents[index].mod"
         type="number"
         width="84"
         hide-details

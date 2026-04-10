@@ -16,6 +16,7 @@ declare module 'vue' {
     BattleMapTile: typeof import('./components/BattleMapTile.vue')['default']
     CharacterIcon: typeof import('./components/CharacterIcon.vue')['default']
     ConfirmCancelDialog: typeof import('./components/ConfirmCancelDialog.vue')['default']
+    DiceRoll: typeof import('./components/DiceRoll.vue')['default']
     EncounterFilters: typeof import('./components/EncounterFilters.vue')['default']
     PokemonSheet: typeof import('./components/PokemonSheet.vue')['default']
     PokemonSheetAttacks: typeof import('./components/PokemonSheetAttacks.vue')['default']

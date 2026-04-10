@@ -168,4 +168,17 @@ export class WebSocketService {
       snackbarService.setError('Non connecté');
     }
   };
+
+  public rollDice = (characterId: string, value: number) => {
+    if (this.ws && this.ws.OPEN) {
+      this.ws.send(JSON.stringify({
+        event: 'roll-dice',
+        uuid: this.room.value?.uuid,
+        characterId,
+        value
+      }));
+    } else {
+      snackbarService.setError('Non connecté');
+    }
+  }
 }
