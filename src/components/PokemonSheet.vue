@@ -2,8 +2,8 @@
   <v-card rounded="lg">
     <PokemonSheetHeader
       v-model="character"
-      :is-player-sheet="isPlayerSheet"
-      :is-battle-sheet="isBattleSheet"
+      :is-player-sheet
+      :is-battle-sheet
       :regenerate-loading="regenerateLoading"
       @update-species="updateSpecies"
       @regenerate="regenerateCharacter"
@@ -15,20 +15,20 @@
         <v-col cols="12" sm="6">
           <PokemonSheetStats
             v-model="character"
-            :character-mods="characterMods"
+            :character-mods
             @update-level="updateLevel"
           />
           <PokemonSheetSpecificities :specificities="alteredSpecificities" />
           <PokemonSheetAttacks
             v-model="character"
-            :attack-types="attackTypes"
+            :attack-types
             @open-status-dialog="openStatusDialog"
           />
         </v-col>
         <v-col cols="12" sm="6">
           <PokemonSheetTalents
             v-model="character"
-            :character-mods="characterMods"
+            :character-mods
           />
         </v-col>
       </v-row>
@@ -67,9 +67,9 @@
 
   <v-dialog v-model="showStatusDialog" max-width="600">
     <v-card
-      title="Capacités de statut"
-      rounded="xl"
       class="py-4"
+      rounded="xl"
+      title="Capacités de statut"
     >
       <template #append>
         <TypeImage :type="character.attacks[selectedStatus].type ?? 'normal'"/>
@@ -84,10 +84,10 @@
           <v-btn
             v-for="move in statusMoves[character.attacks[selectedStatus].type ?? 'normal'][i]"
             :key="move"
-            @click="selectStatusMove(move)"
-            tile
-            elevation="0"
             class="text-body-2 auto-height py-1"
+            elevation="0"
+            tile
+            @click="selectStatusMove(move)"
           >
             <span class="status-move-btn">{{ move }}</span>
           </v-btn>
@@ -98,8 +98,8 @@
 
   <ConfirmCancelDialog
     v-model="confirmReset"
-    @confirm="resetCharacter"
     title="Réinitialiser la fiche ?"
+    @confirm="resetCharacter"
   />
 
   <v-dialog
@@ -109,8 +109,8 @@
   >
     <v-card
       :title="`Changement de type ${typeChangeIndex + 1}`"
-      rounded="xl"
       class="py-4"
+      rounded="xl"
     >
       <v-card-text>
         <v-row
@@ -127,11 +127,11 @@
             <v-select
               v-model="newType"
               :items="attackTypes.filter(t => !alteredTypes.includes(t.type))"
-              item-value="type"
               item-title="title"
-              hide-details
+              item-value="type"
               density="compact"
               variant="outlined"
+              hide-details
               @update:model-value="changeType"
             />
           </v-col>
@@ -147,42 +147,39 @@
   >
     <v-card
       :title="`Changement de spécificité`"
-      rounded="xl"
       class="py-4"
+      rounded="xl"
     >
       <template #append>
         <v-btn
+          :disabled="(!oldSpecificity && !hideOldSpecificity) || !newSpecificity"
+          class="mt-n4"
           icon="mdi-content-save"
           variant="flat"
-          class="mt-n4"
-          :disabled="(!oldSpecificity && !hideOldSpecificity) || !newSpecificity"
           @click="changeSpecificities"
         />
       </template>
       <v-card-text>
-        <v-row
-          dense
-          align="center"
-        >
+        <v-row dense align="center">
           <v-col class="d-flex justify-center">
             <v-tooltip
               v-if="!hideOldSpecificity"
-              location="bottom"
               :disabled="!oldSpecificity"
               :text="specificityArray.find(s => s.value === oldSpecificity)?.desc"
+              location="bottom"
               max-width="512"
               open-on-click
             >
               <template #activator="{ props }">
                 <v-select
+                  v-bind="props"
                   v-model="oldSpecificity"
                   :items="specificityArray.filter(s => character.specificities.includes(s.value))"
-                  item-value="value"
                   item-title="title"
-                  hide-details
+                  item-value="value"
                   density="compact"
                   variant="outlined"
-                  v-bind="props"
+                  hide-details
                 />
               </template>
             </v-tooltip>
@@ -192,22 +189,22 @@
           </v-col>
           <v-col class="d-flex justify-center">
             <v-tooltip
-              location="bottom"
               :disabled="!newSpecificity"
               :text="specificityArray.find(s => s.value === newSpecificity)?.desc"
+              location="bottom"
               max-width="512"
               open-on-click
             >
               <template #activator="{ props }">
                 <v-select
+                  v-bind="props"
                   v-model="newSpecificity"
                   :items="specificityArray.filter(s => !character.specificities.includes(s.value))"
-                  item-value="value"
                   item-title="title"
-                  hide-details
+                  item-value="value"
                   density="compact"
                   variant="outlined"
-                  v-bind="props"
+                  hide-details
                 />
               </template>
             </v-tooltip>
@@ -223,37 +220,37 @@
     persistent
   >
     <v-card
+      class="py-4"
       title="Gain de talent"
       rounded="xl"
-      class="py-4"
     >
       <template #append>
         <v-btn
+          :disabled="!newAbility"
+          class="mt-n4"
           icon="mdi-content-save"
           variant="flat"
-          class="mt-n4"
-          :disabled="!newAbility"
           @click="learnAbility"
         />
       </template>
       <v-card-text>
         <v-tooltip
-          location="bottom"
           :disabled="!newAbility"
           :text="newAbility?.desc"
+          location="bottom"
           max-width="512"
           open-on-click
         >
           <template #activator="{ props }">
             <v-select
+              v-bind="props"
               v-model="newAbility"
               :items="availableAbilities"
-              return-object
               item-title="title"
-              hide-details
               density="compact"
               variant="outlined"
-              v-bind="props"
+              hide-details
+              return-object
             />
           </template>
         </v-tooltip>

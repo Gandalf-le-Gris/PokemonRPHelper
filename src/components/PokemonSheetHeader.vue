@@ -14,7 +14,6 @@
             <v-row>
               <v-col cols="12" sm>
                 <v-autocomplete
-                  @update:modelValue="character.variety = 0; $emit('update-species')"
                   v-model="character.species"
                   :items="searchArray"
                   item-value="value"
@@ -22,17 +21,18 @@
                   label="Espèce"
                   hide-details
                   no-data-text="Aucun Pokémon trouvé"
+                  @update:modelValue="character.variety = 0; $emit('update-species')"
                 />
               </v-col>
-              <v-col cols="12" sm="6" v-if="varieties.length > 1">
+              <v-col v-if="varieties.length > 1" cols="12" sm="6">
                 <v-select
-                  @update:modelValue="$emit('update-species')"
                   v-model="character.variety"
                   :items="varieties"
                   item-value="value"
                   item-title="title"
                   label="Variante"
                   hide-details
+                  @update:modelValue="$emit('update-species')"
                 />
               </v-col>
             </v-row>

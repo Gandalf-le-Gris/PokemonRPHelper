@@ -10,7 +10,7 @@
             Attaques
           </v-col>
         </v-row>
-        <v-row align="center" v-for="(_, index) in character.attacks" :key="index" dense>
+        <v-row v-for="(_, index) in character.attacks" :key="index" align="center" dense>
           <v-col v-if="!character.attacks[index].type" cols="4">
             <v-select
               v-model="character.attacks[index].type"
@@ -26,10 +26,10 @@
           </v-col>
           <v-col v-else cols="auto">
             <type-image
-              @click="character.attacks[index].type = undefined; autoOpen = index"
               :type="character.attacks[index].type!"
               offensive
               class="cursor-pointer"
+              @click="character.attacks[index].type = undefined; autoOpen = index"
             />
           </v-col>
           <v-col>
