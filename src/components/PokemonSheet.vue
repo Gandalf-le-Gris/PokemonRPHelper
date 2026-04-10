@@ -903,6 +903,7 @@ function updateLevel() {
 }
 
 function levelUp() {
+  new Audio('/sounds/pokemon_level_up.mp3').play();
   character.value.experience = {
     dungeonClear: false,
     exploration: false,
