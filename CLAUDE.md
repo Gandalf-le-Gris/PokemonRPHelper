@@ -31,6 +31,19 @@ Respecter cet ordre dans les templates, conforme au Style Guide officiel Vue :
 />
 ```
 
+Dans les slots `#activator`, `v-bind="props"` se place avant `v-model` pour que le modèle prenne la priorité sur les props spreadées :
+
+```vue
+<template #activator="{ props }">
+  <v-select
+    v-bind="props"
+    v-model="value"
+    :items="items"
+    @update:model-value="handler"
+  />
+</template>
+```
+
 ### Shorthand de liaison (Vue 3.4+)
 
 Quand le nom de la prop correspond exactement à la variable liée, utiliser la syntaxe courte :
