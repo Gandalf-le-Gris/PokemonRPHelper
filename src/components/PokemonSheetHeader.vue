@@ -76,6 +76,14 @@
             />
             <v-btn
               v-if="isPlayerSheet && !isBattleSheet"
+              @click="$emit('roll')"
+              icon="mdi-dice-multiple"
+              density="compact"
+              variant="plain"
+              size="x-large"
+            />
+            <v-btn
+              v-if="isPlayerSheet && !isBattleSheet"
               @click="$emit('confirm-reset')"
               icon="mdi-refresh"
               density="compact"
@@ -133,6 +141,7 @@ defineEmits<{
   'regenerate': [];
   'save': [];
   'confirm-reset': [];
+  'roll': [];
 }>();
 
 const character: ModelRef<Character> = defineModel<Character>({ required: true });

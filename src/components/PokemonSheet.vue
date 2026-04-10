@@ -9,6 +9,7 @@
       @regenerate="regenerateCharacter"
       @save="saveCharacter(true)"
       @confirm-reset="confirmReset = true"
+      @roll="showRoll = true"
     />
     <v-card-text>
       <v-row align="center">
@@ -257,6 +258,56 @@
       </v-card-text>
     </v-card>
   </v-dialog>
+
+  <v-dialog
+    v-model="showRoll"
+    max-width="400"
+  >
+    <v-card
+      title="Jet de statistique"
+      class="py-4"
+      rounded="xl"
+    >
+      <v-card-text>
+        <v-row
+          dense
+          align="center"
+          class="pt-3"
+        >
+          <v-col class="d-flex justify-center align-center">
+            <v-select
+              v-model="mod"
+              label="Caractéristique"
+              :items="talentsWithMods"
+              item-title="talent"
+              density="compact"
+              variant="outlined"
+              hide-details
+              clearable
+            />
+            <v-tooltip
+              location="top"
+              class="bg-semi-transparent"
+              offset="0"
+            >
+              <template #activator="{ props }">
+                <div v-bind="props">
+                  <v-icon icon="mdi-help-circle-outline" class="ps-3"/>
+                </div>
+              </template>
+              <span class="text-white">
+                Si la caractéristique n'apparait pas c'est qu'elle n'a pas de modifieur<br>
+                Auquel cas laissez le sélecteur vide
+              </span>
+            </v-tooltip>
+          </v-col>
+        </v-row>
+        <v-row>
+          <DiceRoll :mod="talentsWithMods?.find(t => t.talent === mod)?.mod" :key="mod"/>
+        </v-row>
+      </v-card-text>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script setup lang="ts">
@@ -266,6 +317,7 @@ import { Ability, abilityRecord } from '@/types/abilities';
 import { changeSpecies, createCharacter, type Character } from '@/types/pokemon';
 import { computeGlobalModifiers, specificityArray, SpecificityType, type Mod } from '@/types/specificities';
 import statusMoves from '@/types/statusMoves';
+import { talentArray } from '@/types/talents';
 import { Type, TypeDetail } from '@/types/types';
 import { ModelRef } from 'vue';
 
@@ -290,6 +342,8 @@ const hideOldSpecificity: Ref<boolean> = ref<boolean>(false);
 const newAbility: Ref<Ability | undefined> = ref();
 const showNewAbility: Ref<boolean> = ref<boolean>(false);
 const saveTimeout: Ref<number> = ref<number>(-1);
+const showRoll: Ref<boolean> = ref<boolean>(false);
+const mod : Ref<string> = ref('');
 
 const characterMods: ComputedRef<Mod> = computed<Mod>(() => computeGlobalModifiers(character.value));
 
@@ -467,6 +521,18 @@ function handleKeyPress(event: KeyboardEvent) {
     saveCharacter(true);
   }
 }
+
+const talentsWithMods = computed(() => 
+  character.value.talents.filter(talent => talent.mod > 0)
+  .concat(computeGlobalModifiers(character.value).talents
+    ?.map(t => { return {talent:t.name, mod: t.mod}}) ?? []).map(talent => 
+      { 
+        return {
+          talent: talentArray.find(t => t.value === talent.talent)?.title,
+          mod: talent.mod
+        }
+      })
+)
 
 watch(() => character.value, () => {
   clearTimeout(saveTimeout.value);
