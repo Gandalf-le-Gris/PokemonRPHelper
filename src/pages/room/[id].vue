@@ -25,11 +25,37 @@
         />
       </div>
     </v-navigation-drawer>
+    <v-navigation-drawer
+      v-if="character"
+      v-model="showDices"
+      location="right"
+      temporary
+      width="300"
+    >
+      <div class="d-flex flex-column">
+        <v-btn
+          @click="showDices = false"
+          icon="mdi-close"
+          elevation="0"
+          size="x-large"
+          density="compact"
+          class="ma-2"
+        />
+        <DiceRoll :character-name="character.name" in-combat />
+      </div>
+    </v-navigation-drawer>
     <v-btn
       v-if="character"
       @click="showSheet = true"
       icon="mdi-chevron-left"
       class="rounded-s-pill position-absolute right-0"
+      style="z-index: 1"
+    />
+    <v-btn
+      v-if="character"
+      @click="showDices = true"
+      icon="mdi-dice-multiple"
+      class="rounded-s-pill position-absolute right-0 mt-14"
       style="z-index: 1"
     />
     <BattleMap
@@ -98,6 +124,7 @@ const isMaster: Ref<boolean | undefined> = ref();
 const character: Ref<Character | undefined> = ref();
 const characters: Ref<Character[]> = ref([]);
 const showSheet: Ref<boolean> = ref(false);
+const showDices: Ref<boolean> = ref(false);
 
 const router = useRouter();
 const route = useRoute();
@@ -105,10 +132,16 @@ const route = useRoute();
 function handleKeyPress(event: KeyboardEvent) {
   if (!showSheet.value && (event.key === 'p' || event.key === ' ')) {
     event.preventDefault();
+    showDices.value = false;
     showSheet.value = true;
-  } else if (showSheet.value && event.key === 'Escape') {
+  } else if (!showDices.value && event.key === 'r') {
     event.preventDefault();
     showSheet.value = false;
+    showDices.value = true;
+  }else if (showSheet.value && event.key === 'Escape') {
+    event.preventDefault();
+    showSheet.value = false;
+    showDices.value = false;
   }
 }
 

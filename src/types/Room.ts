@@ -7,6 +7,7 @@ export interface Room {
   environment: string,
   characters: BattleCharacter[],
   initiativeList: string[],
+  rolls: Roll[],
   activeCharacter?: string,
   persistent: boolean,
 }
@@ -49,4 +50,9 @@ export interface TileAsset {
   uuid: string,
   value: string,
   visible: boolean
+}
+
+export interface Roll {
+  characterId: string,
+  value: number
 }
