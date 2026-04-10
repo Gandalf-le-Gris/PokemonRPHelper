@@ -4,7 +4,7 @@
       v-model="character"
       :is-player-sheet
       :is-battle-sheet
-      :regenerate-loading="regenerateLoading"
+      :regenerate-loading
       @update-species="updateSpecies"
       @regenerate="regenerateCharacter"
       @save="saveCharacter(true)"
