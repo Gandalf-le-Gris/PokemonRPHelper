@@ -67,42 +67,33 @@
           <v-col class="d-flex justify-end">
             <v-btn
               v-if="!isPlayerSheet"
-              @click="$emit('regenerate')"
               icon="mdi-refresh"
               density="compact"
               variant="plain"
               size="x-large"
               :loading="regenerateLoading"
+              @click="$emit('regenerate')"
             />
             <v-btn
               v-if="isPlayerSheet && !isBattleSheet"
-              @click="$emit('confirm-reset')"
               icon="mdi-refresh"
               density="compact"
               variant="plain"
               size="x-large"
+              @click="$emit('confirm-reset')"
             />
             <v-btn
               v-if="isPlayerSheet || isBattleSheet"
-              @click="$emit('save')"
               icon="mdi-content-save"
               density="compact"
               variant="plain"
               size="x-large"
+              @click="$emit('save')"
             />
-          </v-col>
-          <v-col v-if="$vuetify.display.xs" cols="auto" class="d-flex justify-center">
-            <v-sheet
-              border="md grey-darken-3"
-              rounded="lg"
-              max-width="80"
-            >
-              <v-img :src="character.pokemon.sprites.front_default" width="80"/>
-            </v-sheet>
           </v-col>
         </v-row>
       </v-col>
-      <v-col v-if="$vuetify.display.smAndUp" cols="12" sm="auto" class="d-flex justify-center align-center">
+      <v-col cols="12" sm="auto" class="d-flex justify-center align-center">
         <v-sheet
           border="md grey-darken-3"
           rounded="xl"
