@@ -98,19 +98,32 @@
                 rounded="lg"
                 max-width="80"
               >
-                <v-img :src="character.pokemon.sprites.front_default" width="80"/>
+                <v-img :src="spriteUrl" width="80"/>
               </v-sheet>
             </v-col>
           </v-row>
         </v-col>
         <v-col v-if="$vuetify.display.smAndUp" cols="12" sm="auto" class="d-flex justify-center align-center">
-          <v-sheet
-            border="md grey-darken-3"
-            rounded="xl"
-            max-width="128"
-          >
-            <v-img :src="character.pokemon.sprites.front_default" width="128"/>
-          </v-sheet>
+          <div style="position: relative; display: inline-block;">
+            <v-sheet
+              border="md grey-darken-3"
+              rounded="xl"
+              max-width="128"
+            >
+              <v-img :src="spriteUrl" width="128"/>
+            </v-sheet>
+            <v-tooltip v-if="character.isShiny" text="Chromatique !" location="top">
+              <template #activator="{ props }">
+                <v-icon
+                  v-bind="props"
+                  icon="mdi-shimmer"
+                  color="amber"
+                  size="small"
+                  style="position: absolute; top: 4px; right: 4px;"
+                />
+              </template>
+            </v-tooltip>
+          </div>
         </v-col>
       </v-row>
     </v-card-title>
@@ -726,6 +739,12 @@ const hideOldSpecificity: Ref<boolean> = ref<boolean>(false);
 const newAbility: Ref<Ability | undefined> = ref();
 const showNewAbility: Ref<boolean> = ref<boolean>(false);
 const saveTimeout: Ref<number> = ref<number>(-1);
+
+const spriteUrl: ComputedRef<string> = computed<string>(() =>
+  character.value.isShiny && character.value.pokemon.sprites.front_shiny
+    ? character.value.pokemon.sprites.front_shiny
+    : character.value.pokemon.sprites.front_default
+);
 
 const characterMods: ComputedRef<Mod> = computed<Mod>(() => computeGlobalModifiers(character.value));
 const maxHP: ComputedRef<number> = computed<number>(() => computeHPT(character.value));
