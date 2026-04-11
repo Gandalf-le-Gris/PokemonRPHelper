@@ -15,7 +15,6 @@
               <v-row>
                 <v-col cols="12" sm>
                   <v-autocomplete
-                    @update:modelValue="character.variety = 0; updateSpecies()"
                     v-model="character.species"
                     :items="searchArray"
                     item-value="value"
@@ -23,17 +22,18 @@
                     label="Espèce"
                     hide-details
                     no-data-text="Aucun Pokémon trouvé"
+                    @update:modelValue="character.variety = 0; updateSpecies()"
                   />
                 </v-col>
-                <v-col cols="12" sm="6" v-if="varieties.length > 1">
+                <v-col v-if="varieties.length > 1" cols="12" sm="6">
                   <v-select
-                    @update:modelValue="updateSpecies"
                     v-model="character.variety"
                     :items="varieties"
                     item-value="value"
                     item-title="title"
                     label="Variante"
                     hide-details
+                    @update:modelValue="updateSpecies"
                   />
                 </v-col>
               </v-row>
@@ -63,53 +63,66 @@
             </v-col>
             <v-col cols="auto" class="d-flex flex-column">
               <TypeImage :type="alteredTypes[0]" defensive open-on-click/>
-              <TypeImage v-if="alteredTypes[1]" :type="alteredTypes[1]" defensive open-on-click class="mt-2"/>
+              <TypeImage v-if="alteredTypes[1]" :type="alteredTypes[1]" class="mt-2" defensive open-on-click/>
             </v-col>
             <v-col class="d-flex justify-end">
               <v-btn
                 v-if="!isPlayerSheet"
-                @click="regenerateCharacter"
                 icon="mdi-refresh"
                 density="compact"
                 variant="plain"
                 size="x-large"
                 :loading="regenerateLoading"
+                @click="regenerateCharacter"
               />
               <v-btn
                 v-if="isPlayerSheet && !isBattleSheet"
-                @click="confirmReset = true"
                 icon="mdi-refresh"
                 density="compact"
                 variant="plain"
                 size="x-large"
+                @click="confirmReset = true"
               />
               <v-btn
                 v-if="isPlayerSheet || isBattleSheet"
-                @click="saveCharacter(true)"
                 icon="mdi-content-save"
                 density="compact"
                 variant="plain"
                 size="x-large"
+                @click="saveCharacter(true)"
               />
+              <v-divider vertical class="mx-1"/>
+              <v-tooltip :text="hideAnimatedSprites ? 'Afficher les sprites animés' : 'Afficher les sprites statiques'" location="bottom">
+                <template #activator="{ props }">
+                  <v-btn
+                    v-bind="props"
+                    :icon="hideAnimatedSprites ? 'mdi-image-off' : 'mdi-image'"
+                    density="compact"
+                    variant="plain"
+                    size="x-large"
+                    @click="hideAnimatedSprites = !hideAnimatedSprites; spriteErrorCount = 0"
+                  />
+                </template>
+              </v-tooltip>
             </v-col>
-            <v-col v-if="$vuetify.display.xs" cols="auto" class="d-flex justify-center">
+            <v-col v-if="$vuetify.display.xs" cols="auto" class="d-flex flex-column align-center">
               <v-sheet
                 border="md grey-darken-3"
                 rounded="lg"
                 max-width="80"
               >
-                <v-img :src="character.pokemon.sprites.front_default" width="80"/>
+                <v-img :src="spriteUrl" width="80" height="80" :class="['sprite-contain', { 'sprite-static': isStaticSprite }]" @error="onSpriteError"/>
               </v-sheet>
             </v-col>
           </v-row>
         </v-col>
-        <v-col v-if="$vuetify.display.smAndUp" cols="12" sm="auto" class="d-flex justify-center align-center">
+        <v-col v-if="$vuetify.display.smAndUp" cols="12" sm="auto" class="d-flex flex-column justify-center align-center">
           <v-sheet
             border="md grey-darken-3"
             rounded="xl"
             max-width="128"
           >
-            <v-img :src="character.pokemon.sprites.front_default" width="128"/>
+            <v-img :src="spriteUrl" width="128" height="128" :class="['sprite-contain', { 'sprite-static': isStaticSprite }]" @error="onSpriteError"/>
           </v-sheet>
         </v-col>
       </v-row>
@@ -153,13 +166,13 @@
                 location="top center"
                 origin="bottom center"
               >
-                <template v-slot:activator="{ props: menuProps }">
+                <template #activator="{ props: menuProps }">
                   <v-tooltip location="top">
-                    <template v-slot:activator="{ props: tooltipProps }">
+                    <template #activator="{ props: tooltipProps }">
                       <v-btn
+                        v-bind="mergeProps(menuProps, tooltipProps)"
                         icon="mdi-fruit-pear"
                         size="sm"
-                        v-bind="mergeProps(menuProps, tooltipProps)"
                       />
                     </template>
                     PV supplémentaires
@@ -176,15 +189,15 @@
                   </template>
                   <template #append>
                     <v-icon
-                      @click="showExtraHpMenu = false"
                       icon="mdi-close"
                       size="x-small"
+                      @click="showExtraHpMenu = false"
                     />
                   </template>
                   <div class="pa-2 pt-0 d-flex flex-column">
                     <v-text-field
-                      type="number"
                       v-model="character.extraHp"
+                      type="number"
                       min="0"
                       variant="outlined"
                       density="compact"
@@ -212,16 +225,16 @@
               <v-row>
                 <v-btn
                   icon="mdi-plus"
-                  tile
                   size="xs"
+                  tile
                   @click="character.stats[stat.value]++"
                 />
               </v-row>
               <v-row>
                 <v-btn
                   icon="mdi-minus"
-                  tile
                   size="xs"
+                  tile
                   @click="character.stats[stat.value] = Math.max(character.stats[stat.value] - 1, 0)"
                 />
               </v-row>
@@ -263,7 +276,7 @@
                     Attaques
                   </v-col>
                 </v-row>
-                <v-row align="center" v-for="(_, index) in character.attacks" :key=index dense>
+                <v-row v-for="(_, index) in character.attacks" :key=index align="center" dense>
                   <v-col v-if="!character.attacks[index].type" cols="4">
                     <v-select
                       v-model="character.attacks[index].type"
@@ -279,10 +292,10 @@
                   </v-col>
                   <v-col v-else cols="auto">
                     <type-image
-                      @click="character.attacks[index].type = undefined; autoOpen = index"
                       :type="character.attacks[index].type!"
-                      offensive
                       class="cursor-pointer"
+                      offensive
+                      @click="character.attacks[index].type = undefined; autoOpen = index"
                     />
                   </v-col>
                   <v-col>
@@ -509,10 +522,10 @@
           <v-btn
             v-for="move in statusMoves[character.attacks[selectedStatus].type ?? 'normal'][i]"
             :key="move"
-            @click="selectStatusMove(move)"
-            tile
-            elevation="0"
             class="text-body-2 auto-height py-1"
+            elevation="0"
+            tile
+            @click="selectStatusMove(move)"
           >
             <span class="status-move-btn">{{ move }}</span>
           </v-btn>
@@ -702,6 +715,7 @@ import { talentArray } from '@/types/talents';
 import { Type, TypeDetail } from '@/types/types';
 import { getVarieties } from '@/utils/varieties';
 import { mergeProps, ModelRef } from 'vue';
+import { useSpriteSetting } from '@/composables/useSpriteSetting';
 
 const props = defineProps<{
   isPlayerSheet?: boolean
@@ -709,6 +723,17 @@ const props = defineProps<{
 }>();
 
 const character: ModelRef<Character> = defineModel<Character>({required: true});
+const { hideAnimatedSprites } = useSpriteSetting();
+const spriteErrorCount = ref(0);
+const isStaticSprite = computed(() => hideAnimatedSprites.value || spriteErrorCount.value > 0);
+const spriteUrl = computed(() => {
+  if (isStaticSprite.value) {
+    return character.value.pokemon.sprites.front_default;
+  }
+  return character.value.pokemon.sprites.front_animated ?? `https://www.smogon.com/dex/media/sprites/xy/${character.value.pokemon.name}.gif`;
+});
+function onSpriteError() { spriteErrorCount.value++; }
+watch(() => character.value.pokemon.sprites.front_animated, () => { spriteErrorCount.value = 0; });
 const regenerateLoading: Ref<boolean> = ref<boolean>(false);
 const autoOpen: Ref<number> = ref<number>(-1);
 const showStatusDialog: Ref<boolean> = ref<boolean>(false);
@@ -945,6 +970,22 @@ watch(() => character.value, () => {
 </script>
 
 <style scoped>
+.sprite-contain :deep(img) {
+  object-fit: contain;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 599px) {
+  .sprite-contain :deep(img) {
+    padding: 8px;
+  }
+}
+
+.sprite-static :deep(img) {
+  padding: 4px;
+}
+
 .status-move-btn {
   max-width: 800px;
   line-break: auto;

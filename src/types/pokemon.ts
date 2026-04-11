@@ -6,6 +6,7 @@ import { Ability, getAbility } from './abilities';
 import { IQSkill, iqSkillArray } from './iqSkills';
 import { Experience } from './experience';
 import statusMoves from './statusMoves';
+import { formVarieties } from '@/utils/varietyData';
 
 export interface Pokemon {
   id: number,
@@ -16,6 +17,7 @@ export interface Pokemon {
   varieties: any[],
   sprites: {
     front_default: string,
+    front_animated?: string,
   },
 }
 
@@ -88,6 +90,40 @@ export interface Character {
   extraAbility?: Ability
 }
 
+// Normalize PokeAPI detail.name to a valid Smogon sprite name.
+const MINIOR_COLOR_INFIX = /^(minior)-(?:red|orange|yellow|green|blue|indigo|violet)(-|$)/;
+const SQUAWKABILLY_DEFAULT_PLUMAGE = /-green-plumage$/;
+const PLUMAGE_SUFFIX = /-plumage$/;
+const TAUROS_BREED_SUFFIX = /-breed$/;
+const BASCULIN_DEFAULT_STRIPE = /-red-striped$/;
+const DARMANITAN_DEFAULT = /-standard(?=-|$)/;
+const MORPEKO_DEFAULT = /-full-belly(?=-|$)/;
+const TOXTRICITY_DEFAULT = /-amped(?=-|$)/;
+const URSHIFU_DEFAULT = /-single-strike(?=-|$)/;
+const WISHIWASHI_DEFAULT = /-solo(?=-|$)/;
+const PALAFIN_DEFAULT = /-zero(?=-|$)/;
+const DUDUNSPARCE_DEFAULT = /-two-segment$/;
+const MAUSHOLD_FOUR = /-family-of-four$/;
+const MAUSHOLD_THREE = /-family-of-three$/;
+
+function toSmogonName(detailName: string): string {
+  return detailName
+    .replace(MINIOR_COLOR_INFIX, '$1$2')
+    .replace(SQUAWKABILLY_DEFAULT_PLUMAGE, '')
+    .replace(PLUMAGE_SUFFIX, '')
+    .replace(TAUROS_BREED_SUFFIX, '')
+    .replace(BASCULIN_DEFAULT_STRIPE, '')
+    .replace(DARMANITAN_DEFAULT, '')
+    .replace(MORPEKO_DEFAULT, '')
+    .replace(TOXTRICITY_DEFAULT, '')
+    .replace(URSHIFU_DEFAULT, '')
+    .replace(WISHIWASHI_DEFAULT, '')
+    .replace(PALAFIN_DEFAULT, '')
+    .replace(DUDUNSPARCE_DEFAULT, '')
+    .replace(MAUSHOLD_FOUR, '-four')
+    .replace(MAUSHOLD_THREE, '');
+}
+
 export async function createCharacter(pokemon: Pokemon, level: number, uuid?: string): Promise<Character> {
   const detail = await encounterService.getPokemonDetail(pokemon.id);
   pokemon.types = Object.values(detail.types).map((e: any) => e.type.name);
@@ -99,7 +135,10 @@ export async function createCharacter(pokemon: Pokemon, level: number, uuid?: st
     spdef: detail.stats[4].base_stat,
     spd: detail.stats[5].base_stat,
   };
-  pokemon.sprites = { front_default: detail.sprites.front_default };
+  pokemon.sprites = {
+    front_default: detail.sprites.front_default,
+    front_animated: `https://www.smogon.com/dex/media/sprites/xy/${toSmogonName(detail.name)}.gif`,
+  };
 
   const character: Character = {
     uuid: uuid ?? crypto.randomUUID(),
@@ -193,9 +232,31 @@ export async function createCharacter(pokemon: Pokemon, level: number, uuid?: st
 
 export async function changeSpecies(character: Character) {
   const pokemon = await encounterService.getPokemonSpecies(character.species);
-  const detail = await encounterService.getPokemonDetailByVariety(pokemon.varieties[character.variety].pokemon.url);
+
+  const extraForms = formVarieties[pokemon.name] ?? [];
+  const extraFormIndex = character.variety - pokemon.varieties.length;
+
+  let detail;
+  let overrideSprites: { front_default: string, front_animated: string } | null = null;
+
+  if (extraFormIndex >= 0 && extraFormIndex < extraForms.length) {
+    // Cosmetic form: same stats/types as base variety, only sprite differs
+    detail = await encounterService.getPokemonDetailByVariety(pokemon.varieties[0].pokemon.url);
+    const formName = extraForms[extraFormIndex].formName;
+    const formDetail = await encounterService.getPokemonForm(formName);
+    overrideSprites = {
+      front_default: formDetail.sprites.front_default,
+      front_animated: `https://www.smogon.com/dex/media/sprites/xy/${toSmogonName(formName)}.gif`,
+    };
+  } else {
+    detail = await encounterService.getPokemonDetailByVariety(pokemon.varieties[character.variety].pokemon.url);
+  }
+
   pokemon.types = Object.values(detail.types).map((e: any) => e.type.name);
-  pokemon.sprites = { front_default: detail.sprites.front_default };
+  pokemon.sprites = overrideSprites ?? {
+    front_default: detail.sprites.front_default,
+    front_animated: `https://www.smogon.com/dex/media/sprites/xy/${toSmogonName(detail.name)}.gif`,
+  };
   character.pokemon = pokemon;
   character.specificities = getPokemonSpecificities(character);
   character.ability = getAbility(character);

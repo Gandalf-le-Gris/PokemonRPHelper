@@ -1,4 +1,4 @@
-import { appendVarietyMap } from './varieties';
+import { appendVarietyMap } from './varietyData';
 
 export function splitMatch(str: string, vs: string): boolean {
   const strMatches = Array.from(str.toLowerCase().matchAll(/[\w\d]+/g)).map(e => e[0]);

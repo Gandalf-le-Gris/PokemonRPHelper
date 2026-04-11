@@ -1197,12 +1197,14 @@ const specialAbilities: Record<string, Ability> = {
 };
 
 export function getAbility(character: Character): Ability {
-  const variety = character.pokemon.varieties[character.variety].pokemon.name;
+  const varietyIndex = Math.min(character.variety, character.pokemon.varieties.length - 1);
+  const variety = character.pokemon.varieties[varietyIndex].pokemon.name;
   const key = (['A', 'B', 'C', 'D'] as ('A' | 'B' | 'C' | 'D')[]).find(e => abilities[e].some(s => splitMatchPokemonName(variety, s.toLowerCase())));
   return key ? abilityRecord[character.pokemon.types[0]][key] : getSpecialAbility(character);
 }
 
 function getSpecialAbility(character: Character): Ability {
-  const variety = character.pokemon.varieties[character.variety].pokemon.name;
+  const varietyIndex = Math.min(character.variety, character.pokemon.varieties.length - 1);
+  const variety = character.pokemon.varieties[varietyIndex].pokemon.name;
   return Object.entries(specialAbilities).find(s => splitMatchPokemonName(variety, s[0].toLowerCase()))?.[1] ?? { value: 'Not found', title: 'Non trouvé', desc: 'Non trouvé' };
 }

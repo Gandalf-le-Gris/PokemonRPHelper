@@ -12,6 +12,9 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
+# Local guidelines (not versioned)
+CLAUDE.md
+
 # Editor directories and files
 .idea
 .vscode
