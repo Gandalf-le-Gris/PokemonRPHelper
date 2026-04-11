@@ -14,21 +14,12 @@ export class TypeService {
     return (await axios.get(`https://pokeapi.co/api/v2/type/${type}`)).data;
   }
 
-  public async getTypeIcon(type: Type): Promise<string> {
-    return (await this.getType(type))
-      .sprites['generation-viii']['sword-shield'].name_icon;
-  }
-
-  public async getOrFetchTypeIcon(type: Type): Promise<string> {
-    return this.typeList.value.find(e => e.type === type)?.src ?? await this.getTypeIcon(type);
-  }
-
   public async getTypeDetail(type: Type): Promise<TypeDetail> {
     const r = await this.getType(type);
     return {
       type,
       title: typeArray.find(e => e.value === type)?.title ?? '',
-      src: r.sprites['generation-viii']['sword-shield'].name_icon,
+      src: typeArray.find(e => e.value === type)?.src ?? '',
       offensive: {
         strong: r.damage_relations.double_damage_to.map((e: { name: string }) => e.name),
         weak: r.damage_relations.half_damage_to.map((e: { name: string }) => e.name),
