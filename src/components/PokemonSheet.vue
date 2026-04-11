@@ -726,6 +726,7 @@ const hideOldSpecificity: Ref<boolean> = ref<boolean>(false);
 const newAbility: Ref<Ability | undefined> = ref();
 const showNewAbility: Ref<boolean> = ref<boolean>(false);
 const saveTimeout: Ref<number> = ref<number>(-1);
+const autoSaveInterval: Ref<number> = ref<number>(-1);
 
 const characterMods: ComputedRef<Mod> = computed<Mod>(() => computeGlobalModifiers(character.value));
 const maxHP: ComputedRef<number> = computed<number>(() => computeHPT(character.value));
@@ -852,15 +853,23 @@ function learnAbility() {
   showNewAbility.value = false;
 }
 
-onMounted(() => {
-  window.addEventListener('keydown', handleKeyPress);
-});
-
-onUnmounted(() => {
+function saveIfKnown() {
   const saved = JSON.parse(localStorage.getItem('saved-characters') ?? '{}');
   if (saved[character.value.uuid]) {
     saveCharacter(false);
   }
+}
+
+const AUTOSAVE_INTERVAL_5_MIN = 5 * 60 * 1000;
+
+onMounted(() => {
+  window.addEventListener('keydown', handleKeyPress);
+  autoSaveInterval.value = setInterval(saveIfKnown, AUTOSAVE_INTERVAL_5_MIN);
+});
+
+onUnmounted(() => {
+  saveIfKnown();
+  clearInterval(autoSaveInterval.value);
   window.removeEventListener('keydown', handleKeyPress);
 });
 
