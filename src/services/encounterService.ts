@@ -20,6 +20,10 @@ export class EncounterService {
     return (await axios.get(url)).data;
   }
 
+  public async getPokemonForm(name: string) {
+    return (await axios.get(`https://pokeapi.co/api/v2/pokemon-form/${name}`)).data;
+  }
+
   public async getRandomPokemon(habitat?: Habitat) {
     if (habitat) {
       if (habitat !== 'any-land' && !habitat.includes('ocean') && !habitat.includes('river') && Math.random() < .1) {

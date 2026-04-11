@@ -251,7 +251,8 @@ export const specificityArray = [
 ] as { value: SpecificityType, title: string, desc: string, effect?: (c: Character) => Mod }[];
 
 export function getPokemonSpecificities(character: Character): SpecificityType[] {
-  const variety = character.pokemon.varieties[character.variety].pokemon.name;
+  const varietyIndex = Math.min(character.variety, character.pokemon.varieties.length - 1);
+  const variety = character.pokemon.varieties[varietyIndex].pokemon.name;
   return specificityArray
     .toSorted((a, b) => a.title.localeCompare(b.title))
     .map(e => e.value)
