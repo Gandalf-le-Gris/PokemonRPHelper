@@ -16,6 +16,7 @@ export interface Pokemon {
   varieties: any[],
   sprites: {
     front_default: string,
+    front_shiny?: string,
   },
 }
 
@@ -83,6 +84,7 @@ export interface Character {
   iqSkills: IQSkill[],
   experience: Experience,
   notes: string
+  isShiny?: boolean
   swappedTypes?: Record<number, [number, Type]>
   swappedSpecificities?: Record<number, [SpecificityType, SpecificityType]>
   extraAbility?: Ability
@@ -99,7 +101,11 @@ export async function createCharacter(pokemon: Pokemon, level: number, uuid?: st
     spdef: detail.stats[4].base_stat,
     spd: detail.stats[5].base_stat,
   };
-  pokemon.sprites = { front_default: detail.sprites.front_default };
+  const isShiny = Math.random() < 1 / 124;
+  pokemon.sprites = {
+    front_default: detail.sprites.front_default,
+    front_shiny: detail.sprites.front_shiny ?? undefined,
+  };
 
   const character: Character = {
     uuid: uuid ?? crypto.randomUUID(),
@@ -139,7 +145,8 @@ export async function createCharacter(pokemon: Pokemon, level: number, uuid?: st
       ko: 0,
       help: false,
     },
-    notes: ''
+    notes: '',
+    isShiny,
   };
 
   if (level > 0) {
@@ -195,7 +202,10 @@ export async function changeSpecies(character: Character) {
   const pokemon = await encounterService.getPokemonSpecies(character.species);
   const detail = await encounterService.getPokemonDetailByVariety(pokemon.varieties[character.variety].pokemon.url);
   pokemon.types = Object.values(detail.types).map((e: any) => e.type.name);
-  pokemon.sprites = { front_default: detail.sprites.front_default };
+  pokemon.sprites = {
+    front_default: detail.sprites.front_default,
+    front_shiny: detail.sprites.front_shiny ?? undefined,
+  };
   character.pokemon = pokemon;
   character.specificities = getPokemonSpecificities(character);
   character.ability = getAbility(character);
