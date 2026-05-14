@@ -94,13 +94,22 @@
       >
         <v-data-table
           :items="filteredItems[itemType as ItemType]"
-          :headers="itemType === 'clothing' ? clothingHeaders : headers"
+          :headers="itemType === 'clothing' ? clothingHeaders : itemType === 'berry' ? berryHeaders : headers"
           mobile-breakpoint="sm"
           items-per-page-text="Objets par page :"
           :items-per-page-options
           :hide-default-footer="filteredItems[itemType as ItemType].length <= 10"
           :pageText="'{0}-{1} de {2}'"
         >
+          <template v-slot:item.sprite="{ item }">
+            <img
+              v-if="berryImages[item.name]"
+              :src="berryImages[item.name]"
+              width="24"
+              height="24"
+              class="pixelated d-block"
+            />
+          </template>
           <template v-slot:item.buy="{ item }">
             <span v-if="item.buy">{{ item.buy }}P</span>
           </template>
@@ -179,11 +188,37 @@ const filteredItems: ComputedRef<Record<ItemType, Item[]>> = computed(() => {
   return res;
 });
 
+const BASE = 'https://www.pokepedia.fr';
+
+const berryImages: Record<string, string> = {
+  'Baie Oran':   `${BASE}/images/3/35/Miniature_Baie_Oran_RFVF.png`,
+  'Baie Oren':   `${BASE}/images/3/35/Miniature_Baie_Oran_RFVF.png`,
+  'Baie Sitrus': `${BASE}/images/c/cc/Miniature_Baie_Sitrus_RFVF.png`,
+  'Baie Ceriz':  `${BASE}/images/f/f6/Miniature_Baie_Ceriz_RFVF.png`,
+  'Baie Pêcha':  `${BASE}/images/c/cd/Miniature_Baie_P%C3%AAcha_RFVF.png`,
+  'Baie Fraive': `${BASE}/images/3/38/Miniature_Baie_Fraive_RFVF.png`,
+  'Baie Maron':  `${BASE}/images/3/30/Miniature_Baie_Maron_RFVF.png`,
+  'Baie Willia': `${BASE}/images/8/8b/Miniature_Baie_Willia_RFVF.png`,
+  'Baie Kika':   `${BASE}/images/b/b2/Miniature_Baie_Kika_RFVF.png`,
+  'Baie Prine':  `${BASE}/images/e/ee/Miniature_Baie_Prine_RFVF.png`,
+  'Baie Lichii': `${BASE}/images/4/41/Miniature_Baie_Lichii_RFVF.png`,
+  'Baie Lingan': `${BASE}/images/b/b6/Miniature_Baie_Lingan_RFVF.png`,
+  'Baie Pitaye': `${BASE}/images/f/fd/Miniature_Baie_Pitaye_RFVF.png`,
+  'Baie Abriko': `${BASE}/images/6/6d/Miniature_Baie_Abriko_RFVF.png`,
+  'Baie Sailak': `${BASE}/images/7/75/Miniature_Baie_Sailak_RFVF.png`,
+  'Baie Mepo':   `${BASE}/images/a/a9/Miniature_Baie_Mepo_RFVF.png`,
+};
+
 const headers = [
   { title: 'Nom', value: 'name', sortable: true },
   { title: 'Description', value: 'desc' },
   { title: 'Achat', value: 'buy', sortable: true },
   { title: 'Vente', value: 'sell', sortable: true }
+];
+
+const berryHeaders = [
+  { title: '', value: 'sprite', sortable: false, width: '48px' },
+  ...headers,
 ];
 
 const clothingHeaders = [
