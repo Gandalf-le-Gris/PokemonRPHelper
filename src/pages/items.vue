@@ -85,16 +85,21 @@
               v-if="!filters.type || filters.type === 'clothing'"
               cols="12"
             >
-              <div class="text-caption text-medium-emphasis mb-1">Emplacement</div>
-              <v-chip-group
-                v-model="filters.placements"
-                multiple
-                selected-class="text-primary"
-              >
-                <v-chip value="head" filter>Tête</v-chip>
-                <v-chip value="neck" filter>Cou</v-chip>
-                <v-chip value="belt" filter>Ceinture</v-chip>
-              </v-chip-group>
+              <v-sheet border rounded="lg" class="px-3 pt-2 pb-1">
+                <div class="text-caption text-medium-emphasis mb-1">
+                  <v-icon icon="mdi-tshirt-crew" size="x-small" class="mr-1" />
+                  Emplacement — vêtements
+                </div>
+                <v-chip-group
+                  v-model="filters.placements"
+                  multiple
+                  selected-class="text-primary"
+                >
+                  <v-chip value="head" filter>Tête</v-chip>
+                  <v-chip value="neck" filter>Cou</v-chip>
+                  <v-chip value="belt" filter>Ceinture</v-chip>
+                </v-chip-group>
+              </v-sheet>
             </v-col>
           </v-row>
         </v-expand-transition>
