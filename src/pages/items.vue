@@ -81,6 +81,26 @@
                 clearable
               />
             </v-col>
+            <v-col
+              v-if="!filters.type || filters.type === 'clothing'"
+              cols="12"
+            >
+              <v-sheet border rounded="lg" class="px-3 pt-2 pb-1">
+                <div class="text-caption text-medium-emphasis mb-1">
+                  <v-icon icon="mdi-tshirt-crew" size="x-small" class="mr-1" />
+                  Emplacement — vêtements
+                </div>
+                <v-chip-group
+                  v-model="filters.placements"
+                  multiple
+                  selected-class="text-primary"
+                >
+                  <v-chip value="head" filter>Tête</v-chip>
+                  <v-chip value="neck" filter>Cou</v-chip>
+                  <v-chip value="belt" filter>Ceinture</v-chip>
+                </v-chip-group>
+              </v-sheet>
+            </v-col>
           </v-row>
         </v-expand-transition>
       </v-card>
@@ -144,10 +164,11 @@ interface Filters {
   name: string | null,
   type?: ItemType,
   minPrice?: number,
-  maxPrice?: number
+  maxPrice?: number,
+  placements: string[],
 }
 
-const filters: Ref<Filters> = ref({ name: '' });
+const filters: Ref<Filters> = ref({ name: '', placements: [] });
 const debouncedName: Ref<string> = ref('');
 let nameTimeout: number = -1;
 
@@ -165,12 +186,15 @@ watch(() => filters.value.name, (val: string | null) => {
 
 const filteredItems: ComputedRef<Record<ItemType, Item[]>> = computed(() => {
   const res = {} as Record<ItemType, Item[]>;
+  const activePlacements = filters.value.placements;
+  const typeFilter = activePlacements.length ? 'clothing' : filters.value.type;
   for (const itemType in items) {
-    if (!filters.value.type || itemType === filters.value.type) {
+    if (!typeFilter || itemType === typeFilter) {
       const values = items[itemType as ItemType]
         .filter(e => debouncedName.value.toLowerCase().split(' ').every(t => e.name.toLowerCase().includes(t)))
         .filter(e => !filters.value.minPrice || e.buy && e.buy >= filters.value.minPrice)
-        .filter(e => !filters.value.maxPrice || e.buy && e.buy <= filters.value.maxPrice);
+        .filter(e => !filters.value.maxPrice || e.buy && e.buy <= filters.value.maxPrice)
+        .filter(e => !activePlacements.length || activePlacements.some(p => (e as Clothing)[p as keyof Clothing]));
       if (values.length) {
         res[itemType as ItemType] = values.toSorted((a, b) => a.name.localeCompare(b.name));
       }
@@ -188,9 +212,9 @@ const headers = [
 
 const clothingHeaders = [
   ...headers,
-  { title: 'Tête', value: 'head' },
-  { title: 'Cou', value: 'neck' },
-  { title: 'Ceinture', value: 'belt' }
+  { title: 'Tête', value: 'head', sortable: true },
+  { title: 'Cou', value: 'neck', sortable: true },
+  { title: 'Ceinture', value: 'belt', sortable: true },
 ];
 
 const itemsPerPageOptions = [
