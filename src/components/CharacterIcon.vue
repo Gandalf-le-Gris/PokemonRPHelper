@@ -13,6 +13,9 @@
         class="overlay"
         :class="{ active, isPlayer: character.isPlayer }"
         @dragstart="startDrag"
+        @touchstart="onTouchStart"
+        @touchmove.prevent
+        @touchend="onTouchEnd"
         v-bind="props"
         @click.stop="showMenu = false"
         @mousedown="$emit('mousedown')"
@@ -202,6 +205,33 @@ const alteredStats: ComputedRef<StatName[]> = computed(() => {
 const owned: ComputedRef<boolean> = computed(() =>
   props.character.character.uuid === props.myCharacter || props.isMaster
 );
+
+const touchStartPos = ref<{ x: number; y: number } | null>(null);
+
+function onTouchStart(evt: TouchEvent) {
+  const touch = evt.touches[0];
+  touchStartPos.value = { x: touch.clientX, y: touch.clientY };
+}
+
+function onTouchEnd(evt: TouchEvent) {
+  if (!owned.value || !touchStartPos.value) return;
+  const touch = evt.changedTouches[0];
+  const dx = touch.clientX - touchStartPos.value.x;
+  const dy = touch.clientY - touchStartPos.value.y;
+  const distance = Math.sqrt(dx * dx + dy * dy);
+  touchStartPos.value = null;
+  if (distance < 10) return;
+  const overlay = evt.currentTarget as HTMLElement;
+  overlay.style.visibility = 'hidden';
+  const el = document.elementFromPoint(touch.clientX, touch.clientY);
+  overlay.style.visibility = '';
+  if (el) {
+    el.dispatchEvent(new CustomEvent('characterdrop', {
+      bubbles: true,
+      detail: { uuid: props.character.character.uuid },
+    }));
+  }
+}
 
 function startDrag(evt: DragEvent) {
   if (owned.value && evt.dataTransfer) {
