@@ -12,6 +12,7 @@
         @drop="onDrop"
         @dragover.prevent
         @dragenter.prevent
+        @characterdrop="onTouchDrop"
         class="position-relative tile"
         v-bind="props"
       >
@@ -150,6 +151,20 @@ watch(() => [props.spriteSheet, room.value?.map[props.i][props.j]], paintTiles);
 const character: ComputedRef<BattleCharacter | undefined> = computed(() =>
   room.value?.characters.find(c => c.i === props.i && c.j === props.j)
 );
+
+function onTouchDrop(evt: CustomEvent) {
+  const characterUuid = evt.detail?.uuid;
+  if (characterUuid) {
+    const movedCharacter = room.value?.characters.find(e => e.character.uuid === characterUuid);
+    if (movedCharacter) {
+      webSocketService.updateCharacter({
+        ...movedCharacter,
+        i: props.i,
+        j: props.j,
+      });
+    }
+  }
+}
 
 function onDrop(evt: DragEvent) {
   const characterUuid = evt.dataTransfer?.getData('character');
