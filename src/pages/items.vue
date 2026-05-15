@@ -94,13 +94,22 @@
       >
         <v-data-table
           :items="filteredItems[itemType as ItemType]"
-          :headers="itemType === 'clothing' ? clothingHeaders : headers"
+          :headers="itemType === 'clothing' ? clothingHeaders : itemType === 'rare' ? rareHeaders : headers"
           mobile-breakpoint="sm"
           items-per-page-text="Objets par page :"
           :items-per-page-options
           :hide-default-footer="filteredItems[itemType as ItemType].length <= 10"
           :pageText="'{0}-{1} de {2}'"
         >
+          <template v-slot:item.sprite="{ item }">
+            <img
+              v-if="itemSprites[item.name]"
+              :src="itemSprites[item.name]"
+              width="24"
+              height="24"
+              class="pixelated d-block"
+            />
+          </template>
           <template v-slot:item.buy="{ item }">
             <span v-if="item.buy">{{ item.buy }}P</span>
           </template>
@@ -139,6 +148,7 @@
 
 <script setup lang="ts">
 import items, { Clothing, Item, ItemType, itemTypeArray } from '@/types/items';
+import { itemSprites } from '@/assets/pokepediaSprites';
 
 interface Filters {
   name: string | null,
@@ -184,6 +194,11 @@ const headers = [
   { title: 'Description', value: 'desc' },
   { title: 'Achat', value: 'buy', sortable: true },
   { title: 'Vente', value: 'sell', sortable: true }
+];
+
+const rareHeaders = [
+  { title: '', value: 'sprite', sortable: false, width: '48px' },
+  ...headers,
 ];
 
 const clothingHeaders = [
