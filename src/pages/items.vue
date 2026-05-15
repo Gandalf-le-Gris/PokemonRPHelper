@@ -88,10 +88,19 @@
       <v-card
         v-for="itemType in Object.keys(filteredItems)"
         :key="itemType"
-        :title="itemTypeArray.find(e => e.value === itemType)?.title"
         class="px-4 pb-2 mt-8"
         rounded="lg"
       >
+        <template #title>
+          <div class="d-flex align-center ga-2">
+            <img
+              v-if="categoryIcons[itemType as ItemType]"
+              :src="categoryIcons[itemType as ItemType]"
+              class="pixelated"
+            />
+            {{ itemTypeArray.find(e => e.value === itemType)?.title }}
+          </div>
+        </template>
         <v-data-table
           :items="filteredItems[itemType as ItemType]"
           :headers="itemType === 'clothing' ? clothingHeaders : headers"
@@ -185,6 +194,20 @@ const headers = [
   { title: 'Achat', value: 'buy', sortable: true },
   { title: 'Vente', value: 'sell', sortable: true }
 ];
+
+const BASE = 'https://www.pokepedia.fr';
+
+const categoryIcons: Record<ItemType, string> = {
+  berry:         `${BASE}/images/0/05/Sprite_Baie_Sitrus_PMDM.png`,
+  seed:          `${BASE}/images/6/65/Sprite_Gu%C3%A9rigraine_PDMRB.png`,
+  orb:           `${BASE}/images/d/d6/Sprite_Temp%C3%AAtorbe_PDMRB.png`,
+  wand:          `${BASE}/images/5/5a/Sprite_branche_PMDM.png`,
+  clothing:      `${BASE}/images/f/f1/Sprite_Passmuraille_PDMRB.png`,
+  flag:          `${BASE}/images/f/fc/Sprite_Fanion_PDMPI.png`,
+  throwing:      `${BASE}/images/a/a5/Sprite_Racaillasse_PMDM.png`,
+  rare:          `${BASE}/images/7/75/Sprite_Pierre_Feu_PDMTO.png`,
+  miscellaneous: `${BASE}/images/f/f4/Sprite_Pok%C3%A9_PMDM.png`,
+};
 
 const clothingHeaders = [
   ...headers,
