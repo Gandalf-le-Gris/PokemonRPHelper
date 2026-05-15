@@ -89,5 +89,5 @@ export const itemSprites: Record<string, string> = {
   'PP Plus':               `${BASE}/images/7/7e/Miniature_PP_Plus_EV.png`,
   'PP Max':                `${BASE}/images/b/b7/Miniature_PP_Max_EV.png`,
   'Pépite':                `${BASE}/images/6/63/Miniature_P%C3%A9pite_LPZA.png`,
-  'Capsule Technique':     `${BASE}/images/9/9d/Vignette_CT171_EV.png`,
+  'Capsule Technique':     `${BASE}/images/2/2f/Miniature_CT_Normal_LPZA.png`,
 };
